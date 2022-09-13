@@ -10,10 +10,11 @@ Dette er prosjektet til gruppe 13 i emnet IT1901 høsten 2022.
 Formålet med applikajsonen er å lage en type canvas hvor man kan tegne. I applikajson skal man tegne og lagre opp til en sky, og laste dem ned igjen. 
 
 
-
-## Prosjektet
-
 ### Bygging og kjøring
+Prosjektet blir bygget med Maven, og har direkte tilgang til Gitpod. Brukergrensesnittet  er i JavaFX-GUI.
+
+Bygging: 
+
 
 ### Organisering av koden
 
