@@ -3,11 +3,11 @@ package gr2213.PaintTools;
 import gr2213.PaintSettings;
 import javafx.scene.canvas.Canvas;
 
-public abstract class PaintTool {
+public abstract class Tool {
 
     protected PaintSettings settings;
 
-    public PaintTool(PaintSettings settings) {
+    public Tool(PaintSettings settings) {
         this.settings = settings;
     }
 

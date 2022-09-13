@@ -14,7 +14,7 @@ public class PrimaryController {
     @FXML Canvas drawingCanvas;
 
     private PaintSettings settings;
-    private PaintTool tool;
+    private Tool tool;
     @FXML
     void initialize(){
 

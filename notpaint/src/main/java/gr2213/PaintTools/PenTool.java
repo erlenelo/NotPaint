@@ -4,7 +4,7 @@ import gr2213.PaintSettings;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 
-public class PenTool extends PaintTool {
+public class PenTool extends Tool {
 
     public PenTool(PaintSettings settings) {
         super(settings);
