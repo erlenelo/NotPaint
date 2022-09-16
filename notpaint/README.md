@@ -1,18 +1,35 @@
-Brukerhistorie (US-1):
+# NotPaint
+Dette prosjektet er en tegneapp som skal gjøre det mulig for brukere å tegne på et lerret, og så kunne lagre/hente bildene fra en ekstern server. Bruker skal kunne velge størrelse på pensel, form og farge, og ha muligheten til å viske vekk tegningen. Det er planlagt at man skal kunne være flere som tegner på lerretet samtidig. 
 
-Som privatperson ønsker jeg å kunne tegne på et lerret og lagre tegningen lokalt.
+Dersom det blir en for stor utfordring å få til at flere personer kan tegne samtidig, er plan B å dreie prosjektet mot et spill. Bruker får et randomisert ord som de skal tegne, og de resterende spillerne skal gjette først hvilket ord som tegnes. 
+
+## Bilde av grensesnittet
+![](PaintViewBilde.png "Grensesnitt")
+Dette er det foreløpige grensesnittet. Videre skal flere funksjonsknapper legges til, som farger og fill-in.
+- Sirklene setter pensel til indikert radius
+- Firkantene setter pensel til indikert
+størrelse
+- Viskelæret setter pensel til hvit, slik at tegnede områder kan viskes ut
+- Blyanten setter pensel til farge (foreløpigt svart)
+- Clear canvas skal resette lerretet.
+- Load-knappen skal hente opp fillager
+- Save skal åpne lageret, så nåværende tegning kan lagres
+- View2 er en placeholder for når vi etterhvert skal style fillageret i et sekundært view.
+
+## Brukerhistorie (US-1)
+
+Som bruker ønsker jeg å kunne tegne på et lerret og lagre tegningen lokalt.
 
 Brukeren skal kunne tegne med forskjellige farger, samt størrelse og form på pensel. Det som har blitt tegnet skal også kunne viskes ut med et innebygd viskelær. Til slutt, når tegningen er ferdigstilt, skal bruker kunne lagre den, slik at de senere kan fortsette der de slapp og tegne videre.
 
-
 Viktig å kunne se:
-- et lerret
-- valg av størrelse på pensel
-- valg av form på pensel
-- valg av farge
-- viskelær
+- Et lerret
+- Valg av størrelse på pensel
+- Valg av form på pensel
+- Valg av farge
+- Viskelær
 
 Viktig å kunne gjøre:
-- velge pensel og male på lerretet med valgt farge
-- kunne viske ut det man har malt
-- kunne lagre tegningen til senere bruk
+- Velge pensel og male på lerretet med valgt farge
+- Kunne viske ut det man har malt
+- Kunne lagre tegningen til senere bruk
