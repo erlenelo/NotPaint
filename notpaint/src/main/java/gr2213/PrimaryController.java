@@ -4,11 +4,11 @@ import java.io.IOException;
 
 import gr2213.Brushes.CircleBrush;
 import gr2213.Brushes.SquareBrush;
+import gr2213.PaintTools.EraserTool;
 import gr2213.PaintTools.PenTool;
 import gr2213.PaintTools.Tool;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -39,6 +39,7 @@ public class PrimaryController {
         settings = new PaintSettings();
         settings.setColor(Color.BLACK);
         selectedTool = new PenTool(settings);
+        setCircleBrush(10);
 
         circleSmall.setOnMouseClicked(e -> setCircleBrush(5));
         circleMedium.setOnMouseClicked(e -> setCircleBrush(10));
@@ -61,4 +62,22 @@ public class PrimaryController {
     private void handleCavasClick(MouseEvent event) {
         selectedTool.Paint(drawingCanvas, (int)event.getX(), (int)event.getY());
     }
+
+    @FXML
+    private void setToolEraser() {
+        selectedTool = new EraserTool(settings);
+    }
+
+    @FXML
+    private void setToolPen() {
+        selectedTool = new PenTool(settings);
+    }
+
+    @FXML
+    private void clearCanvas() {
+        drawingCanvas.getGraphicsContext2D().clearRect(0, 0, drawingCanvas.getWidth(), drawingCanvas.getHeight());
+        initialize();
+    }
+
+    
 }
