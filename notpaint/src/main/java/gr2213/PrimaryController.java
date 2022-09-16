@@ -14,7 +14,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
-public class PrimaryController {
+/**
+ * Controller for the view that handles the painting.
+ * Supports drawing on a canvas with different tools and brushes.
+ */
+public class PaintController {
 
     @FXML
     Circle circleSmall, circleMedium, circleBig;
@@ -36,11 +40,13 @@ public class PrimaryController {
 
     @FXML
     public void initialize() {
+        // Set the default settings and tools
         settings = new PaintSettings();
         settings.setColor(Color.BLACK);
         selectedTool = new PenTool(settings);
         setCircleBrush(10);
 
+        // Create event handlers for brush changes
         circleSmall.setOnMouseClicked(e -> setCircleBrush(5));
         circleMedium.setOnMouseClicked(e -> setCircleBrush(10));
         circleBig.setOnMouseClicked(e -> setCircleBrush(17));
@@ -50,16 +56,24 @@ public class PrimaryController {
         squareBig.setOnMouseClicked(e -> setSquareBrush(17));
     }
 
+    /**
+     * Set the brush to be a circle
+     * @param size Radius of the brush
+     */
     private void setCircleBrush(int size) {
         settings.setBrush(new  CircleBrush(size));
     }
 
+    /**
+     * Set the brush to be a square
+     * @param size 'Radius' of the brush  (half of the square side length)
+     */
     private void setSquareBrush(int size) {
         settings.setBrush(new  SquareBrush(size));
     }
 
     @FXML
-    private void handleCavasClick(MouseEvent event) {
+    private void handleCavasClick(MouseEvent event) {   
         selectedTool.Paint(drawingCanvas, (int)event.getX(), (int)event.getY());
     }
 
