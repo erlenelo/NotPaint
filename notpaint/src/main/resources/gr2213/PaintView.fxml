@@ -40,8 +40,8 @@
          </image>
       </ImageView>
       <Button layoutX="669.0" layoutY="401.0" mnemonicParsing="false" scaleX="1.3" scaleY="1.3" scaleZ="1.3" style="-fx-background-color: lightblue; -fx-border-color: gray; -fx-background-radius: 5; -fx-border-radius: 5;" text="Clear Canvas" onAction="#clearCanvas"/>
-      <Button layoutX="650.0" layoutY="453.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="48.0" scaleX="1.3" scaleY="1.3" scaleZ="1.3" style="-fx-background-color: LightBlue; -fx-border-color: gray; -fx-background-radius: 5; -fx-border-radius: 5;" text="Save" />
-      <Button layoutX="729.0" layoutY="453.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="48.0" scaleX="1.3" scaleY="1.3" scaleZ="1.3" style="-fx-background-color: LightBlue; -fx-border-color: gray; -fx-border-radius: 5; -fx-background-radius: 5;" text="Load" />
+      <Button onAction="#save" layoutX="650.0" layoutY="453.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="48.0" scaleX="1.3" scaleY="1.3" scaleZ="1.3" style="-fx-background-color: LightBlue; -fx-border-color: gray; -fx-background-radius: 5; -fx-border-radius: 5;" text="Save" />
+      <Button onAction="#load" layoutX="729.0" layoutY="453.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="48.0" scaleX="1.3" scaleY="1.3" scaleZ="1.3" style="-fx-background-color: LightBlue; -fx-border-color: gray; -fx-border-radius: 5; -fx-background-radius: 5;" text="Load" />
       <Button fx:id="primaryButton" layoutX="681.0" layoutY="37.0" onAction="#switchToSecondary" prefWidth="62.0" scaleX="1.3" scaleY="1.3" scaleZ="1.3" style="-fx-background-color: LightBlue; -fx-border-color: Gray; -fx-background-radius: 5; -fx-border-radius: 5;" text="View2" />
    </children>
 </AnchorPane>
