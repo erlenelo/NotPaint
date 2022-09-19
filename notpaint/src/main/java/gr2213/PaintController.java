@@ -114,6 +114,8 @@ public class PaintController {
     @FXML
     private void save() {
         File file = chooser.showSaveDialog(null);
+        if(file == null) return;
+
         WritableImage image = new WritableImage((int)drawingCanvas.getWidth(), (int)drawingCanvas.getHeight());
         drawingCanvas.snapshot(new Callback<SnapshotResult, Void>() {
             @Override
@@ -124,12 +126,12 @@ public class PaintController {
             }
         }, new SnapshotParameters(), image);
     }
-    private void snapshotCallback(SnapshotResult result) {
 
-    }
     @FXML
     private void load() {
         File file = chooser.showOpenDialog(null);
+        if(file == null) return;
+        
         System.out.println("Loading image at path: " + file.toURI().toString());
         Image loadedImage = persistence.Load(file.toURI().toString());
         drawingCanvas.getGraphicsContext2D().drawImage(loadedImage, 0, 0);
