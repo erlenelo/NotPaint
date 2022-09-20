@@ -1,5 +1,6 @@
 package gr2213;
 
+import java.io.File;
 import java.io.IOException;
 
 import gr2213.Brushes.CircleBrush;
@@ -8,11 +9,21 @@ import gr2213.PaintTools.EraserTool;
 import gr2213.PaintTools.PenTool;
 import gr2213.PaintTools.Tool;
 import javafx.fxml.FXML;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.SnapshotResult;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.util.Callback;
+import gr2213.Persistence.*;
 
 /**
  * Controller for the view that handles the painting.
@@ -32,6 +43,9 @@ public class PaintController {
     PaintSettings settings;
 
     Tool selectedTool;
+
+    private Persistence persistence;
+    private FileChooser chooser;
 
     @FXML
     private void switchToSecondary() throws IOException {
@@ -54,6 +68,12 @@ public class PaintController {
         squareSmall.setOnMouseClicked(e -> setSquareBrush(5));
         squareMedium.setOnMouseClicked(e -> setSquareBrush(10));
         squareBig.setOnMouseClicked(e -> setSquareBrush(17));
+
+        // Init file chooser settings. TODO: Remove when moving to REST API
+        persistence = new LocalPersistence();
+
+        chooser = new FileChooser();
+		chooser.getExtensionFilters().add(new ExtensionFilter("PNG Image", "*.png"));
     }
 
     /**
@@ -91,6 +111,39 @@ public class PaintController {
     private void clearCanvas() {
         drawingCanvas.getGraphicsContext2D().clearRect(0, 0, drawingCanvas.getWidth(), drawingCanvas.getHeight());
         initialize();
+    }
+
+    @FXML
+    private void save() {
+        File file = chooser.showSaveDialog(null);
+        if(file == null) return;
+
+        WritableImage image = new WritableImage((int)drawingCanvas.getWidth(), (int)drawingCanvas.getHeight());
+        drawingCanvas.snapshot(new Callback<SnapshotResult, Void>() {
+            @Override
+            public Void call(SnapshotResult arg0) {
+                System.out.println("Saving to path: " + file.toString());
+                try {
+                persistence.Save(image, file.toString());
+                } catch (IOException e) {
+                    Alert error = new Alert(AlertType.ERROR);
+                    error.setTitle("Failed to save image!");
+                    error.setContentText(e.getMessage());			
+                    error.showAndWait();
+                }
+                return null;
+            }
+        }, new SnapshotParameters(), image);
+    }
+
+    @FXML
+    private void load() {
+        File file = chooser.showOpenDialog(null);
+        if(file == null) return;
+        
+        System.out.println("Loading image at path: " + file.toURI().toString());
+        Image loadedImage = persistence.Load(file.toURI().toString());
+        drawingCanvas.getGraphicsContext2D().drawImage(loadedImage, 0, 0);
     }
 
     
