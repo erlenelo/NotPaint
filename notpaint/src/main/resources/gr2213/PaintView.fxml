@@ -26,26 +26,38 @@
       </Text>
       <Pane pickOnBounds="false" prefHeight="500.0" prefWidth="800.0">
          <children>
-            <Circle fx:id = "circleSmall" layoutX="667.0" layoutY="120.0" radius="5.0"  stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id = "circleMedium" layoutX="709.0" layoutY="120.0" radius="10.0"  stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id = "circleBig" layoutX="762.0" layoutY="120.0" radius="17.0"  stroke="BLACK" strokeType="INSIDE" />
-            <Rectangle fx:id = "squareSmall" arcHeight="5.0" arcWidth="5.0" height="10.0" layoutX="662.0" layoutY="223.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
-            <Rectangle fx:id = "squareMedium" arcHeight="5.0" arcWidth="5.0" height="20.0" layoutX="699.0" layoutY="218.0" stroke="BLACK" strokeType="INSIDE" width="20.0" />
-            <Rectangle fx:id = "squareBig" arcHeight="5.0" arcWidth="5.0" height="34.0" layoutX="745.0" layoutY="211.0" stroke="BLACK" strokeType="INSIDE" width="34.0" />
-            <ImageView fx:id = "eraser" fitHeight="42.0" fitWidth="42.0" layoutX="662.0" layoutY="315.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#setToolEraser">
+            <Circle fx:id="circleSmall" layoutX="667.0" layoutY="120.0" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="circleMedium" layoutX="709.0" layoutY="120.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="circleBig" layoutX="762.0" layoutY="120.0" radius="17.0" stroke="BLACK" strokeType="INSIDE" />
+            <Rectangle fx:id="squareSmall" arcHeight="5.0" arcWidth="5.0" height="10.0" layoutX="662.0" layoutY="223.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+            <Rectangle fx:id="squareMedium" arcHeight="5.0" arcWidth="5.0" height="20.0" layoutX="699.0" layoutY="218.0" stroke="BLACK" strokeType="INSIDE" width="20.0" />
+            <Rectangle fx:id="squareBig" arcHeight="5.0" arcWidth="5.0" height="34.0" layoutX="745.0" layoutY="211.0" stroke="BLACK" strokeType="INSIDE" width="34.0" />
+            <ImageView fx:id="eraser" fitHeight="42.0" fitWidth="42.0" layoutX="662.0" layoutY="310.0" onMouseClicked="#setToolEraser" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/eraser.png" />
                </image>
             </ImageView>
-            <ImageView fx:id = "pencil" fitHeight="42.0" fitWidth="42.0" layoutX="732.0" layoutY="315.0" pickOnBounds="true" preserveRatio="true"  onMouseClicked="#setToolPen">
+            <ImageView fx:id="pencil" fitHeight="42.0" fitWidth="42.0" layoutX="732.0" layoutY="310.0" onMouseClicked="#setToolPen" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/pencil.png" />
                </image>
             </ImageView>
-            <Button layoutX="669.0" layoutY="401.0" mnemonicParsing="false" scaleX="1.3" scaleY="1.3" scaleZ="1.3" style="-fx-background-color: lightblue; -fx-border-color: gray; -fx-background-radius: 5; -fx-border-radius: 5;" text="Clear Canvas" onAction="#clearCanvas"/>
-            <Button layoutX="650.0" layoutY="453.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="48.0"  style="-fx-background-color: LightBlue; -fx-border-color: gray; -fx-background-radius: 5; -fx-border-radius: 5;" text="Save" />
-            <Button layoutX="729.0" layoutY="453.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="48.0"  style="-fx-background-color: LightBlue; -fx-border-color: gray; -fx-border-radius: 5; -fx-background-radius: 5;" text="Load" />
-            <Button fx:id="primaryButton" layoutX="681.0" layoutY="37.0" onAction="#switchToSecondary" prefWidth="62.0"  style="-fx-background-color: LightBlue; -fx-border-color: Gray; -fx-background-radius: 5; -fx-border-radius: 5;" text="View2" />      
+            <Button layoutX="670.0" layoutY="382.0" mnemonicParsing="false" onAction="#clearCanvas" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: lightblue; -fx-border-color: gray; -fx-background-radius: 5; -fx-border-radius: 5;" text="Clear Canvas">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <Button layoutX="645.0" layoutY="437.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="68.0" style="-fx-background-color: LightBlue; -fx-border-color: gray; -fx-background-radius: 5; -fx-border-radius: 5;" text="Save">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <Button layoutX="723.0" layoutY="437.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="68.0" style="-fx-background-color: LightBlue; -fx-border-color: gray; -fx-border-radius: 5; -fx-background-radius: 5;" text="Load">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <Button fx:id="primaryButton" layoutX="681.0" layoutY="19.0" onAction="#switchToSecondary" prefHeight="40.0" prefWidth="68.0" style="-fx-background-color: LightBlue; -fx-border-color: Gray; -fx-background-radius: 5; -fx-border-radius: 5;" text="View2">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>      
          </children>
       </Pane>
    </children>
