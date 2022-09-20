@@ -46,11 +46,11 @@
                <font>
                   <Font size="14.0" />
                </font></Button>
-            <Button layoutX="645.0" layoutY="437.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="68.0" style="-fx-background-color: LightBlue; -fx-border-color: gray; -fx-background-radius: 5; -fx-border-radius: 5;" text="Save">
+            <Button onAction="#save" layoutX="645.0" layoutY="437.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="68.0" style="-fx-background-color: LightBlue; -fx-border-color: gray; -fx-background-radius: 5; -fx-border-radius: 5;" text="Save">
                <font>
                   <Font size="14.0" />
                </font></Button>
-            <Button layoutX="723.0" layoutY="437.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="68.0" style="-fx-background-color: LightBlue; -fx-border-color: gray; -fx-border-radius: 5; -fx-background-radius: 5;" text="Load">
+            <Button onAction="#load" layoutX="723.0" layoutY="437.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="68.0" style="-fx-background-color: LightBlue; -fx-border-color: gray; -fx-border-radius: 5; -fx-background-radius: 5;" text="Load">
                <font>
                   <Font size="14.0" />
                </font></Button>
