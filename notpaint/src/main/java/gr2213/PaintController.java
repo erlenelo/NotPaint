@@ -12,6 +12,8 @@ import javafx.fxml.FXML;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.SnapshotResult;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
@@ -121,7 +123,14 @@ public class PaintController {
             @Override
             public Void call(SnapshotResult arg0) {
                 System.out.println("Saving to path: " + file.toString());
+                try {
                 persistence.Save(image, file.toString());
+                } catch (IOException e) {
+                    Alert error = new Alert(AlertType.ERROR);
+                    error.setTitle("Failed to save image!");
+                    error.setContentText(e.getMessage());			
+                    error.showAndWait();
+                }
                 return null;
             }
         }, new SnapshotParameters(), image);

@@ -13,18 +13,12 @@ import javafx.scene.image.PixelReader;
 public class LocalPersistence extends Persistence {
 
     @Override
-    public void Save(Image image, String imagePath) {
+    public void Save(Image image, String imagePath) throws IOException {
         // TODO Auto-generated method stub
         File output = new File(imagePath);
         BufferedImage bufferedImage = javaFXImageToBufferedImage(image);
-        try{
-            ImageIO.write(bufferedImage, "png", output);       
-        } catch (IOException e) {
-            Alert error = new Alert(AlertType.ERROR);
-			error.setTitle("Failed to save image!");
-			error.setContentText(e.getMessage());			
-			error.showAndWait();
-        }
+        
+        ImageIO.write(bufferedImage, "png", output);               
     }
 
     @Override
