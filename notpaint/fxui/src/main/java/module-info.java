@@ -1,8 +1,7 @@
-module gr2213 {
+module notpaint.ui {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.desktop;
     
-    opens gr2213 to javafx.fxml;
-    exports gr2213;
+    opens notpaint.ui to javafx.fxml;
 }

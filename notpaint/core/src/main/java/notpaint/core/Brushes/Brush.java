@@ -1,4 +1,4 @@
-package gr2213.Brushes;
+package notpaint.core.Brushes;
 
 import java.util.stream.Stream;
 

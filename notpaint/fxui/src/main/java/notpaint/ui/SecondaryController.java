@@ -1,4 +1,4 @@
-package gr2213;
+package notpaint.ui;
 
 import java.io.IOException;
 import javafx.fxml.FXML;

@@ -1,4 +1,4 @@
-package gr2213;
+package notpaint.ui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
