@@ -1,6 +1,6 @@
 package notpaint.core.PaintTools;
 
-import gr2213.PaintSettings;
+import notpaint.core.PaintSettings;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 

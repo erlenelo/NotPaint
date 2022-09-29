@@ -3,11 +3,12 @@ package notpaint.ui;
 import java.io.File;
 import java.io.IOException;
 
-import gr2213.Brushes.CircleBrush;
-import gr2213.Brushes.SquareBrush;
-import gr2213.PaintTools.EraserTool;
-import gr2213.PaintTools.PenTool;
-import gr2213.PaintTools.Tool;
+import notpaint.core.Brushes.CircleBrush;
+import notpaint.core.Brushes.SquareBrush;
+import notpaint.core.PaintTools.EraserTool;
+import notpaint.core.PaintTools.PenTool;
+import notpaint.core.PaintTools.Tool;
+import notpaint.core.PaintSettings;
 import javafx.fxml.FXML;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.SnapshotResult;
@@ -23,7 +24,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Callback;
-import gr2213.Persistence.*;
+import notpaint.core.Persistence.*;
 
 /**
  * Controller for the view that handles the painting.
@@ -56,6 +57,7 @@ public class PaintController {
     public void initialize() {
         // Set the default settings and tools
         settings = new PaintSettings();
+        
         settings.setColor(Color.BLACK);
         selectedTool = new PenTool(settings);
         setCircleBrush(10);

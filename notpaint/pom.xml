@@ -90,7 +90,7 @@
                 <!-- Default configuration for running -->
                 <!-- Usage: mvn javafx:run -->
                 <configuration>
-                    <mainClass>gr2213.App</mainClass>
+                    <mainClass>gr2213.notpaint.ui.App</mainClass>
                 </configuration>
             </plugin>
             <!-- Plugin for oppsett av jacoco -->

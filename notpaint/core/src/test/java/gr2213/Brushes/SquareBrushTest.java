@@ -1,4 +1,4 @@
-package gr2213.Brushes;
+package notpaint.core.Brushes;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

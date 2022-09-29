@@ -1,4 +1,4 @@
-package gr2213.Persistence;
+package notpaint.core.Persistence;
 
 import java.io.IOError;
 import java.io.IOException;
