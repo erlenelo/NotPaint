@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gr2213.SettingsViewController">
+   <children>
+      <Text layoutX="221.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create new project">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <TextField id="setTimeTextField" layoutX="61.0" layoutY="163.0" promptText="Ex: 100" />
+      <Text layoutX="62.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Write a time to finish the project between 1 and 120 seconds:" wrappingWidth="157.880859375" />
+      <CheckBox id="checkboxYes" layoutX="372.0" layoutY="167.0" mnemonicParsing="false" text="Yes" />
+      <CheckBox id="checkboxNo" layoutX="374.0" layoutY="191.0" mnemonicParsing="false" text="No" />
+      <Text layoutX="313.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Do you want to randomize the theme for each new player? If you choose &quot;no&quot;, the first theme will be the same for everyone." wrappingWidth="199.880859375" />
+      <Button id="backToMenuB" layoutX="22.0" layoutY="12.0" mnemonicParsing="false" onAction="#switchToMenu" text="Back to menu" />
+      <Button id="createB" layoutX="532.0" layoutY="360.0" mnemonicParsing="false" text="Create" />
+   </children>
+</AnchorPane>
