@@ -6,5 +6,5 @@ module notpaint.ui {
 
     requires notpaint.core;
 
-    opens notpaint.ui to javafx.fxml;
+    opens notpaint.ui to javafx.fxml, javafx.graphics;
 }
