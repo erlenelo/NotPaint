@@ -13,7 +13,7 @@ Formålet med applikajsonen er å lage en canvas hvor man kan tegne. I applikasj
 ### Bygging og kjøring
 **Bygging:** Kjør `mvn install` fra kodings-prosjektet (**not-paint**-mappa).
 
-**Kjøring:** Åpne ny terminal, kjør først `cd notpaint` og deretter `mvn javafx:run`. Dette vil da åpne applikajsonen.
+**Kjøring:** Åpne ny terminal, kjør først `cd notpaint`, `cd fxui` og deretter `mvn javafx:run`. Dette vil da åpne applikajsonen.
 
 **Testing:** For å teste prosjektet kjør kommandoen `mvn test`. For å sjekke testdekningsgraden kjør kommandoen `mvn jacoco:report`. Dette vil generer en rapport for forrige test i *target/site/jacoco/index.html*. 
 

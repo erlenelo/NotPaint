@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: DEB59D;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="notpaint.ui.PaintController">
+   <children>
+      <StackPane layoutX="14.0" layoutY="50.0" prefHeight="153.0" prefWidth="444.0" style="-fx-background-color: white; -fx-border-color: gray;">
+         <children>
+            <Canvas fx:id="drawingCanvas" height="436.0" onMouseDragged="#handleCavasClick" onMousePressed="#handleCavasClick" width="620.0" />
+         </children>
+      </StackPane>
+      <Text layoutX="14.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Not Paint" wrappingWidth="217.13671875">
+         <font>
+            <Font name="Georgia" size="30.0" />
+         </font>
+      </Text>
+      <Pane pickOnBounds="false" prefHeight="500.0" prefWidth="800.0">
+         <children>
+            <Circle fx:id="circleSmall" layoutX="667.0" layoutY="120.0" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="circleMedium" layoutX="709.0" layoutY="120.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="circleBig" layoutX="762.0" layoutY="120.0" radius="17.0" stroke="BLACK" strokeType="INSIDE" />
+            <Rectangle fx:id="squareSmall" arcHeight="5.0" arcWidth="5.0" height="10.0" layoutX="662.0" layoutY="223.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+            <Rectangle fx:id="squareMedium" arcHeight="5.0" arcWidth="5.0" height="20.0" layoutX="699.0" layoutY="218.0" stroke="BLACK" strokeType="INSIDE" width="20.0" />
+            <Rectangle fx:id="squareBig" arcHeight="5.0" arcWidth="5.0" height="34.0" layoutX="745.0" layoutY="211.0" stroke="BLACK" strokeType="INSIDE" width="34.0" />
+            <ImageView fx:id="eraser" fitHeight="42.0" fitWidth="42.0" layoutX="662.0" layoutY="310.0" onMouseClicked="#setToolEraser" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/eraser.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="pencil" fitHeight="42.0" fitWidth="42.0" layoutX="732.0" layoutY="310.0" onMouseClicked="#setToolPen" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/pencil.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="648.0" layoutY="379.0" mnemonicParsing="false" onAction="#clearCanvas" prefHeight="40.0" prefWidth="140.0" style="-fx-background-color: lightblue; -fx-border-color: gray; -fx-background-radius: 5; -fx-border-radius: 5;" text="Clear Canvas">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <Button onAction="#save" layoutX="645.0" layoutY="437.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="68.0" style="-fx-background-color: LightBlue; -fx-border-color: gray; -fx-background-radius: 5; -fx-border-radius: 5;" text="Save">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <Button onAction="#load" layoutX="723.0" layoutY="437.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="68.0" style="-fx-background-color: LightBlue; -fx-border-color: gray; -fx-border-radius: 5; -fx-background-radius: 5;" text="Load">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <Button fx:id="primaryButton" layoutX="681.0" layoutY="19.0" onAction="#switchToSecondary" prefHeight="40.0" prefWidth="68.0" style="-fx-background-color: LightBlue; -fx-border-color: Gray; -fx-background-radius: 5; -fx-border-radius: 5;" text="View2">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>      
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
