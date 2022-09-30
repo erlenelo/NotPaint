@@ -1,12 +1,10 @@
-package gr2213.Persistence;
+package notpaint.core.Persistence;
 
 import java.io.File;
 import java.io.IOException;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 

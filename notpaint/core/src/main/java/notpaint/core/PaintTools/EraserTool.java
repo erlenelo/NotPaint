@@ -1,6 +1,6 @@
-package gr2213.PaintTools;
+package notpaint.core.PaintTools;
 
-import gr2213.PaintSettings;
+import notpaint.core.PaintSettings;
 import javafx.scene.paint.Color;
 
 public class EraserTool extends PenTool{

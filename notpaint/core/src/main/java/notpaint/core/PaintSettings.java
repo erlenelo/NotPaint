@@ -1,6 +1,6 @@
-package gr2213;
+package notpaint.core;
 
-import gr2213.Brushes.Brush;
+import notpaint.core.Brushes.Brush;
 import javafx.scene.paint.Color;
 
 public class PaintSettings {
