@@ -1,6 +1,7 @@
 package notpaint.core;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -70,9 +71,12 @@ public class GameInfo {
     
     private void generateNewWord() {
         // TODO: get a new random word from a text file (in resources maybe)
-        
-      
-        var wordListString = new String(getClass().getClassLoader().getResourceAsStream("words.txt").readAllBytes());
+        String wordListString = null;
+        try{
+            wordListString = new String(getClass().getClassLoader().getResourceAsStream("words.txt").readAllBytes());
+        } catch(IOException exception) {
+            exception.printStackTrace();
+        }
         var wordListArray =  wordListString.split("\\r?\\n|\\r");
 
         if(random == null) random = new Random();
@@ -95,8 +99,5 @@ public class GameInfo {
         return secondsPerRound;
     }
 
-    public void saveSettings(String){
-        List<> saved = new List<>(lastEditor, maxIterations, secondsPerRound,words,  
-    }
 
 }
