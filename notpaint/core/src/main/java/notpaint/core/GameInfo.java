@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
-
+/**
+ * One instance of the GameInfo class represents a Game (either ongoing or finished)
+ */
 public class GameInfo {
 
     private int maxIterations;      
@@ -22,6 +24,12 @@ public class GameInfo {
 
     private static Random random;
 
+    /**
+     * 
+     * @param maxIterations The number of iterations before this game is finished
+     * @param secondsPerRound How many seconds the users should have to draw each iteration
+     * @param newWordEachRound Whether there should be generated a new word each round. If false there will not be a new word after an iteration.
+     */
     public GameInfo(int maxIterations, int secondsPerRound, boolean newWordEachRound) {
         if (maxIterations < 1)
             throw new IllegalArgumentException("Argument maxIterations must be greater than 0");
@@ -34,10 +42,16 @@ public class GameInfo {
         this.secondsPerRound = secondsPerRound;
         this.newWordEachRound = newWordEachRound;
         this.lastEditor = "N/A";
+
+        generateNewWord();
         
         uuid = UUID.randomUUID();
     }
     
+    /**
+     * Add a new iteration to the Game. Generates a new word if newWordEachRound was set to true
+     * @param editor The nickname of the person who edited the image for this iteration
+     */
     public void addIteration(String editor) { // last editor + counter 
         this.lastEditor = editor;
         
@@ -49,11 +63,19 @@ public class GameInfo {
         }
     }
 
+    /**
+     * 
+     * @return String representing the path to image. Could be a file or web address.
+     */
     public String getImagePath() {
         // TODO: Determine location where this will be saved. For now will be saved relative to where program is running from
         return uuid.toString() + ".png";
     }
 
+    /**
+     * Chech if the game is finished (currentIterations has reached maxIterations)
+     * @return true if finished, false if not
+     */
     public boolean isFinished() {
         return currentIterations == maxIterations;
     }
@@ -70,7 +92,7 @@ public class GameInfo {
 
     
     private void generateNewWord() {
-        // TODO: get a new random word from a text file (in resources maybe)
+        // get a new random word from a text file (in resources)
         String wordListString = null;
         try{
             wordListString = new String(getClass().getClassLoader().getResourceAsStream("words.txt").readAllBytes());
@@ -87,6 +109,10 @@ public class GameInfo {
 
     }
 
+    /**
+     * Returns the word that is currently to be drawn.
+     * @return
+     */
     public String getWord() {
         return words.get(words.size() - 1);
     }
