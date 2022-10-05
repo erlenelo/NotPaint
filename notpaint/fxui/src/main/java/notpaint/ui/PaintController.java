@@ -5,9 +5,9 @@ import java.io.IOException;
 
 import notpaint.core.Brushes.CircleBrush;
 import notpaint.core.Brushes.SquareBrush;
-import notpaint.core.PaintTools.EraserTool;
-import notpaint.core.PaintTools.PenTool;
-import notpaint.core.PaintTools.Tool;
+import notpaint.ui.PaintTools.Tool;
+import notpaint.ui.PaintTools.EraserTool;
+import notpaint.ui.PaintTools.PenTool;
 import notpaint.core.PaintSettings;
 import javafx.fxml.FXML;
 import javafx.scene.SnapshotParameters;
@@ -57,7 +57,7 @@ public class PaintController {
     public void initialize() {
         // Set the default settings and tools
         settings = new PaintSettings();
-        
+
         settings.setColor(Color.BLACK);
         selectedTool = new PenTool(settings);
         setCircleBrush(10);
@@ -66,7 +66,7 @@ public class PaintController {
         circleSmall.setOnMouseClicked(e -> setCircleBrush(5));
         circleMedium.setOnMouseClicked(e -> setCircleBrush(10));
         circleBig.setOnMouseClicked(e -> setCircleBrush(17));
-        
+
         squareSmall.setOnMouseClicked(e -> setSquareBrush(5));
         squareMedium.setOnMouseClicked(e -> setSquareBrush(10));
         squareBig.setOnMouseClicked(e -> setSquareBrush(17));
@@ -75,28 +75,30 @@ public class PaintController {
         persistence = new LocalPersistence();
 
         chooser = new FileChooser();
-		chooser.getExtensionFilters().add(new ExtensionFilter("PNG Image", "*.png"));
+        chooser.getExtensionFilters().add(new ExtensionFilter("PNG Image", "*.png"));
     }
 
     /**
      * Set the brush to be a circle
+     * 
      * @param size Radius of the brush
      */
     private void setCircleBrush(int size) {
-        settings.setBrush(new  CircleBrush(size));
+        settings.setBrush(new CircleBrush(size));
     }
 
     /**
      * Set the brush to be a square
-     * @param size 'Radius' of the brush  (half of the square side length)
+     * 
+     * @param size 'Radius' of the brush (half of the square side length)
      */
     private void setSquareBrush(int size) {
-        settings.setBrush(new  SquareBrush(size));
+        settings.setBrush(new SquareBrush(size));
     }
 
     @FXML
-    private void handleCavasClick(MouseEvent event) {   
-        selectedTool.Paint(drawingCanvas, (int)event.getX(), (int)event.getY());
+    private void handleCavasClick(MouseEvent event) {
+        selectedTool.Paint(drawingCanvas, (int) event.getX(), (int) event.getY());
     }
 
     @FXML
@@ -118,19 +120,20 @@ public class PaintController {
     @FXML
     private void save() {
         File file = chooser.showSaveDialog(null);
-        if(file == null) return;
+        if (file == null)
+            return;
 
-        WritableImage image = new WritableImage((int)drawingCanvas.getWidth(), (int)drawingCanvas.getHeight());
+        WritableImage image = new WritableImage((int) drawingCanvas.getWidth(), (int) drawingCanvas.getHeight());
         drawingCanvas.snapshot(new Callback<SnapshotResult, Void>() {
             @Override
             public Void call(SnapshotResult arg0) {
                 System.out.println("Saving to path: " + file.toString());
                 try {
-                persistence.Save(image, file.toString());
+                    persistence.Save(image, file.toString());
                 } catch (IOException e) {
                     Alert error = new Alert(AlertType.ERROR);
                     error.setTitle("Failed to save image!");
-                    error.setContentText(e.getMessage());			
+                    error.setContentText(e.getMessage());
                     error.showAndWait();
                 }
                 return null;
@@ -141,12 +144,12 @@ public class PaintController {
     @FXML
     private void load() {
         File file = chooser.showOpenDialog(null);
-        if(file == null) return;
-        
+        if (file == null)
+            return;
+
         System.out.println("Loading image at path: " + file.toURI().toString());
         Image loadedImage = persistence.Load(file.toURI().toString());
         drawingCanvas.getGraphicsContext2D().drawImage(loadedImage, 0, 0);
     }
 
-    
 }

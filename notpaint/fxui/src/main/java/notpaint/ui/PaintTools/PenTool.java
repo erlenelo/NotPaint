@@ -1,4 +1,4 @@
-package notpaint.core.PaintTools;
+package notpaint.ui.PaintTools;
 
 import notpaint.core.PaintSettings;
 import javafx.scene.canvas.Canvas;
@@ -17,7 +17,7 @@ public class PenTool extends Tool {
         pixels.forEach(pair -> {
             pixelWriter.setColor(pair.getKey(), pair.getValue(), getColor());
         });
-        
+
     }
 
     protected Color getColor() {

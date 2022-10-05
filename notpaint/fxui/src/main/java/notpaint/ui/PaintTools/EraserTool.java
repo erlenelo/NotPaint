@@ -1,9 +1,9 @@
-package notpaint.core.PaintTools;
+package notpaint.ui.PaintTools;
 
 import notpaint.core.PaintSettings;
 import javafx.scene.paint.Color;
 
-public class EraserTool extends PenTool{
+public class EraserTool extends PenTool {
 
     public EraserTool(PaintSettings settings) {
         super(settings);
@@ -13,5 +13,5 @@ public class EraserTool extends PenTool{
     protected Color getColor() {
         return Color.WHITE;
     }
-    
+
 }
