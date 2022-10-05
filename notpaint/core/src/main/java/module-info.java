@@ -5,6 +5,5 @@ module notpaint.core {
 
     exports notpaint.core;
     exports notpaint.core.Brushes;
-    exports notpaint.core.PaintTools;
     exports notpaint.core.Persistence;
 }
