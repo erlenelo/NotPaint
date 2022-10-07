@@ -95,7 +95,7 @@ public class GameInfo {
         // get a new random word from a text file (in resources)
         String wordListString = null;
         try{
-            wordListString = new String(getClass().getClassLoader().getResourceAsStream("words.txt").readAllBytes());
+            wordListString = new String(getClass().getResourceAsStream("words.txt").readAllBytes());
         } catch(IOException exception) {
             exception.printStackTrace();
         }

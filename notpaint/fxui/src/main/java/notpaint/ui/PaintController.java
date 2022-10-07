@@ -57,7 +57,7 @@ public class PaintController {
     public void initialize() {
         // Set the default settings and tools
         settings = new PaintSettings();
-
+        
         settings.setColor(Color.BLACK);
         selectedTool = new PenTool(settings);
         setCircleBrush(10);
