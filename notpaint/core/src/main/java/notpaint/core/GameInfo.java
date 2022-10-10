@@ -7,20 +7,26 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.annotation.JsonAppend.Prop;
+
 /**
  * One instance of the GameInfo class represents a Game (either ongoing or finished)
  */
 public class GameInfo {
-
-    private int maxIterations;      
-    private int secondsPerRound;
-    private boolean newWordEachRound;
-
-    private int currentIterations;
-    private List<String> words;
-    private String lastEditor; // person who last edited
     
-    private UUID uuid;
+    @JsonSerialize private int maxIterations;      
+    @JsonSerialize private int secondsPerRound;
+    @JsonSerialize private boolean newWordEachRound;
+
+    @JsonSerialize private int currentIterations;
+    @JsonSerialize private List<String> words;
+    @JsonSerialize private String lastEditor; // person who last edited
+    
+    @JsonSerialize private UUID uuid;
 
     private static Random random;
 
@@ -69,7 +75,7 @@ public class GameInfo {
      */
     public String getImagePath() {
         // TODO: Determine location where this will be saved. For now will be saved relative to where program is running from
-        return uuid.toString() + ".png";
+        return "data/" + uuid.toString() + ".png";
     }
 
     /**
@@ -90,6 +96,17 @@ public class GameInfo {
         return currentIterations;
     }
 
+    public void saveToJson() {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.setVisibility(PropertyAccessor.GETTER, Visibility.NONE);
+        mapper.setVisibility(PropertyAccessor.IS_GETTER, Visibility.NONE);
+
+        try {
+            mapper.writeValue(new File("data\\" + uuid.toString() + ".json"), this);
+        } catch(IOException ex) {
+            ex.printStackTrace();
+        }
+    }
     
     private void generateNewWord() {
         // get a new random word from a text file (in resources)
@@ -125,5 +142,9 @@ public class GameInfo {
         return secondsPerRound;
     }
 
+    @Override
+    public String toString() {
+        return "GameInfo: maxIterations: " + maxIterations + ", secondsperround: " + secondsPerRound + "newWordEachRound: " + newWordEachRound;
+    }
 
 }
