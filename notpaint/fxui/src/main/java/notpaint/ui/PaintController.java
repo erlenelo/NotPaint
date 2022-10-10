@@ -14,6 +14,7 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.SnapshotResult;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
@@ -40,6 +41,9 @@ public class PaintController {
 
     @FXML
     Canvas drawingCanvas;
+
+    @FXML
+    ColorPicker colorPicker;
 
     PaintSettings settings;
 
@@ -73,6 +77,8 @@ public class PaintController {
 
         // Init file chooser settings. TODO: Remove when moving to REST API
         persistence = new LocalPersistence();
+        
+        colorPicker.setValue(Color.BLACK);
 
         chooser = new FileChooser();
         chooser.getExtensionFilters().add(new ExtensionFilter("PNG Image", "*.png"));
@@ -115,6 +121,12 @@ public class PaintController {
     private void clearCanvas() {
         drawingCanvas.getGraphicsContext2D().clearRect(0, 0, drawingCanvas.getWidth(), drawingCanvas.getHeight());
         initialize();
+    }
+
+
+    @FXML
+    private void updatePaintColor() {
+        settings.setColor(colorPicker.getValue());
     }
 
     @FXML

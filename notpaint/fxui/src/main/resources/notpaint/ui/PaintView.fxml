@@ -52,7 +52,7 @@
                <font>
                   <Font size="14.0" />
                </font></Button>
-            <ColorPicker layoutX="655.0" layoutY="143.0" />
+            <ColorPicker fx:id="colorPicker" onAction="#updatePaintColor" layoutX="655.0" layoutY="143.0" />
             <Text layoutX="706.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timer:" />
             <TextField id="countDown" layoutX="638.0" layoutY="71.0" />      
          </children>
