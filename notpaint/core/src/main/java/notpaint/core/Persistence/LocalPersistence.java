@@ -15,8 +15,8 @@ public class LocalPersistence extends Persistence {
         // TODO Auto-generated method stub
         File output = new File(imagePath);
         BufferedImage bufferedImage = javaFXImageToBufferedImage(image);
-        
-        ImageIO.write(bufferedImage, "png", output);               
+
+        ImageIO.write(bufferedImage, "png", output);
     }
 
     @Override
@@ -28,15 +28,16 @@ public class LocalPersistence extends Persistence {
     }
 
     private BufferedImage javaFXImageToBufferedImage(Image image) {
-		BufferedImage img = new BufferedImage((int)image.getWidth(), (int)image.getHeight(), BufferedImage.TYPE_3BYTE_BGR);
-		PixelReader fxImageReader =  image.getPixelReader();
-		for(int y = 0; y < img.getHeight(); y++) {
-			for(int x = 0; x < img.getWidth(); x++) {
-				int color = fxImageReader.getArgb(x, y);
-				img.setRGB(x, y, color);
-			}
-		}
-		return img;
-	}
-    
+        BufferedImage img = new BufferedImage((int) image.getWidth(), (int) image.getHeight(),
+                BufferedImage.TYPE_3BYTE_BGR);
+        PixelReader fxImageReader = image.getPixelReader();
+        for (int y = 0; y < img.getHeight(); y++) {
+            for (int x = 0; x < img.getWidth(); x++) {
+                int color = fxImageReader.getArgb(x, y);
+                img.setRGB(x, y, color);
+            }
+        }
+        return img;
+    }
+
 }

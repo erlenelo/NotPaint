@@ -14,8 +14,8 @@ public class SquareBrush extends Brush {
     @Override
     public Stream<Pair<Integer, Integer>> GetPixels(Canvas canvas, int x, int y) {
         // Return a stream of all pixels in a square around (x, y)
-        return IntStream.range(y- Size, y + Size).boxed()
-            .flatMap(y_coord -> IntStream.range(x - Size, x + Size)
+        return IntStream.range(y- size, y + size).boxed()
+            .flatMap(y_coord -> IntStream.range(x - size, x + size)
             .mapToObj(x_coord -> new Pair<Integer, Integer>(x_coord, y_coord)));
     }
 }
