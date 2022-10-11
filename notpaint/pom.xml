@@ -94,7 +94,7 @@
                 <!-- Default configuration for running -->
                 <!-- Usage: mvn javafx:run -->
                 <configuration>
-                    <mainClass>notpaint.ui.App</mainClass>
+                    <mainClass>notpaint.ui/notpaint.ui.App</mainClass>
                 </configuration>
             </plugin>
 

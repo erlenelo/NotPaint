@@ -1,8 +1,9 @@
 package notpaint.core.Persistence;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,19 +12,21 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import notpaint.core.GameInfo;
-    
+
 public class GameInfoPersistence {
     
-    private String dataPath = "data";
+    private Path dataPath;
 
     private GameInfo activeGameInfo;
 
 
-    public GameInfoPersistence(String dataPath) {
+    public GameInfoPersistence(Path dataPath) {
         this.dataPath = dataPath;
     }
 
-    public GameInfoPersistence() {}
+    public GameInfoPersistence() {
+        this.dataPath = Paths.get("data");
+    }
 
     /**
      * Get a list of all GameInfo classes stored as json in the dataPath
@@ -31,25 +34,29 @@ public class GameInfoPersistence {
      * @throws IOException
      */
     public List<GameInfo> getAllGameInfos() throws IOException {
-        File file = new File(dataPath);
+        //File file = new File(dataPath);
         // If the file doesnt exist, create a directory at the path.
-        if(!file.exists())
-            if(!file.mkdirs())
-                throw new IOException("Failed to make directory at: " + dataPath);
-
-        var allFiles = file.listFiles();
-        if(allFiles == null) // listFiles() returns null if the file does not denote a directory
-            throw new IllegalStateException("dataPath not set to a directory");
+        
+        if(!Files.exists(dataPath))
+            Files.createDirectories(dataPath);
 
         ArrayList<GameInfo> gameInfoList = new ArrayList<>();
-        for(var gameInfoJson : allFiles) {
-            // Skip non-json files
-            if(gameInfoJson.toString().endsWith(".json") == false) 
-                continue; 
 
-            String jsonString = Files.readString(gameInfoJson.toPath());
-            gameInfoList.add(parseFromJson(jsonString));            
+        try (var allFilesStream = Files.list(dataPath)) {
+            List<Path> allFiles = allFilesStream.toList();
+            for(Path gameInfoPath : allFiles) {
+                // Skip non-json files
+                if(gameInfoPath.toString().endsWith(".json") == false) 
+                    continue; 
+
+                String jsonString = Files.readString(gameInfoPath);
+                gameInfoList.add(parseFromJson(jsonString));            
+            }
         }
+        
+
+        
+       
 
         return gameInfoList;
     }
@@ -75,8 +82,12 @@ public class GameInfoPersistence {
         mapper.setVisibility(PropertyAccessor.GETTER, Visibility.NONE);
         mapper.setVisibility(PropertyAccessor.IS_GETTER, Visibility.NONE);
         
-        
-        mapper.writeValue(new File(dataPath + "\\" + gameInfo.getUuid().toString() + ".json"), gameInfo);        
+        // If the data folder doesn't exist, create it
+        if(!Files.exists(dataPath))
+            Files.createDirectories(dataPath);
+
+        // Serialize and write to json file
+        mapper.writeValue(Paths.get(dataPath.toString(), gameInfo.getUuid().toString() + ".json").toFile(), gameInfo);        
     }
 
     /**

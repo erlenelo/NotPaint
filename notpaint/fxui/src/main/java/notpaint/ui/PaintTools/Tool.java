@@ -11,5 +11,5 @@ public abstract class Tool {
         this.settings = settings;
     }
 
-    public abstract void Paint(Canvas canvas, int x, int y);
+    public abstract void paint(Canvas canvas, int x, int y);
 }

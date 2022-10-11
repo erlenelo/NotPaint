@@ -54,9 +54,9 @@ public class PaintController {
 
     PaintSettings settings;
 
-    Tool selectedTool;
+    private Tool selectedTool;
 
-    private Persistence persistence;
+   
     private FileChooser chooser;
     private GameInfoPersistence gameInfoPersistence;
     private GameInfo gameInfo;
@@ -90,7 +90,7 @@ public class PaintController {
         squareBig.setOnMouseClicked(e -> setSquareBrush(17));
 
         // Init file chooser settings. TODO: Remove when moving to REST API
-        persistence = new LocalPersistence();
+        //persistence = new LocalPersistence();
         
         colorPicker.setValue(Color.BLACK);
 
@@ -176,7 +176,7 @@ public class PaintController {
 
     @FXML
     private void handleCavasClick(MouseEvent event) {
-        selectedTool.Paint(drawingCanvas, (int) event.getX(), (int) event.getY());
+        selectedTool.paint(drawingCanvas, (int) event.getX(), (int) event.getY());
     }
 
     @FXML

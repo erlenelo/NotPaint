@@ -11,7 +11,7 @@ public class PenTool extends Tool {
     }
 
     @Override
-    public void Paint(Canvas canvas, int x, int y) {
+    public void paint(Canvas canvas, int x, int y) {
         var pixels = settings.getBrush().getPixels(canvas, x, y);
         var pixelWriter = canvas.getGraphicsContext2D().getPixelWriter();
         pixels.forEach(pair -> {
