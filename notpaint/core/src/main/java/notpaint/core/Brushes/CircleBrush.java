@@ -13,8 +13,8 @@ public class CircleBrush extends SquareBrush {
 
     @Override
     public Stream<Pair<Integer, Integer>> GetPixels(Canvas canvas, int x, int y) {
-        // Same as squarebrush, except filter out the pixels more than Size distance away from (x, y)
+        // Same as squarebrush, except filter out the pixels more than size distance away from (x, y)
         return super.GetPixels(canvas, x, y)
-            .filter(pair -> (y-pair.getValue())*(y-pair.getValue()) + (x-pair.getKey())*(x-pair.getKey()) < Size*Size);        
+            .filter(pair -> (y-pair.getValue())*(y-pair.getValue()) + (x-pair.getKey())*(x-pair.getKey()) < size*size);        
     }
 }

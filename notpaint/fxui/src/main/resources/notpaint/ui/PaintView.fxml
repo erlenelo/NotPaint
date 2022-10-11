@@ -53,7 +53,8 @@
                <font>
                   <Font size="14.0" />
                </font></Button>
-            <ColorPicker layoutX="655.0" layoutY="143.0" />
+
+            <ColorPicker fx:id="colorPicker" onAction="#updatePaintColor" layoutX="655.0" layoutY="143.0" />
             <Text fx:id="wordToDrawText" boundsType="VISUAL" layoutX="619.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="196.2109375">
                <font>
                   <Font size="20.0" />

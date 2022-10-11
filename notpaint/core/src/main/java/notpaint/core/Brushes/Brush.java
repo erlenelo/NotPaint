@@ -7,11 +7,11 @@ import javafx.util.Pair;
 
 public abstract class Brush {
 
-    public Brush(int Size) {
-        this.Size = Size;
+    public Brush(int size) {
+        this.size = size;
     }
 
-    public int Size = 1;
+    public int size = 1;
 
     public abstract Stream<Pair<Integer, Integer>> GetPixels(Canvas canvas, int x, int y);
 }
