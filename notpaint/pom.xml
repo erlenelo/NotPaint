@@ -113,7 +113,8 @@
             </executions>
             <version>4.7.2.0</version>
             <configuration>
-                <xmlOutput>true</xmlOutput>
+                <excludeFilterFile>spotbugs-exclude.xml</excludeFilterFile>
+                <xmlOutput>true</xmlOutput>                
             </configuration>
         </plugin>
 
