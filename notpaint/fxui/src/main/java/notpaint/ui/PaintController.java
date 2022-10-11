@@ -194,8 +194,10 @@ public class PaintController {
         drawingCanvas.getGraphicsContext2D().clearRect(0, 0, drawingCanvas.getWidth(), drawingCanvas.getHeight());
         initialize();
     }
-
-<<<<<<< notpaint/fxui/src/main/java/notpaint/ui/PaintController.java
+    @FXML
+    private void updatePaintColor() {
+        settings.setColor(colorPicker.getValue());
+    }
     // @FXML
     // private void save() {
     //     File file = chooser.showSaveDialog(null);
@@ -230,47 +232,5 @@ public class PaintController {
     //     Image loadedImage = persistence.Load(file.toURI().toString());
     //     drawingCanvas.getGraphicsContext2D().drawImage(loadedImage, 0, 0);
     // }
-=======
-
-    @FXML
-    private void updatePaintColor() {
-        settings.setColor(colorPicker.getValue());
-    }
-
-    @FXML
-    private void save() {
-        File file = chooser.showSaveDialog(null);
-        if (file == null)
-            return;
-
-        WritableImage image = new WritableImage((int) drawingCanvas.getWidth(), (int) drawingCanvas.getHeight());
-        drawingCanvas.snapshot(new Callback<SnapshotResult, Void>() {
-            @Override
-            public Void call(SnapshotResult arg0) {
-                System.out.println("Saving to path: " + file.toString());
-                try {
-                    persistence.Save(image, file.toString());
-                } catch (IOException e) {
-                    Alert error = new Alert(AlertType.ERROR);
-                    error.setTitle("Failed to save image!");
-                    error.setContentText(e.getMessage());
-                    error.showAndWait();
-                }
-                return null;
-            }
-        }, new SnapshotParameters(), image);
-    }
-
-    @FXML
-    private void load() {
-        File file = chooser.showOpenDialog(null);
-        if (file == null)
-            return;
-
-        System.out.println("Loading image at path: " + file.toURI().toString());
-        Image loadedImage = persistence.Load(file.toURI().toString());
-        drawingCanvas.getGraphicsContext2D().drawImage(loadedImage, 0, 0);
-    }
->>>>>>> notpaint/fxui/src/main/java/notpaint/ui/PaintController.java
 
 }
