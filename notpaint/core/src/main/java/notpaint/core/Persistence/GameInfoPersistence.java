@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import notpaint.core.GameInfo;
-
+    
 public class GameInfoPersistence {
     
     private String dataPath = "data";
@@ -32,20 +32,20 @@ public class GameInfoPersistence {
      */
     public List<GameInfo> getAllGameInfos() throws IOException {
         File file = new File(dataPath);
+        // If the file doesnt exist, create a directory at the path.
         if(!file.exists())
-            file.mkdirs();
+            if(!file.mkdirs())
+                throw new IOException("Failed to make directory at: " + dataPath);
 
-        if(!file.isDirectory())
-            throw new IllegalStateException("dataPath not set to a directory");
-        
         var allFiles = file.listFiles();
+        if(allFiles == null) // listFiles() returns null if the file does not denote a directory
+            throw new IllegalStateException("dataPath not set to a directory");
 
         ArrayList<GameInfo> gameInfoList = new ArrayList<>();
-
         for(var gameInfoJson : allFiles) {
-            if(gameInfoJson.toString().endsWith(".json") == false) {
-                continue;
-            }
+            // Skip non-json files
+            if(gameInfoJson.toString().endsWith(".json") == false) 
+                continue; 
 
             String jsonString = Files.readString(gameInfoJson.toPath());
             gameInfoList.add(parseFromJson(jsonString));            

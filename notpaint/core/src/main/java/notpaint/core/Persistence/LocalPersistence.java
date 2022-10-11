@@ -11,7 +11,7 @@ import javafx.scene.image.PixelReader;
 public class LocalPersistence extends Persistence {
 
     @Override
-    public void Save(Image image, String imagePath) throws IOException {
+    public void save(Image image, String imagePath) throws IOException {
         // TODO Auto-generated method stub
         File output = new File(imagePath);
         BufferedImage bufferedImage = javaFXImageToBufferedImage(image);
@@ -20,7 +20,7 @@ public class LocalPersistence extends Persistence {
     }
 
     @Override
-    public Image Load(String imagePath) {
+    public Image load(String imagePath) {
         // TODO Auto-generated method stub
         File file = new File(imagePath);
         Image image = new Image(file.toString());
