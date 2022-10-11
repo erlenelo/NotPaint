@@ -54,6 +54,7 @@ public class PaintController {
 
     private Persistence persistence;
     private FileChooser chooser;
+    private GameInfoPersistence gameInfoPersistence;
     private GameInfo gameInfo;
     private Integer countDownSecondsLeft;
     private Timer countDownTimer;
@@ -96,9 +97,15 @@ public class PaintController {
         drawingCanvas.sceneProperty().addListener((observableScene, oldScene, newScene) -> {
             if(newScene != null) {
                 Stage stage = (Stage)newScene.getWindow();
-                gameInfo = (GameInfo)stage.getUserData();
+                gameInfoPersistence = (GameInfoPersistence)stage.getUserData();
+                if(gameInfoPersistence == null)
+                    throw new IllegalStateException("Stage has no gameInfoPersistence set");
+
+                gameInfo = gameInfoPersistence.getActiveGameInfo();
+
                 if(gameInfo == null) 
                     throw new IllegalArgumentException("Loaded PaintController but gameInfo was not set in stage");
+
                 System.out.println("GameInfo loaded: " + gameInfo.toString());
 
                 wordToDrawText.setText(gameInfo.getWord());
@@ -125,21 +132,19 @@ public class PaintController {
     }
     @FXML
     private void finishDrawing()  {
-        System.out.println("FINISHDRAWING");
         if(countDownTimer != null)
             countDownTimer.cancel();
             
         gameInfo.addIteration("UnknownEditor");
         //TODO: Save gameinfo and image to json and png respectively
 
-        gameInfo.saveToJson();
-
         try {
+            gameInfoPersistence.saveGameInfo(gameInfo);  
             App.setRoot("secondary");
         } catch(IOException ex) {
             ex.printStackTrace();
             Alert alert = new Alert(AlertType.ERROR);
-            alert.setContentText("Error finishing drawing.");
+            alert.setContentText("Error occured while saving drawing.");
             alert.setHeaderText("ERROR");
             alert.show();
         }

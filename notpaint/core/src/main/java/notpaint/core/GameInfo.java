@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.annotation.JsonAppend.Prop;
+import com.fasterxml.jackson.databind.deser.std.UUIDDeserializer;
 
 /**
  * One instance of the GameInfo class represents a Game (either ongoing or finished)
@@ -96,16 +97,10 @@ public class GameInfo {
         return currentIterations;
     }
 
-    public void saveToJson() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.setVisibility(PropertyAccessor.GETTER, Visibility.NONE);
-        mapper.setVisibility(PropertyAccessor.IS_GETTER, Visibility.NONE);
+    
 
-        try {
-            mapper.writeValue(new File("data\\" + uuid.toString() + ".json"), this);
-        } catch(IOException ex) {
-            ex.printStackTrace();
-        }
+    public UUID getUuid() {
+        return uuid;
     }
     
     private void generateNewWord() {

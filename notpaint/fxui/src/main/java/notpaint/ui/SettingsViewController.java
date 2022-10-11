@@ -15,6 +15,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextFormatter.Change;
 import javafx.stage.Stage;
 import notpaint.core.GameInfo;
+import notpaint.core.Persistence.GameInfoPersistence;
 
 public class SettingsViewController {
 
@@ -69,7 +70,8 @@ public class SettingsViewController {
         
         try {
             stage.close();
-            stage.setUserData(newGameInfo);
+            GameInfoPersistence gameInfoPersistence = (GameInfoPersistence)stage.getUserData();
+            gameInfoPersistence.setActiveGameInfo(newGameInfo);
             App.setRoot("PaintView");            
             stage.show();
         } catch(IOException IOException) {
