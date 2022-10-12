@@ -1,9 +1,9 @@
 package notpaint.ui;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
+
 
 import notpaint.core.Brushes.CircleBrush;
 import notpaint.core.Brushes.SquareBrush;
@@ -19,7 +19,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -30,7 +29,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Callback;
-import notpaint.core.Persistence.*;
+import notpaint.core.Persistence.GameInfoPersistence;
+import notpaint.ui.Persistence.*;
 
 /**
  * Controller for the view that handles the painting.
@@ -59,13 +59,14 @@ public class PaintController {
    
     private FileChooser chooser;
     private GameInfoPersistence gameInfoPersistence;
+    private ImagePersistence imagePersistence;
     private GameInfo gameInfo;
     private Integer countDownSecondsLeft;
     private Timer countDownTimer;
 
     @FXML
     private void switchToSecondary() throws IOException {
-        App.setRoot("secondary");
+        App.setRoot("GameSelectView");
     }
 
     @FXML
@@ -90,7 +91,7 @@ public class PaintController {
         squareBig.setOnMouseClicked(e -> setSquareBrush(17));
 
         // Init file chooser settings. TODO: Remove when moving to REST API
-        //persistence = new LocalPersistence();
+        imagePersistence = new LocalImagePersistence();
         
         colorPicker.setValue(Color.BLACK);
 
@@ -143,10 +144,11 @@ public class PaintController {
             
         gameInfo.addIteration("UnknownEditor");
         //TODO: Save gameinfo and image to json and png respectively
+        saveImageToPath(gameInfo.getImagePath());
 
         try {
             gameInfoPersistence.saveGameInfo(gameInfo);  
-            App.setRoot("secondary");
+            App.setRoot("GameSelectView");
         } catch(IOException ex) {
             ex.printStackTrace();
             Alert alert = new Alert(AlertType.ERROR);
@@ -155,7 +157,19 @@ public class PaintController {
             alert.show();
         }
     }
-
+    void saveImageToPath(String path) {
+        WritableImage image = new WritableImage((int) drawingCanvas.getWidth(), (int) drawingCanvas.getHeight());
+        image = drawingCanvas.snapshot(new SnapshotParameters(), image);    
+        System.out.println("Saving to path: " + path);
+        try {
+            imagePersistence.save(image, path);
+        } catch (IOException e) {
+            Alert error = new Alert(AlertType.ERROR);
+            error.setTitle("Failed to save image!");
+            error.setContentText(e.getMessage());
+            error.showAndWait();
+        }
+    }
     /**
      * Set the brush to be a circle
      * 
