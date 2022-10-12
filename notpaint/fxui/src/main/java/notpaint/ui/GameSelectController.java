@@ -125,6 +125,6 @@ public class GameSelectController {
     @FXML
     private void handleJoinProject() throws IOException {
         gameInfoPersistence.setActiveGameInfo(selectedGameInfo);
-        App.setRoot("PaintView.fxml");
+        App.setRoot("PaintView");
     }
 }
