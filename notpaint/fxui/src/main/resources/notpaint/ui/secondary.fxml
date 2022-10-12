@@ -45,7 +45,7 @@
       </TabPane>
       <Label id="Author" layoutX="646.0" layoutY="91.0" prefHeight="30.0" prefWidth="140.0" text="Author" />
       <Label layoutX="646.0" layoutY="160.0" prefHeight="30.0" prefWidth="140.0" text="Iterations" />
-      <TextField id="authorTextField" layoutX="636.0" layoutY="121.0" />
+      <TextField fx:id="authorTextField" layoutX="636.0" layoutY="121.0" />
       <TextField id="iterationsTextField" layoutX="636.0" layoutY="190.0" />
       </children>
 </AnchorPane>
