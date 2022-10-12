@@ -1,19 +1,15 @@
 package notpaint.core;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
-
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.annotation.JsonAppend.Prop;
-import com.fasterxml.jackson.databind.deser.std.UUIDDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 
 /**
  * One instance of the GameInfo class represents a Game (either ongoing or
@@ -21,21 +17,23 @@ import com.fasterxml.jackson.databind.deser.std.UUIDDeserializer;
  */
 public class GameInfo {
 
-    @JsonSerialize
+    @JsonSerialize @JsonDeserialize
     private int maxIterations;
-    @JsonSerialize
+    @JsonSerialize @JsonDeserialize
     private int secondsPerRound;
-    @JsonSerialize
+    @JsonSerialize @JsonDeserialize
     private boolean newWordEachRound;
 
-    @JsonSerialize
+    @JsonSerialize @JsonDeserialize
     private int currentIterations;
-    @JsonSerialize
+    @JsonSerialize @JsonDeserialize
     private List<String> words;
-    @JsonSerialize
+    @JsonSerialize @JsonDeserialize
     private String lastEditor; // person who last edited
+    @JsonSerialize @JsonDeserialize
+    private Date lastEditTime; 
 
-    @JsonSerialize
+    @JsonSerialize @JsonDeserialize
     private UUID uuid;
 
     private static final Random random = new Random();
@@ -61,11 +59,13 @@ public class GameInfo {
         this.secondsPerRound = secondsPerRound;
         this.newWordEachRound = newWordEachRound;
         this.lastEditor = "N/A";
+        this.lastEditTime = new Date();
 
         generateNewWord();
 
         uuid = UUID.randomUUID();
     }
+    protected GameInfo() {}
 
     /**
      * Add a new iteration to the Game. Generates a new word if newWordEachRound was
@@ -76,7 +76,7 @@ public class GameInfo {
      */
     public void addIteration(String editor) { // last editor + counter
         this.lastEditor = editor;
-
+        this.lastEditTime = new Date();
         increaseCurrentIterations();
 
         if (!isFinished()) {
@@ -93,7 +93,7 @@ public class GameInfo {
     public String getImagePath() {
         // TODO: Determine location where this will be saved. For now will be saved
         // relative to where program is running from
-        return "data/" + uuid.toString() + ".png";
+        return "file:data/" + uuid.toString() + ".png";
     }
 
     /**
@@ -117,6 +117,10 @@ public class GameInfo {
 
     public UUID getUuid() {
         return uuid;
+    }
+
+    public Date getLastEditTime() {
+        return new Date(lastEditTime.getTime());
     }
 
     private void generateNewWord() {
