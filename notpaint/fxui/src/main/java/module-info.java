@@ -4,6 +4,6 @@ module notpaint.ui {
     requires java.desktop;
 
     requires notpaint.core;
-
-    opens notpaint.ui to javafx.fxml, javafx.graphics;
+    
+    opens notpaint.ui to javafx.fxml, javafx.graphics, javafx.base;
 }
