@@ -73,10 +73,9 @@ public class GameInfoPersistence {
 
     /**
      * Save a gameInfo to datapath. Its name will be its uuid + .json
-     * @param gameInfo The gameInfo to save
      * @throws IOException 
      */
-    public void saveGameInfo(GameInfo gameInfo) throws IOException {
+    public void saveGameInfo() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         // Stop mapper from considering getXxx() and isXxx() methods for serialization
         mapper.setVisibility(PropertyAccessor.GETTER, Visibility.NONE);
