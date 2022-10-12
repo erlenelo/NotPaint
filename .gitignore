@@ -1,2 +1,4 @@
 target/
-.vscode/
+.vscode
+.DS_Store
+.vscode/settings.json
