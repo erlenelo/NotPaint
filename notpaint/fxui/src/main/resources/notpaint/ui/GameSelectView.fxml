@@ -12,8 +12,8 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="notpaint.ui.GameSelectController">
       <children>
-               <Button fx:id="secondaryButton" layoutX="646.0" layoutY="433.0" onAction="#handleNewProject" prefHeight="40.0" prefWidth="140.0" text="New Project" />
-               <Button fx:id="secondaryButton1" layoutX="646.0" layoutY="382.0" onAction="#handleJoinProject" prefHeight="40.0" prefWidth="140.0" text="Join Project" />
+               <Button fx:id="joinProjectButton" layoutX="646.0" layoutY="433.0" onAction="#handleNewProject" prefHeight="40.0" prefWidth="140.0" text="New Project" />
+               <Button fx:id="createProjectButton" layoutX="646.0" layoutY="382.0" onAction="#handleJoinProject" prefHeight="40.0" prefWidth="140.0" text="Join Project" />
       <TabPane prefHeight="500.0" prefWidth="633.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Active Projects">
@@ -55,9 +55,9 @@
       <Label layoutX="646.0" layoutY="95.0" prefHeight="30.0" prefWidth="140.0" text="Iterations" />
       <Text fx:id="secondsPerRound" layoutX="646.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="103.21630859375" />
       <Text fx:id="iterations" layoutX="646.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="103.21630859375" />
-      <Label id="Author" fx:id="lastEditor" layoutX="646.0" layoutY="155.0" prefHeight="30.0" prefWidth="140.0" text="Last editor" />
+      <Label id="Author" layoutX="646.0" layoutY="155.0" prefHeight="30.0" prefWidth="140.0" text="Last editor" />
       <Text fx:id="lastEdit" layoutX="646.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="103.21630859375" />
       <Label layoutX="646.0" layoutY="220.0" prefHeight="30.0" prefWidth="140.0" text="Last edit" />
-      <Text fx:id="lasteditor" layoutX="646.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="103.21630859375" />
+      <Text fx:id="lastEditor" layoutX="646.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="103.21630859375" />
       </children>
 </AnchorPane>

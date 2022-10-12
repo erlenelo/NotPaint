@@ -115,6 +115,10 @@ public class GameInfo {
         return currentIterations;
     }
 
+    public int getMaxIterations() {
+        return maxIterations;
+    }
+
     public UUID getUuid() {
         return uuid;
     }
