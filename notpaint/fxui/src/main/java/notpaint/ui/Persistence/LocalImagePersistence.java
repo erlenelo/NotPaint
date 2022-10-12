@@ -24,10 +24,7 @@ public class LocalImagePersistence extends ImagePersistence {
 
     @Override
     public Image load(String imagePath) {
-        if(imagePath.startsWith("file:"))
-            imagePath = imagePath.substring(5); // Remove first 5 characters
-        File file = new File(imagePath);
-        Image image = new Image(file.toString());
+        Image image = new Image(imagePath);
         return image;
     }
 
