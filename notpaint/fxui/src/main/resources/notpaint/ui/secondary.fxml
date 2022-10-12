@@ -5,11 +5,12 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="notpaint.ui.SecondaryController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="notpaint.ui.SecondaryController">
       <children>
               <Button fx:id="secondaryButton" layoutX="646.0" layoutY="433.0" onAction="#switchToPrimary" prefHeight="40.0" prefWidth="140.0" text="New Project" />
       <Button fx:id="secondaryButton1" layoutX="646.0" layoutY="382.0" onAction="#switchToPrimary" prefHeight="40.0" prefWidth="140.0" text="Join Project" />
@@ -21,7 +22,11 @@
                      <children>
                         <ScrollPane hbarPolicy="NEVER" prefHeight="469.0" prefWidth="633.0">
                            <content>
-                              <ImageView id="imageTest" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                              <TilePane fx:id="activeTilePane" prefHeight="467.0" prefWidth="631.0">
+                                 <children>
+                                    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                                 </children>
+                              </TilePane>
                            </content>
                         </ScrollPane>
                      </children>
@@ -33,19 +38,24 @@
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <ScrollPane hbarPolicy="NEVER" prefHeight="469.0" prefWidth="633.0">
-                          <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-                          </content>
-                        </ScrollPane>
+                           <content>
+                              <TilePane fx:id="completedTilePane" prefHeight="464.0" prefWidth="631.0">
+                                 <children>
+                                    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                                 </children>
+                              </TilePane>
+                           </content></ScrollPane>
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
         </tabs>
       </TabPane>
-      <Label id="Author" layoutX="646.0" layoutY="91.0" prefHeight="30.0" prefWidth="140.0" text="Author" />
+      <Label id="Author" fx:id="secondsToDraw" layoutX="646.0" layoutY="91.0" prefHeight="30.0" prefWidth="140.0" text="Seconds to draw" />
       <Label layoutX="646.0" layoutY="160.0" prefHeight="30.0" prefWidth="140.0" text="Iterations" />
-      <TextField id="authorTextField" layoutX="636.0" layoutY="121.0" />
-      <TextField id="iterationsTextField" layoutX="636.0" layoutY="190.0" />
+      <Text fx:id="secondsPerRound" layoutX="646.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="103.21630859375" />
+      <Text fx:id="iterations" layoutX="646.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="103.21630859375" />
+      <Label id="Author" fx:id="lastEditor" layoutX="646.0" layoutY="227.0" prefHeight="30.0" prefWidth="140.0" text="Last editor" />
+      <Text fx:id="author" layoutX="646.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="103.21630859375" />
       </children>
 </AnchorPane>
