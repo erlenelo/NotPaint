@@ -16,4 +16,8 @@
     <Class name="notpaint.ui.PaintTools.Tool" />
     <Bug code="EI2" />
 </Match>
+<Match>
+    <Class name="notpaint.ui.GameSelectController" />
+    <Bug code="UrF" />
+</Match>
 </FindBugsFilter>
