@@ -2,10 +2,18 @@ package notpaint.core;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.annotation.JsonAppend.Prop;
+import com.fasterxml.jackson.databind.deser.std.UUIDDeserializer;
 
 /**
  * One instance of the GameInfo class represents a Game (either ongoing or
@@ -13,17 +21,24 @@ import java.util.UUID;
  */
 public class GameInfo {
 
+    @JsonSerialize
     private int maxIterations;
+    @JsonSerialize
     private int secondsPerRound;
+    @JsonSerialize
     private boolean newWordEachRound;
 
+    @JsonSerialize
     private int currentIterations;
+    @JsonSerialize
     private List<String> words;
+    @JsonSerialize
     private String lastEditor; // person who last edited
 
+    @JsonSerialize
     private UUID uuid;
 
-    private static Random random;
+    private static final Random random = new Random();
 
     /**
      * 
@@ -78,7 +93,7 @@ public class GameInfo {
     public String getImagePath() {
         // TODO: Determine location where this will be saved. For now will be saved
         // relative to where program is running from
-        return uuid.toString() + ".png";
+        return "data/" + uuid.toString() + ".png";
     }
 
     /**
@@ -100,22 +115,23 @@ public class GameInfo {
         return currentIterations;
     }
 
+    public UUID getUuid() {
+        return uuid;
+    }
+
     private void generateNewWord() {
         // get a new random word from a text file (in resources)
         String wordListString = null;
-        try {
-            wordListString = new String(getClass().getClassLoader().getResourceAsStream("words.txt").readAllBytes());
+        try(var inputStream = getClass().getResourceAsStream("words.txt")) {
+            wordListString = new String(inputStream.readAllBytes(), Charset.forName("UTF-8"));
+    
+            var wordListArray = wordListString.split("\\r?\\n|\\r");
+            int randomIndex = random.nextInt(wordListArray.length);
+            // Add the word to the list of words
+            words.add(wordListArray[randomIndex]);
         } catch (IOException exception) {
             exception.printStackTrace();
         }
-        var wordListArray = wordListString.split("\\r?\\n|\\r");
-
-        if (random == null)
-            random = new Random();
-        int randomIndex = random.nextInt(wordListArray.length);
-
-        // Add the word to the list of words
-        words.add(wordListArray[randomIndex]);
 
     }
 
@@ -134,6 +150,12 @@ public class GameInfo {
 
     public int getSecondsPerRound() {
         return secondsPerRound;
+    }
+
+    @Override
+    public String toString() {
+        return "GameInfo: maxIterations: " + maxIterations + ", secondsperround: " + secondsPerRound
+                + "newWordEachRound: " + newWordEachRound;
     }
 
 }

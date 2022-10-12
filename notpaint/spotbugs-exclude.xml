@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+<Match>
+   <Class name="notpaint.core.Persistence.GameInfoPersistence" />
+   <Bug code="EI,EI2" />
+</Match>
+<Match>
+    <Class name="notpaint.ui.App" />
+    <Bug code="ST" />
+</Match>
+<Match>
+    <Class name="notpaint.ui.PaintController" />
+    <Bug code="UrF" />
+</Match>
+<Match>
+    <Class name="notpaint.ui.PaintTools.Tool" />
+    <Bug code="EI2" />
+</Match>
+</FindBugsFilter>
