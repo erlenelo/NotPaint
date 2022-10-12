@@ -2,3 +2,5 @@ target/
 .vscode
 .DS_Store
 .vscode/settings.json
+.vscode/
+notpaint/fxui/data/
