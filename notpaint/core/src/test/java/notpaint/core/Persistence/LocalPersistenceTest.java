@@ -4,14 +4,12 @@ import org.junit.jupiter.api.Test;
 
 public class LocalPersistenceTest {
     @Test
-    void testLoad() {
-        
-
+    public void testLoad() {
 
     }
 
     @Test
-    void testSave() {
+    public void testSave() {
 
     }
 }
