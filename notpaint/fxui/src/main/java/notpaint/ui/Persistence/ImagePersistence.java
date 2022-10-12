@@ -1,10 +1,10 @@
-package notpaint.core.Persistence;
+package notpaint.ui.Persistence;
 
 import java.io.IOException;
 
 import javafx.scene.image.Image;
 
-public abstract class Persistence {
+public abstract class ImagePersistence {
 
     public abstract void save(Image image, String imageName) throws IOException;
 
