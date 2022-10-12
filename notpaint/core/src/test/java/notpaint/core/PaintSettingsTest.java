@@ -4,22 +4,22 @@ import org.junit.jupiter.api.Test;
 
 public class PaintSettingsTest {
     @Test
-    void testGetBrush() {
+    public void testGetBrush() {
 
     }
 
     @Test
-    void testGetColor() {
+    public void testGetColor() {
 
     }
 
     @Test
-    void testSetBrush() {
+    public void testSetBrush() {
 
     }
 
     @Test
-    void testSetColor() {
+    public void testSetColor() {
 
     }
 }

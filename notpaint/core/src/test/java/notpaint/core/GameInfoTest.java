@@ -4,17 +4,17 @@ import org.junit.jupiter.api.Test;
 
 public class GameInfoTest {
     @Test
-    void testAddIteration() {
+    public void testAddIteration() {
 
     }
 
     @Test
-    void testGetCurrentIterations() {
+    public void testGetCurrentIterations() {
 
     }
 
     @Test
-    void testGetImagePath(){
+    public void testGetImagePath(){
 
     
 
@@ -22,22 +22,22 @@ public class GameInfoTest {
     }
 
     @Test
-    void testGetLastEditor() {
+    public void testGetLastEditor() {
 
     }
 
     @Test
-    void testGetSecondsPerRound() {
+    public void testGetSecondsPerRound() {
 
     }
 
     @Test
-    void testGetWord() {
+    public void testGetWord() {
 
     }
 
     @Test
-    void testIsFinished() {
+    public void testIsFinished() {
 
     }
 }
