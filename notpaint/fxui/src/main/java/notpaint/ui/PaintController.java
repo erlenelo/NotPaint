@@ -163,10 +163,10 @@ public class PaintController {
             App.setRoot("GameSelectView");
         } catch(IOException ex) {
             ex.printStackTrace();
-            AlertUtil.ErrorAlert("ERROR", "Error occured while saving drawing.");
+            AlertUtil.errorAlert("ERROR", "Error occured while saving drawing.");
         }
     }
-    private void saveImageToPath(String path) {
+    void saveImageToPath(String path) {
         WritableImage image = new WritableImage((int) drawingCanvas.getWidth(), (int) drawingCanvas.getHeight());
         image = drawingCanvas.snapshot(new SnapshotParameters(), image);    
         System.out.println("Saving to path: " + path);
@@ -174,7 +174,7 @@ public class PaintController {
             imagePersistence.save(image, path);
         } catch (IOException ex) {
             ex.printStackTrace();
-            AlertUtil.ErrorAlert("ERROR","Failed to save image!");
+            AlertUtil.errorAlert("ERROR","Failed to save image!");
         }
     }
 
@@ -218,6 +218,7 @@ public class PaintController {
 
     @FXML
     private void resetCanvas() {
+        drawingCanvas.getGraphicsContext2D().clearRect(0, 0, drawingCanvas.getWidth(), drawingCanvas.getHeight());
         loadImage(gameInfo.getImagePath());
     }
     @FXML
