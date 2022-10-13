@@ -67,9 +67,11 @@ public class GameSelectController {
                 // If it is null, listen for the property to update an then set it
                 if (stage == null) {
                     newScene.windowProperty().addListener((observableWindow, oldWindow, newWindow) -> {
+
                         // Create a persistence instance and set it as the user data for the stage.
                         // This makes it accessible from all other scenes.
-                        onStageLoaded((Stage) newWindow);
+                        if (newWindow != null)
+                            onStageLoaded((Stage) newWindow);
                     });
                 } else {
                     onStageLoaded((Stage) stage);

@@ -59,7 +59,7 @@ public class PaintControllerTest extends ApplicationTest {
     @Test
     public void testDone() {
         clickOn("#doneButton");
-        assertNotNull(findSceneRootWithId("paintViewRoot"));
+        assertNotNull(findSceneRootWithId("paintRoot"));
         boolean jsonExists = Files.exists(Paths.get(dataPath.toString(), gameInfo.getUuid().toString() + ".json"));
         assertTrue(jsonExists);
         boolean imageExists = Files.exists(Paths.get(gameInfo.getImagePath()));
