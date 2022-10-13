@@ -15,6 +15,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import notpaint.core.Persistence.GameInfoPersistence;
+import notpaint.ui.Util.AlertUtil;
+
 import java.util.Comparator;
 
 public class GameSelectController {
@@ -90,10 +92,7 @@ public class GameSelectController {
             displayGameInfos(allInfos);
         } catch (IOException ex) {
             ex.printStackTrace();
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setContentText("Error occured while loading games.");
-            alert.setHeaderText("ERROR");
-            alert.show();
+            AlertUtil.ErrorAlert("ERROR", "Error occured while loading games.");
         }
     }
 
@@ -126,10 +125,9 @@ public class GameSelectController {
     @FXML
     private void handleJoinProject() throws IOException {
         if (selectedGameInfo == null) {
-            Alert alert = new Alert(AlertType.WARNING);
-            alert.setContentText("You must select a project to join first.");
-            alert.setHeaderText("Warning");
-            alert.show();
+            AlertUtil.WarningAlert("Warning", "You must select a project to join first.");
+        }else if(selectedGameInfo.isFinished()) {
+            AlertUtil.WarningAlert("Warning", "You cannot join a completed project.");
         } else {
             gameInfoPersistence.setActiveGameInfo(selectedGameInfo);
             App.setRoot("PaintView");
