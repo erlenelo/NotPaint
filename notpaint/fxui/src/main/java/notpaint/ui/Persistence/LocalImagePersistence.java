@@ -1,4 +1,4 @@
-package notpaint.core.Persistence;
+package notpaint.ui.Persistence;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,11 +8,14 @@ import javax.imageio.ImageIO;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 
-public class LocalPersistence extends Persistence {
+public class LocalImagePersistence extends ImagePersistence {
 
+    
     @Override
     public void save(Image image, String imagePath) throws IOException {
-        // TODO Auto-generated method stub
+        if(imagePath.startsWith("file:"))
+            imagePath = imagePath.substring(5); // Remove first 5 characters
+
         File output = new File(imagePath);
         BufferedImage bufferedImage = javaFXImageToBufferedImage(image);
 
@@ -21,9 +24,7 @@ public class LocalPersistence extends Persistence {
 
     @Override
     public Image load(String imagePath) {
-        // TODO Auto-generated method stub
-        File file = new File(imagePath);
-        Image image = new Image(file.toString());
+        Image image = new Image(imagePath);
         return image;
     }
 
