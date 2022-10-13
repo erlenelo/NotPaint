@@ -25,7 +25,6 @@ public class GameSelectController {
     @FXML
     private TilePane activeTilePane, completedTilePane;
 
-
     @FXML
     private Text secondsPerRound, iterations, lastEdit, lastEditor;
 
@@ -57,17 +56,20 @@ public class GameSelectController {
     @FXML
     private void initialize() {
         // Get the scene from any Node object.
-        // Because the scene is not set in initialize, we need to listen for the property to update.
+        // Because the scene is not set in initialize, we need to listen for the
+        // property to update.
         secondsPerRound.sceneProperty().addListener((observableScene, oldScene, newScene) -> {
             if (newScene != null) {
                 var stage = newScene.getWindow();
                 // The window property is also initially not set the first time the app starts.
                 // If it is null, listen for the property to update an then set it
-                if (stage == null) {                    
+                if (stage == null) {
                     newScene.windowProperty().addListener((observableWindow, oldWindow, newWindow) -> {
+
                         // Create a persistence instance and set it as the user data for the stage.
                         // This makes it accessible from all other scenes.
-                        onStageLoaded((Stage) newWindow);
+                        if (newWindow != null)
+                            onStageLoaded((Stage) newWindow);
                     });
                 } else {
                     onStageLoaded((Stage) stage);
@@ -112,7 +114,8 @@ public class GameSelectController {
     private void setSelectedGameInfo(GameInfo info) {
         selectedGameInfo = info;
         secondsPerRound.setText(Integer.toString(info.getSecondsPerRound()));
-        iterations.setText(String.format("%s / %s", info.getCurrentIterations(), info.getMaxIterations()));;
+        iterations.setText(String.format("%s / %s", info.getCurrentIterations(), info.getMaxIterations()));
+        ;
         lastEdit.setText(info.getLastEditTime().toString());
         lastEditor.setText(info.getLastEditor());
     }

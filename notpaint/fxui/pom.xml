@@ -64,6 +64,7 @@
               <headless>${headlessTests}</headless>
           </systemPropertyVariables>
           <argLine>
+          ${argLine}
           --add-opens notpaint.ui/notpaint.ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
           --add-opens javafx.graphics/com.sun.glass.ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.glass.ui=ALL-UNNAMED
           --add-exports javafx.graphics/com.sun.glass.ui.delegate=ALL-UNNAMED

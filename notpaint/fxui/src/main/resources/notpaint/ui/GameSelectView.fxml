@@ -10,10 +10,10 @@
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="notpaint.ui.GameSelectController">
+<AnchorPane fx:id="gameSelectRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="notpaint.ui.GameSelectController">
       <children>
-               <Button fx:id="joinProjectButton" layoutX="646.0" layoutY="433.0" onAction="#handleNewProject" prefHeight="40.0" prefWidth="140.0" text="New Project" />
-               <Button fx:id="createProjectButton" layoutX="646.0" layoutY="382.0" onAction="#handleJoinProject" prefHeight="40.0" prefWidth="140.0" text="Join Project" />
+               <Button fx:id="newProjectButton" layoutX="646.0" layoutY="433.0" onAction="#handleNewProject" prefHeight="40.0" prefWidth="140.0" text="New Project" />
+               <Button fx:id="joinProjectButton" layoutX="646.0" layoutY="382.0" onAction="#handleJoinProject" prefHeight="40.0" prefWidth="140.0" text="Join Project" />
       <TabPane prefHeight="500.0" prefWidth="633.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Active Projects">
@@ -33,7 +33,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Completed Projects">
+          <Tab fx:id="completedTab" text="Completed Projects">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

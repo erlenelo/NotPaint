@@ -1,13 +1,14 @@
 package notpaint.ui;
 
+import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.nio.channels.SeekableByteChannel;
 
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxAssert;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
-import org.testfx.util.WaitForAsyncUtils;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,12 +16,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
-public class GameSelectControllerTest extends ApplicationTest {
-    private GameSelectController controller;
+public class SettingsViewControllerTest extends ApplicationTest {
+    private SettingsViewController controller;
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(GameSelectController.class.getResource("GameSelectView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(GameSelectController.class.getResource("SettingsView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         App.scene = scene;
         stage.setScene(scene);
@@ -34,21 +35,11 @@ public class GameSelectControllerTest extends ApplicationTest {
         assertNotNull(controller);
     }
 
+    // Test that the "back to menu" button works
     @Test
-    public void testOpenNewProject() throws InterruptedException {
-        System.out.println("testOpenNewProject");
-        clickOn("#newProjectButton");
-        WaitForAsyncUtils.waitForFxEvents();
-        // Thread.sleep(1000);
-        // assertTrue(true);
-        assertNotNull(findSceneRootWithId("settingsRoot"));
-        // Thread.sleep(1000);
-    }
-
-    @Test
-    public void testJoinGameAlert() {
-        clickOn("#joinProjectButton");
-        FxAssert.verifyThat("Warning", NodeMatchers.isVisible());
+    public void testBackToMenu() {
+        clickOn("#backToMenuButton");
+        assertNotNull(findSceneRootWithId("gameSelectRoot"));
     }
 
     private Parent findSceneRootWithId(String id) {
@@ -66,9 +57,12 @@ public class GameSelectControllerTest extends ApplicationTest {
     }
 
     @Test
-    public void testClickOnCompletedTab() {
-        clickOn("#completedTab");
-        WaitForAsyncUtils.waitForFxEvents();
+    public void testTimeTextFieldIsEmpty() {
+        clickOn("#setTimeTextField");
+        write("");
+        clickOn("#createButton");
+        // assert if the error message is displayed
+        FxAssert.verifyThat("#timeErrorLabel", NodeMatchers.isVisible());
     }
 
 }
