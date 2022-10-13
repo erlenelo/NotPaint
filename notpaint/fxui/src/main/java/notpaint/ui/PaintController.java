@@ -12,13 +12,14 @@ import notpaint.ui.PaintTools.EraserTool;
 import notpaint.ui.PaintTools.PenTool;
 import notpaint.core.GameInfo;
 import notpaint.core.PaintSettings;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.SnapshotParameters;
-import javafx.scene.SnapshotResult;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -28,7 +29,6 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.util.Callback;
 import notpaint.core.Persistence.GameInfoPersistence;
 import notpaint.ui.Persistence.*;
 
@@ -115,24 +115,39 @@ public class PaintController {
 
                 System.out.println("GameInfo loaded: " + gameInfo.toString());
 
+                // Load the current image into the canvas, unless this is the first iteration. In that case there is no image.
+                if(gameInfo.getCurrentIterations() > 0) {
+                    Image loadedImage = imagePersistence.load(gameInfo.getImagePath());
+                    drawingCanvas.getGraphicsContext2D().drawImage(loadedImage, 0, 0);
+                }
+
                 wordToDrawText.setText(gameInfo.getWord());
 
                 countDownSecondsLeft = gameInfo.getSecondsPerRound();
 
                 countDownTimer = new Timer();
+
+                // Create a timer task that decreases and keeps track of the remaining time.
                 TimerTask countDownTask = new TimerTask() {
                     @Override
                     public void run() {
                         countDownSecondsLeft -= 1;
-                        if(countDownSecondsLeft < 0) {
-                            finishDrawing();
+                        if(countDownSecondsLeft < 0) {     
+                            // finishDrawing() is not safe to run from a separate thread.
+                            // Platform.runLater schedules the function to be run on the main UI thread.
+                            Platform.runLater(new Runnable() {
+                                @Override public void run() {
+                                    finishDrawing();
+                                }
+                            });
+                            
                         }else {
                             countDown.setText(countDownSecondsLeft.toString());
                         }
                         
                     }
                 };
-
+                // Run timer once every second.
                 countDownTimer.schedule(countDownTask, 1000, 1000);
             }
         });
