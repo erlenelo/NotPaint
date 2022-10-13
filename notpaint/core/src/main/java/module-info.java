@@ -1,7 +1,4 @@
 module notpaint.core {
-    requires javafx.controls;
-    requires javafx.fxml;
-    requires java.desktop;
     requires transitive com.fasterxml.jackson.databind;
 
     exports notpaint.core;

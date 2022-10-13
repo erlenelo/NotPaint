@@ -11,7 +11,6 @@ import notpaint.ui.PaintTools.Tool;
 import notpaint.ui.PaintTools.EraserTool;
 import notpaint.ui.PaintTools.PenTool;
 import notpaint.core.GameInfo;
-import notpaint.core.PaintSettings;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.SnapshotParameters;
