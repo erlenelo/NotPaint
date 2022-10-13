@@ -35,8 +35,8 @@ public class PaintControllerTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws Exception {
-        var gameInfoPersistence = new GameInfoPersistence(dataPath);
-        var gameInfo = new GameInfo(5, 10, true);
+        gameInfoPersistence = new GameInfoPersistence(dataPath);
+        gameInfo = new GameInfo(5, 10, true);
         gameInfoPersistence.setActiveGameInfo(gameInfo);        
         stage.setUserData(gameInfoPersistence);
          
