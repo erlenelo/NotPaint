@@ -45,7 +45,7 @@
                   <Image url="@images/pencil.png" />
                </image>
             </ImageView>
-            <Button layoutX="648.0" layoutY="379.0" mnemonicParsing="false" onAction="#clearCanvas" prefHeight="40.0" prefWidth="140.0" style="-fx-background-color: lightblue; -fx-border-color: gray; -fx-background-radius: 5; -fx-border-radius: 5;" text="Reset Canvas">
+            <Button layoutX="648.0" layoutY="379.0" mnemonicParsing="false" onAction="#resetCanvas" prefHeight="40.0" prefWidth="140.0" style="-fx-background-color: lightblue; -fx-border-color: gray; -fx-background-radius: 5; -fx-border-radius: 5;" text="Reset Canvas">
                <font>
                   <Font size="14.0" />
                </font></Button>

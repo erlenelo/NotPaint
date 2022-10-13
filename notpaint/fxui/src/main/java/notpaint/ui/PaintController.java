@@ -1,9 +1,9 @@
 package notpaint.ui;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
+
 
 import notpaint.core.Brushes.CircleBrush;
 import notpaint.core.Brushes.SquareBrush;
@@ -11,10 +11,9 @@ import notpaint.ui.PaintTools.Tool;
 import notpaint.ui.PaintTools.EraserTool;
 import notpaint.ui.PaintTools.PenTool;
 import notpaint.core.GameInfo;
-import notpaint.core.PaintSettings;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.SnapshotParameters;
-import javafx.scene.SnapshotResult;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ColorPicker;
@@ -29,8 +28,9 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.util.Callback;
-import notpaint.core.Persistence.*;
+import notpaint.core.Persistence.GameInfoPersistence;
+import notpaint.ui.Persistence.*;
+import notpaint.ui.Util.AlertUtil;
 
 /**
  * Controller for the view that handles the painting.
@@ -59,13 +59,14 @@ public class PaintController {
    
     private FileChooser chooser;
     private GameInfoPersistence gameInfoPersistence;
+    private ImagePersistence imagePersistence;
     private GameInfo gameInfo;
     private Integer countDownSecondsLeft;
     private Timer countDownTimer;
 
     @FXML
     private void switchToSecondary() throws IOException {
-        App.setRoot("secondary");
+        App.setRoot("GameSelectView");
     }
 
     @FXML
@@ -90,7 +91,7 @@ public class PaintController {
         squareBig.setOnMouseClicked(e -> setSquareBrush(17));
 
         // Init file chooser settings. TODO: Remove when moving to REST API
-        //persistence = new LocalPersistence();
+        imagePersistence = new LocalImagePersistence();
         
         colorPicker.setValue(Color.BLACK);
 
@@ -110,28 +111,40 @@ public class PaintController {
                 gameInfo = gameInfoPersistence.getActiveGameInfo();
 
                 if(gameInfo == null) 
-                    throw new IllegalArgumentException("Loaded PaintController but gameInfo was not set in stage");
+                    throw new IllegalArgumentException("Loaded PaintController but activeGameInfo was not set in stage");
 
                 System.out.println("GameInfo loaded: " + gameInfo.toString());
+
+                // Load the current image into the canvas, unless this is the first iteration. In that case there is no image.
+                if(gameInfo.getCurrentIterations() > 0) {
+                    loadImage(gameInfo.getImagePath());
+                }
 
                 wordToDrawText.setText(gameInfo.getWord());
 
                 countDownSecondsLeft = gameInfo.getSecondsPerRound();
 
                 countDownTimer = new Timer();
+
+                // Create a timer task that decreases and keeps track of the remaining time.
                 TimerTask countDownTask = new TimerTask() {
                     @Override
                     public void run() {
                         countDownSecondsLeft -= 1;
-                        if(countDownSecondsLeft < 0) {
-                            finishDrawing();
+                        if(countDownSecondsLeft < 0) {     
+                            // finishDrawing() is not safe to run from a separate thread.
+                            // Platform.runLater schedules the function to be run on the main UI thread.
+                            Platform.runLater(new Runnable() {
+                                @Override public void run() {
+                                    finishDrawing();
+                                }
+                            });                            
                         }else {
                             countDown.setText(countDownSecondsLeft.toString());
-                        }
-                        
+                        }                        
                     }
                 };
-
+                // Run timer once every second.
                 countDownTimer.schedule(countDownTask, 1000, 1000);
             }
         });
@@ -143,17 +156,31 @@ public class PaintController {
             
         gameInfo.addIteration("UnknownEditor");
         //TODO: Save gameinfo and image to json and png respectively
+        saveImageToPath(gameInfo.getImagePath());
 
         try {
             gameInfoPersistence.saveGameInfo(gameInfo);  
-            App.setRoot("secondary");
+            App.setRoot("GameSelectView");
         } catch(IOException ex) {
             ex.printStackTrace();
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setContentText("Error occured while saving drawing.");
-            alert.setHeaderText("ERROR");
-            alert.show();
+            AlertUtil.ErrorAlert("ERROR", "Error occured while saving drawing.");
         }
+    }
+    private void saveImageToPath(String path) {
+        WritableImage image = new WritableImage((int) drawingCanvas.getWidth(), (int) drawingCanvas.getHeight());
+        image = drawingCanvas.snapshot(new SnapshotParameters(), image);    
+        System.out.println("Saving to path: " + path);
+        try {
+            imagePersistence.save(image, path);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            AlertUtil.ErrorAlert("ERROR","Failed to save image!");
+        }
+    }
+
+    private void loadImage(String path) {
+        Image loadedImage = imagePersistence.load(path);
+        drawingCanvas.getGraphicsContext2D().drawImage(loadedImage, 0, 0);
     }
 
     /**
@@ -190,47 +217,12 @@ public class PaintController {
     }
 
     @FXML
-    private void clearCanvas() {
-        drawingCanvas.getGraphicsContext2D().clearRect(0, 0, drawingCanvas.getWidth(), drawingCanvas.getHeight());
-        initialize();
+    private void resetCanvas() {
+        loadImage(gameInfo.getImagePath());
     }
     @FXML
     private void updatePaintColor() {
         settings.setColor(colorPicker.getValue());
     }
-    // @FXML
-    // private void save() {
-    //     File file = chooser.showSaveDialog(null);
-    //     if (file == null)
-    //         return;
-
-    //     WritableImage image = new WritableImage((int) drawingCanvas.getWidth(), (int) drawingCanvas.getHeight());
-    //     drawingCanvas.snapshot(new Callback<SnapshotResult, Void>() {
-    //         @Override
-    //         public Void call(SnapshotResult arg0) {
-    //             System.out.println("Saving to path: " + file.toString());
-    //             try {
-    //                 persistence.Save(image, file.toString());
-    //             } catch (IOException e) {
-    //                 Alert error = new Alert(AlertType.ERROR);
-    //                 error.setTitle("Failed to save image!");
-    //                 error.setContentText(e.getMessage());
-    //                 error.showAndWait();
-    //             }
-    //             return null;
-    //         }
-    //     }, new SnapshotParameters(), image);
-    // }
-
-    // @FXML
-    // private void load() {
-    //     File file = chooser.showOpenDialog(null);
-    //     if (file == null)
-    //         return;
-
-    //     System.out.println("Loading image at path: " + file.toURI().toString());
-    //     Image loadedImage = persistence.Load(file.toURI().toString());
-    //     drawingCanvas.getGraphicsContext2D().drawImage(loadedImage, 0, 0);
-    // }
 
 }

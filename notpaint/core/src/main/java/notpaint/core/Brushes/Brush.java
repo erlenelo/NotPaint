@@ -1,9 +1,8 @@
 package notpaint.core.Brushes;
 
+import java.util.AbstractMap.SimpleEntry;
 import java.util.stream.Stream;
 
-import javafx.scene.canvas.Canvas;
-import javafx.util.Pair;
 
 public abstract class Brush {
 
@@ -13,5 +12,9 @@ public abstract class Brush {
 
     public int size = 1;
 
-    public abstract Stream<Pair<Integer, Integer>> getPixels(Canvas canvas, int x, int y);
+    /**
+     * Returns a stream of all the pixel coordinates that this brush should apply to
+     * when used on (x, y)
+     */
+    public abstract Stream<SimpleEntry<Integer, Integer>> getPixels(int x, int y);
 }
