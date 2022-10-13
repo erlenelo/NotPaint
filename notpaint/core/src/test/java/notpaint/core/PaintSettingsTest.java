@@ -1,9 +1,8 @@
 package notpaint.core;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 
 import org.junit.jupiter.api.Test;
 
@@ -24,14 +23,13 @@ public class PaintSettingsTest {
 
     }
 
-    /* @Test
+    @Test
     public void testGetColor() {
-        Color color = Color.BLACK;
         PaintSettings paintSettings = new PaintSettings();
         paintSettings.setColor(Color.BLUE);
         Color test = paintSettings.getColor();
-        assertEquals(test, 5)
-    }*/
+        assertNotNull(test);
+    }
         
 
     
@@ -45,12 +43,13 @@ public class PaintSettingsTest {
 
     }
 
-    /* @Test
-    public void testSetColor(Color color) {
+    @Test
+    public void testSetColor() {
         PaintSettings paintSettings = new PaintSettings();
-
         paintSettings.setColor(Color.BLACK);
+        paintSettings.getColor();
+        assertNotNull(paintSettings.color);
         
 
-    } */
+    } 
 }
