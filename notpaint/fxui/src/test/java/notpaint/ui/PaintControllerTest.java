@@ -28,6 +28,7 @@ public class PaintControllerTest extends ApplicationTest {
     GameInfoPersistence gameInfoPersistence;
     GameInfo gameInfo;
 
+    @Override
     public void start(Stage stage) throws Exception {
         gameInfoPersistence = new GameInfoPersistence(dataPath);
         gameInfo = new GameInfo(5, 10, true);
@@ -41,6 +42,11 @@ public class PaintControllerTest extends ApplicationTest {
         stage.show();
     }
 
+    @Test
+    public void testController() {
+        assertNotNull(controller);
+    }
+
     @AfterAll
     public void cleanup() {
         try(var filesStream = Files.list(dataPath)) {
@@ -52,8 +58,6 @@ public class PaintControllerTest extends ApplicationTest {
             ex.printStackTrace();
         }
     }
-
-     
 
     
     @Test
