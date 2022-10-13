@@ -92,7 +92,7 @@ public class GameSelectController {
             displayGameInfos(allInfos);
         } catch (IOException ex) {
             ex.printStackTrace();
-            AlertUtil.ErrorAlert("ERROR", "Error occured while loading games.");
+            AlertUtil.errorAlert("ERROR", "Error occured while loading games.");
         }
     }
 
@@ -125,9 +125,9 @@ public class GameSelectController {
     @FXML
     private void handleJoinProject() throws IOException {
         if (selectedGameInfo == null) {
-            AlertUtil.WarningAlert("Warning", "You must select a project to join first.");
+            AlertUtil.warningAlert("Warning", "You must select a project to join first.");
         }else if(selectedGameInfo.isFinished()) {
-            AlertUtil.WarningAlert("Warning", "You cannot join a completed project.");
+            AlertUtil.warningAlert("Warning", "You cannot join a completed project.");
         } else {
             gameInfoPersistence.setActiveGameInfo(selectedGameInfo);
             App.setRoot("PaintView");
