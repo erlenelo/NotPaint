@@ -54,7 +54,7 @@ public class PaintController {
 
     PaintSettings settings;
 
-    private Tool selectedTool;
+    Tool selectedTool;
 
    
     private FileChooser chooser;
@@ -103,52 +103,67 @@ public class PaintController {
     private void loadGameInfo() {        
         drawingCanvas.sceneProperty().addListener((observableScene, oldScene, newScene) -> {
             if(newScene != null) {
-                Stage stage = (Stage)newScene.getWindow();
-                gameInfoPersistence = (GameInfoPersistence)stage.getUserData();
-                if(gameInfoPersistence == null)
-                    throw new IllegalStateException("Stage has no gameInfoPersistence set");
-
-                gameInfo = gameInfoPersistence.getActiveGameInfo();
-
-                if(gameInfo == null) 
-                    throw new IllegalArgumentException("Loaded PaintController but activeGameInfo was not set in stage");
-
-                System.out.println("GameInfo loaded: " + gameInfo.toString());
-
-                // Load the current image into the canvas, unless this is the first iteration. In that case there is no image.
-                if(gameInfo.getCurrentIterations() > 0) {
-                    loadImage(gameInfo.getImagePath());
+                var stage = newScene.getWindow();
+                // The window property is also initially not set the first time the app starts.
+                // If it is null, listen for the property to update an then set it
+                if (stage == null) {
+                    newScene.windowProperty().addListener((observableWindow, oldWindow, newWindow) -> {
+                        if (newWindow != null)
+                            onStageLoaded((Stage) newWindow);
+                    });
+                } else {
+                    onStageLoaded((Stage) stage);
                 }
-
-                wordToDrawText.setText(gameInfo.getWord());
-
-                countDownSecondsLeft = gameInfo.getSecondsPerRound();
-
-                countDownTimer = new Timer();
-
-                // Create a timer task that decreases and keeps track of the remaining time.
-                TimerTask countDownTask = new TimerTask() {
-                    @Override
-                    public void run() {
-                        countDownSecondsLeft -= 1;
-                        if(countDownSecondsLeft < 0) {     
-                            // finishDrawing() is not safe to run from a separate thread.
-                            // Platform.runLater schedules the function to be run on the main UI thread.
-                            Platform.runLater(new Runnable() {
-                                @Override public void run() {
-                                    finishDrawing();
-                                }
-                            });                            
-                        }else {
-                            countDown.setText(countDownSecondsLeft.toString());
-                        }                        
-                    }
-                };
-                // Run timer once every second.
-                countDownTimer.schedule(countDownTask, 1000, 1000);
             }
         });
     }
+
+    private void onStageLoaded(Stage stage) {
+        gameInfoPersistence = (GameInfoPersistence)stage.getUserData();
+        if(gameInfoPersistence == null)
+            throw new IllegalStateException("Stage has no gameInfoPersistence set");
+
+        gameInfo = gameInfoPersistence.getActiveGameInfo();
+
+        if(gameInfo == null) 
+            throw new IllegalArgumentException("Loaded PaintController but activeGameInfo was not set in stage");
+
+        System.out.println("GameInfo loaded: " + gameInfo.toString());
+
+        // Load the current image into the canvas, unless this is the first iteration. In that case there is no image.
+        if(gameInfo.getCurrentIterations() > 0) {
+            loadImage(gameInfoPersistence.getImagePath(gameInfo));
+        }
+
+        wordToDrawText.setText(gameInfo.getWord());
+
+        countDownSecondsLeft = gameInfo.getSecondsPerRound();
+
+        countDownTimer = new Timer();
+
+        // Create a timer task that decreases and keeps track of the remaining time.
+        TimerTask countDownTask = new TimerTask() {
+            @Override
+            public void run() {
+                countDownSecondsLeft -= 1;
+                if(countDownSecondsLeft < 0) {     
+                    // finishDrawing() is not safe to run from a separate thread.
+                    // Platform.runLater schedules the function to be run on the main UI thread.
+                    Platform.runLater(new Runnable() {
+                        @Override public void run() {
+                            finishDrawing();
+                        }
+                    });                            
+                }else {
+                    countDown.setText(countDownSecondsLeft.toString());
+                }                        
+            }
+        };
+        // Run timer once every second.
+        countDownTimer.schedule(countDownTask, 1000, 1000);
+   
+    }
+
     @FXML
     private void finishDrawing()  {
         if(countDownTimer != null)
@@ -156,7 +171,7 @@ public class PaintController {
             
         gameInfo.addIteration("UnknownEditor");
         //TODO: Save gameinfo and image to json and png respectively
-        saveImageToPath(gameInfo.getImagePath());
+        saveImageToPath(gameInfoPersistence.getImagePath(gameInfo));
 
         try {
             gameInfoPersistence.saveGameInfo(gameInfo);  
@@ -219,7 +234,7 @@ public class PaintController {
     @FXML
     private void resetCanvas() {
         drawingCanvas.getGraphicsContext2D().clearRect(0, 0, drawingCanvas.getWidth(), drawingCanvas.getHeight());
-        loadImage(gameInfo.getImagePath());
+        loadImage(gameInfoPersistence.getImagePath(gameInfo));
     }
     @FXML
     private void updatePaintColor() {

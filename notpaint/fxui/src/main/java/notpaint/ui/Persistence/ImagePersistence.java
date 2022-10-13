@@ -8,5 +8,13 @@ public abstract class ImagePersistence {
 
     public abstract void save(Image image, String imageName) throws IOException;
 
-    public abstract Image load(String imageName);
+    
+    /**
+     * @param imagePath Starts with "file:" to load from disk, start with "http:" to load from web
+     * @return Image found at imagePath
+     */
+    public Image load(String imagePath) {
+        Image image = new Image(imagePath);
+        return image;
+    }
 }
