@@ -13,6 +13,7 @@ import notpaint.core.Brushes.CircleBrush;
 import notpaint.core.Brushes.SquareBrush;
 import notpaint.core.Persistence.GameInfoPersistence;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -75,7 +76,7 @@ public class PaintControllerTest extends ApplicationTest {
 
     private void assertButtonSetsBrush(String button, Class<? extends Brush> brushClass) {
         clickOn(button);
-        assertTrue(controller.settings.getBrush().getClass().equals(brushClass));
+        assertEquals(brushClass, controller.settings.getBrush().getClass());
 
     }
 
@@ -85,7 +86,7 @@ public class PaintControllerTest extends ApplicationTest {
         clickOn("#drawingCanvas");
         clickOn("#resetCanvasButton");
         clickOn("#doneButton");
-        System.out.println("Imgpath: " + gameInfoPersistence.getImagePath(gameInfo));
+    
         Image image = new Image(gameInfoPersistence.getImagePath(gameInfo));
         
 

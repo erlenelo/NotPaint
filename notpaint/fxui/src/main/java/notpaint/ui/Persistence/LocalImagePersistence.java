@@ -19,7 +19,7 @@ public class LocalImagePersistence extends ImagePersistence {
         File output = new File(imagePath);
         output.getParentFile().mkdirs(); // If directory to save img does not exist, create it.
         BufferedImage bufferedImage = javaFXImageToBufferedImage(image);
-        System.out.println("Saving image to: " + imagePath);
+        System.out.println("[LOG] Saving image to: " + imagePath);
         ImageIO.write(bufferedImage, "png", output);
     }
 

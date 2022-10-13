@@ -124,11 +124,9 @@ public class PaintController {
             throw new IllegalStateException("Stage has no gameInfoPersistence set");
 
         gameInfo = gameInfoPersistence.getActiveGameInfo();
-
+        // 
         if(gameInfo == null) 
             throw new IllegalArgumentException("Loaded PaintController but activeGameInfo was not set in stage");
-
-        System.out.println("GameInfo loaded: " + gameInfo.toString());
 
         // Load the current image into the canvas, unless this is the first iteration. In that case there is no image.
         if(gameInfo.getCurrentIterations() > 0) {
@@ -184,7 +182,7 @@ public class PaintController {
     void saveImageToPath(String path) {
         WritableImage image = new WritableImage((int) drawingCanvas.getWidth(), (int) drawingCanvas.getHeight());
         image = drawingCanvas.snapshot(new SnapshotParameters(), image);    
-        System.out.println("Saving to path: " + path);
+        
         try {
             imagePersistence.save(image, path);
         } catch (IOException ex) {
