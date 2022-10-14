@@ -45,8 +45,7 @@ public class GameSelectController {
     }
 
     private void addImageToTab(GameInfo info, TilePane pane) {
-        System.out.println("Loading Image path: " + info.getImagePath());
-        ImageView imageView = new ImageView(new Image(info.getImagePath(), 200, 140, true, true));
+        ImageView imageView = new ImageView(new Image(gameInfoPersistence.getImagePath(info), 200, 140, true, true));
         imageView.maxHeight(150);
         imageView.maxWidth(200);
         imageView.setOnMouseClicked(event -> {
@@ -67,9 +66,11 @@ public class GameSelectController {
                 // If it is null, listen for the property to update an then set it
                 if (stage == null) {
                     newScene.windowProperty().addListener((observableWindow, oldWindow, newWindow) -> {
+
                         // Create a persistence instance and set it as the user data for the stage.
                         // This makes it accessible from all other scenes.
-                        onStageLoaded((Stage) newWindow);
+                        if (newWindow != null)
+                            onStageLoaded((Stage) newWindow);
                     });
                 } else {
                     onStageLoaded((Stage) stage);
@@ -112,7 +113,6 @@ public class GameSelectController {
         selectedGameInfo = info;
         secondsPerRound.setText(Integer.toString(info.getSecondsPerRound()));
         iterations.setText(String.format("%s / %s", info.getCurrentIterations(), info.getMaxIterations()));
-        ;
         lastEdit.setText(info.getLastEditTime().toString());
         lastEditor.setText(info.getLastEditor());
     }
