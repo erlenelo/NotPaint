@@ -1,20 +1,42 @@
 # NotPaint
-Dette prosjektet er en tegneapp som skal gjøre det mulig for brukere å tegne på et lerret, og så kunne lagre/hente bildene fra en ekstern server. Bruker skal kunne velge størrelse på pensel, form og farge, og ha muligheten til å viske vekk tegningen. Det er planlagt at man skal kunne være flere som tegner på lerretet samtidig. 
+Dette prosjektet er en tegneapp hvor flere brukere sammen jobber på felles tegneprosjekter, der hver endring gjort av bruker resulterer i en ny iterasjon av samme tegning. Prosjektene tegnes med bruk av pensler i forskjellig størrelse, samt muligheter for å viske vekk endringer, og fjerne alle endringer for nåværende session. Prosjektene kan settes opp med forskjellige instillinger som begrenser brukernes muligheter til å interagere med prosjektet. Et nytt prosjekt kan settes opp med:
+- Tid man har på å utføre sine tegne-endringer
+- Antall iterasjoner for hvert prosjekt
+- At et randomisert ord knyttes til prosjektet, og skal tegnes (eller om nytt ord genereres for hver nye iterasjon)
 
-Dersom det blir en for stor utfordring å få til at flere personer kan tegne samtidig, er plan B å dreie prosjektet mot et spill. Bruker får et randomisert ord som de skal tegne, og de resterende spillerne skal gjette først hvilket ord som tegnes. 
+Prosjekter som er ferdige (enten markert ferdig manuelt, eller at max antall iterasjoner er nådd), legges i en egen fane for ferdige prosjekter. Det er også en fane for nåværende, aktive prosjekter som man kan lage nye iterasjoner av, som vil overskrive det forrige (dog tidligere iterasjoners endringer kan ikke resettes).
 
-## Bilde av grensesnittet
-![](PaintViewBilde.png "Grensesnitt")
-Dette er det foreløpige grensesnittet. Videre skal flere funksjonsknapper legges til, som farger og fill-in.
+## Bilder av grensesnittet
+### PaintView
+![](/notpaint/viewScreenshots/release2%20viewScreenshots/PaintView.png)
+Dette er grensesnittet til tegne-funksjonene.
 - Sirklene setter pensel til indikert radius
-- Firkantene setter pensel til indikert
-størrelse
-- Viskelæret setter pensel til hvit, slik at tegnede områder kan viskes ut
-- Blyanten setter pensel til farge (foreløpigt svart)
-- Clear canvas skal resette lerretet.
-- Load-knappen skal hente opp fillager
-- Save skal åpne lageret, så nåværende tegning kan lagres
-- View2 er en placeholder for når vi etterhvert skal style fillageret i et sekundært view.
+- Firkantene setter pensel til indikert størrelse
+- Viskelæret setter pensel til hvit farge, slik at tegnede områder kan viskes ut
+- Blyanten setter pensel til farge
+- Color-pickeren lar bruker velge farge på pensel
+- Reset-canvas-knappen fjerner alle endringer gjort i nåværende iterasjon. I praksis laster den opp forrige iterasjon, som overwriter nåværende iterasjon med foreløpige endringer
+
+### GameSelectView
+![](/notpaint/viewScreenshots/release2%20viewScreenshots/GameSelectView.png)
+Dette er grensesnittet for nye/gamle prosjekter.
+- Det er to faner; Active projects viser uferdige prosjekter og Completed Prosjects viser alle ferdige prosjekter
+- Seconds to Draw viser hvor mange sekunder prosjektet tillater at en bruker gjør endringer
+- Iterations viser hvor mange ganger en endring på prosjektet er blitt lagret
+- Last Editor viser brukeren som endret prosjektet sist
+- Last Edit viser tiden siste iterasjon ble lagret
+- Join Project engasjerer et selektert, aktivt prosjekt, slik at man kan lage en ny iterasjon av prosjektet. Sender bruker til PaintView for prosjektet
+- New Project lager et nytt prosjekt. Sender bruker til SettingsView
+
+
+### SettingsView
+![](/notpaint/viewScreenshots/release2%20viewScreenshots/SettingsView.png)
+Dette er grensesnittet til instillinger ved laging av nytt prosjekt.
+- Back to Menu tar bruker tilbake til GameSelectView
+- Time-inputten lager restriksjon på hvor mange sekunder man kan tegne per iterasjon på det nye prosjektet
+- Rounds-inputten designerer maks antall iterasjoner som prosjektet kan inneha. Når dette antallet er nådd, markeres prosjektet som ferdig, og kan hentes under "Completed projects" i GameSelectView.
+- Radio-buttonsene indikerer om prosjektet skal ha et nytt randomisert ord som skal tegnes for hver iterasjon, eller om samme ord skal beholdes gjennom hele prosjektet.
+- Create-knappen skaper selve prosjektet. Da blir det et active project, som kan interageres med i GameSelectView.
 
 ## Klassediagram
 
