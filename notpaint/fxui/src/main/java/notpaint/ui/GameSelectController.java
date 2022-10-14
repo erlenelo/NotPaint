@@ -45,8 +45,7 @@ public class GameSelectController {
     }
 
     private void addImageToTab(GameInfo info, TilePane pane) {
-        System.out.println("Loading Image path: " + info.getImagePath());
-        ImageView imageView = new ImageView(new Image(info.getImagePath(), 200, 140, true, true));
+        ImageView imageView = new ImageView(new Image(gameInfoPersistence.getImagePath(info), 200, 140, true, true));
         imageView.maxHeight(150);
         imageView.maxWidth(200);
         imageView.setOnMouseClicked(event -> {
@@ -114,7 +113,6 @@ public class GameSelectController {
         selectedGameInfo = info;
         secondsPerRound.setText(Integer.toString(info.getSecondsPerRound()));
         iterations.setText(String.format("%s / %s", info.getCurrentIterations(), info.getMaxIterations()));
-        ;
         lastEdit.setText(info.getLastEditTime().toString());
         lastEditor.setText(info.getLastEditor());
     }

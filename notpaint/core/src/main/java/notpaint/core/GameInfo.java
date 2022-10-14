@@ -85,16 +85,7 @@ public class GameInfo {
         }
     }
 
-    /**
-     * 
-     * @return String representing the path to image. Could be a file or web
-     *         address.
-     */
-    public String getImagePath() {
-        // TODO: Determine location where this will be saved. For now will be saved
-        // relative to where program is running from
-        return "file:data/" + uuid.toString() + ".png";
-    }
+
 
     /**
      * Chech if the game is finished (currentIterations has reached maxIterations)

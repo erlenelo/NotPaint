@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="paintRoot" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: DEB59D;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="notpaint.ui.PaintController">
+<AnchorPane fx:id="paintRoot" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: DEB59D;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="notpaint.ui.PaintController">
    <children>
       <StackPane layoutX="14.0" layoutY="50.0" prefHeight="153.0" prefWidth="444.0" style="-fx-background-color: white; -fx-border-color: gray;">
          <children>
@@ -45,11 +45,11 @@
                   <Image url="@images/pencil.png" />
                </image>
             </ImageView>
-            <Button layoutX="648.0" layoutY="379.0" mnemonicParsing="false" onAction="#resetCanvas" prefHeight="40.0" prefWidth="140.0" style="-fx-background-color: lightblue; -fx-border-color: gray; -fx-background-radius: 5; -fx-border-radius: 5;" text="Reset Canvas">
+            <Button fx:id="resetCanvasButton" layoutX="648.0" layoutY="379.0" mnemonicParsing="false" onAction="#resetCanvas" prefHeight="40.0" prefWidth="140.0" style="-fx-background-color: lightblue; -fx-border-color: gray; -fx-background-radius: 5; -fx-border-radius: 5;" text="Reset Canvas">
                <font>
                   <Font size="14.0" />
                </font></Button>
-            <Button layoutX="648.0" layoutY="430.0" mnemonicParsing="false" onAction="#finishDrawing" prefHeight="40.0" prefWidth="140.0" style="-fx-background-color: LightBlue; -fx-border-color: gray; -fx-border-radius: 5; -fx-background-radius: 5;" text="Done">
+            <Button fx:id="doneButton" layoutX="648.0" layoutY="430.0" mnemonicParsing="false" onAction="#finishDrawing" prefHeight="40.0" prefWidth="140.0" style="-fx-background-color: LightBlue; -fx-border-color: gray; -fx-border-radius: 5; -fx-background-radius: 5;" text="Done">
                <font>
                   <Font size="14.0" />
                </font></Button>

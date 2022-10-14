@@ -53,10 +53,8 @@ public class GameSelectControllerTest extends ApplicationTest {
 
     private Parent findSceneRootWithId(String id) {
         for (Window window : Window.getWindows()) {
-            System.out.println("Window: " + window.toString());
             if (window instanceof Stage && window.isShowing()) {
                 var root = window.getScene().getRoot();
-                System.out.println("root.getId(): " + root.getId());
                 if (id.equals(root.getId())) {
                     return root;
                 }

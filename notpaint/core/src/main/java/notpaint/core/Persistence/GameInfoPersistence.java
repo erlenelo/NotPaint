@@ -86,6 +86,18 @@ public class GameInfoPersistence {
         mapper.writeValue(Paths.get(dataPath.toString(), gameInfo.getUuid().toString() + ".json").toFile(), gameInfo);
     }
 
+     /**
+     * 
+     * @return String representing the path to image. Could be a file or web
+     *         address.
+     */
+    public String getImagePath(GameInfo info) {
+        // TODO: Determine location where this will be saved. For now will be saved
+        // relative to where program is running from
+        String imageName = info.getUuid().toString() + ".png";
+        return "file:" + Paths.get(dataPath.toString(), imageName).toString();
+    }
+
     /**
      * Returns the active gameinfo, which is the one that should be used by
      * PaintController to draw
