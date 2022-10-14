@@ -8,7 +8,7 @@ Prosjekter som er ferdige (enten markert ferdig manuelt, eller at max antall ite
 
 ## Bilder av grensesnittet
 ### PaintView
-![](/notpaint/viewScreenshots/release2%20viewScreenshots/PaintView.png"PaintView")
+![](/notpaint/viewScreenshots/release2%20viewScreenshots/PaintView.png)
 Dette er grensesnittet til tegne-funksjonene.
 - Sirklene setter pensel til indikert radius
 - Firkantene setter pensel til indikert størrelse
@@ -18,7 +18,7 @@ Dette er grensesnittet til tegne-funksjonene.
 - Reset-canvas-knappen fjerner alle endringer gjort i nåværende iterasjon. I praksis laster den opp forrige iterasjon, som overwriter nåværende iterasjon med foreløpige endringer
 
 ### GameSelectView
-![](/notpaint/viewScreenshots/release2%20viewScreenshots/GameSelectView.png"GameSelectView")
+![](/notpaint/viewScreenshots/release2%20viewScreenshots/GameSelectView.png)
 Dette er grensesnittet for nye/gamle prosjekter.
 - Det er to faner; Active projects viser uferdige prosjekter og Completed Prosjects viser alle ferdige prosjekter
 - Seconds to Draw viser hvor mange sekunder prosjektet tillater at en bruker gjør endringer
@@ -30,7 +30,7 @@ Dette er grensesnittet for nye/gamle prosjekter.
 
 
 ### SettingsView
-![](/notpaint/viewScreenshots/release2%20viewScreenshots/SettingsView.png"SettingsView")
+![](/notpaint/viewScreenshots/release2%20viewScreenshots/SettingsView.png)
 Dette er grensesnittet til instillinger ved laging av nytt prosjekt.
 - Back to Menu tar bruker tilbake til GameSelectView
 - Time-inputten lager restriksjon på hvor mange sekunder man kan tegne per iterasjon på det nye prosjektet
