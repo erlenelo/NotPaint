@@ -85,6 +85,8 @@
           <scanPackages>
             <scanPackage>notpaint.ui</scanPackage>
           </scanPackages>
+          <maxVisibilityFields>PACKAGE_PRIVATE</maxVisibilityFields>
+          <maxVisibilityMethods>PACKAGE_PRIVATE</maxVisibilityMethods>
         </configuration>
       </plugin>
     </plugins>
