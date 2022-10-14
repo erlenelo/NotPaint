@@ -1,11 +1,11 @@
 # Release 2
-Under andre sprint har fokuset vært på å videreutvikle funksjonaliteten til prosjektet, modularisering av mappeoppsettet, samt skrive tester for å øke dekningsgraden til modulene tilstrekkelig.
+Målet med andre sprint var å legge til flerspillerfunksjonalitet til prosjektet, samt gjøre det mulig å lage prosjekter med gitte betingelser for brukerinteraksjon og lagring. Vi har også modularisert strukturen på prosektet og laget tester for modulene. Punktene under dokumenterer endringer litt mer i detalj:
 
 ## Funksjonalitet
 Fra release1 har vi lagt til muligheten til å legge til diverse spillinstillinger på nye prosjekter (GameInfo-classen, og GameInfoPersistence-classen). Prosjektskaper skal kunne blant annet: 
 - legge til antall sekunder man har på hver iterasjon av et prosjekt
 - knytte et ord (eller flere for hver iterasjon) til et prosjekt, tatt utifra en liste med flere ord, som skal tegnes
-- kunne bla gjennom aktive og ferdige prosjekter
+- kunne bla gjennom og hente aktive og ferdige prosjekter
 
 Til dette formålet har vi også laget to nye views:
 - GameSelectView gir brukeren mulighet til å velge gamle prosjekt, eller lage nytt prosjekt
