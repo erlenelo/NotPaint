@@ -6,3 +6,4 @@ Core modulen inneholder viktig funksjonalitet i forhold til malepenslene man kan
 # Klassediagramm:
 
 Klassediagrammet under spesifiserer strukturen:
+![](klassediagram.png)

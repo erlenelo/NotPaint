@@ -38,17 +38,6 @@ Dette er grensesnittet til instillinger ved laging av nytt prosjekt.
 - Radio-buttonsene indikerer om prosjektet skal ha et nytt randomisert ord som skal tegnes for hver iterasjon, eller om samme ord skal beholdes gjennom hele prosjektet.
 - Create-knappen skaper selve prosjektet. Da blir det et active project, som kan interageres med i GameSelectView.
 
-## Klassediagram
-
-Vi bruker [PlantUML Generator](https://mvnrepository.com/artifact/de.elnarion.maven/plantuml-generator-maven-plugin) for å generere klassediagram.
-
-For å generere eller oppdatere de eksisterende klassediagrammene, kjør:
-`mvn generate-test-sources`
-
-Dette vil generere PlantUML-diagram i hver modul sin `target/generated-docs` mappe
-
-
-
 ## Brukerhistorie (US-1)
 
 Som bruker ønsker jeg å kunne tegne på et lerret og lagre tegningen lokalt.
