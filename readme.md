@@ -26,8 +26,13 @@ Her finner man også to undermapper som tar for seg to forskjellige logikker med
  
 - I *PaintTools*-mappen finner man tre klasser; EraserTool, PenTool og Tool. I disse klassene er det funksjoner for å faktisk tegne på lerretet i tillegg til å kunne fjerne det man har tegnet. 
 
+## Klassediagram
 
+Vi bruker [PlantUML Generator](https://mvnrepository.com/artifact/de.elnarion.maven/plantuml-generator-maven-plugin) for å generere klassediagram.
 
+For å generere eller oppdatere de eksisterende klassediagrammene, kjør:
+`mvn generate-test-sources`
 
+Dette vil generere PlantUML-diagram i hver modul sin `target/generated-docs` mappe.
 
-
+Klassediagram for hver modul ligger i hver modul sin readme.md fil.
