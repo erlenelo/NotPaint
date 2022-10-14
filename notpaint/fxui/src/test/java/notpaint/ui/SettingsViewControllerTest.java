@@ -5,8 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.IOException;
 import java.nio.channels.SeekableByteChannel;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxAssert;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -19,18 +24,33 @@ import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import notpaint.core.Persistence.GameInfoPersistence;
 
 public class SettingsViewControllerTest extends ApplicationTest {
     private SettingsViewController controller;
 
+    static Path dataPath = Paths.get("testData_INALKN434NJN");
+
     @Override
     public void start(Stage stage) throws Exception {
+        var gameInfoPersistence = new GameInfoPersistence(dataPath);
+        stage.setUserData(gameInfoPersistence);
+
         FXMLLoader fxmlLoader = new FXMLLoader(GameSelectController.class.getResource("SettingsView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         App.scene = scene;
         stage.setScene(scene);
         stage.show();
         controller = fxmlLoader.getController();
+    }
+
+    @AfterAll
+    public static void cleanUp() throws IOException {
+        var files = Files.list(dataPath).toList();
+        for (var file : files) { // Delete every file in datapath dir
+            Files.delete(file);
+        }
+        Files.deleteIfExists(dataPath); // Delete datapath dir
     }
 
     // Test that the controller is created
@@ -90,5 +110,5 @@ public class SettingsViewControllerTest extends ApplicationTest {
         WaitForAsyncUtils.waitForFxEvents();
         assertNotNull(findSceneRootWithId("paintRoot"));
     }
-    
+
 }
