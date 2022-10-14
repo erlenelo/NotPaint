@@ -4,7 +4,7 @@ import notpaint.core.Brushes.Brush;
 import javafx.scene.paint.Color;
 
 public class PaintSettings {
-    private Color color;
+    Color color;
     private Brush brush;
 
     public Brush getBrush() {

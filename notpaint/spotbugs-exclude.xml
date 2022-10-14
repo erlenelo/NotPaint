@@ -20,4 +20,8 @@
     <Class name="notpaint.ui.GameSelectController" />
     <Bug code="UrF" />
 </Match>
+<Match>
+    <Class name="notpaint.ui.Persistence.LocalImagePersistence" />
+    <Bug code="RV" />
+</Match>
 </FindBugsFilter>

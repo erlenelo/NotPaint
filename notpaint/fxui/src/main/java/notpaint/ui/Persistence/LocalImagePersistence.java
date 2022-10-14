@@ -17,16 +17,12 @@ public class LocalImagePersistence extends ImagePersistence {
             imagePath = imagePath.substring(5); // Remove first 5 characters
 
         File output = new File(imagePath);
+        output.getParentFile().mkdirs(); // If directory to save img does not exist, create it.
         BufferedImage bufferedImage = javaFXImageToBufferedImage(image);
-
+        System.out.println("[LOG] Saving image to: " + imagePath);
         ImageIO.write(bufferedImage, "png", output);
     }
 
-    @Override
-    public Image load(String imagePath) {
-        Image image = new Image(imagePath);
-        return image;
-    }
 
     private BufferedImage javaFXImageToBufferedImage(Image image) {
         BufferedImage img = new BufferedImage((int) image.getWidth(), (int) image.getHeight(),

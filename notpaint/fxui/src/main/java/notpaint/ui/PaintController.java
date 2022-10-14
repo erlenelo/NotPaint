@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
 import notpaint.core.Brushes.CircleBrush;
 import notpaint.core.Brushes.SquareBrush;
 import notpaint.ui.PaintTools.Tool;
@@ -47,16 +46,16 @@ public class PaintController {
     @FXML
     Canvas drawingCanvas;
 
-    @FXML Text countDown, wordToDrawText;
+    @FXML
+    Text countDown, wordToDrawText;
 
     @FXML
     ColorPicker colorPicker;
 
     PaintSettings settings;
 
-    private Tool selectedTool;
+    Tool selectedTool;
 
-   
     private FileChooser chooser;
     private GameInfoPersistence gameInfoPersistence;
     private ImagePersistence imagePersistence;
@@ -74,9 +73,9 @@ public class PaintController {
         // Set the default settings and tools
 
         loadGameInfo();
-        
+
         settings = new PaintSettings();
-        
+
         settings.setColor(Color.BLACK);
         selectedTool = new PenTool(settings);
         setCircleBrush(10);
@@ -92,89 +91,104 @@ public class PaintController {
 
         // Init file chooser settings. TODO: Remove when moving to REST API
         imagePersistence = new LocalImagePersistence();
-        
+
         colorPicker.setValue(Color.BLACK);
 
         chooser = new FileChooser();
         chooser.getExtensionFilters().add(new ExtensionFilter("PNG Image", "*.png"));
     }
 
-
-    private void loadGameInfo() {        
+    private void loadGameInfo() {
         drawingCanvas.sceneProperty().addListener((observableScene, oldScene, newScene) -> {
-            if(newScene != null) {
-                Stage stage = (Stage)newScene.getWindow();
-                gameInfoPersistence = (GameInfoPersistence)stage.getUserData();
-                if(gameInfoPersistence == null)
-                    throw new IllegalStateException("Stage has no gameInfoPersistence set");
-
-                gameInfo = gameInfoPersistence.getActiveGameInfo();
-
-                if(gameInfo == null) 
-                    throw new IllegalArgumentException("Loaded PaintController but activeGameInfo was not set in stage");
-
-                System.out.println("GameInfo loaded: " + gameInfo.toString());
-
-                // Load the current image into the canvas, unless this is the first iteration. In that case there is no image.
-                if(gameInfo.getCurrentIterations() > 0) {
-                    loadImage(gameInfo.getImagePath());
+            if (newScene != null) {
+                var stage = newScene.getWindow();
+                // The window property is also initially not set the first time the app starts.
+                // If it is null, listen for the property to update an then set it
+                if (stage == null) {
+                    newScene.windowProperty().addListener((observableWindow, oldWindow, newWindow) -> {
+                        if (newWindow != null)
+                            onStageLoaded((Stage) newWindow);
+                    });
+                } else {
+                    onStageLoaded((Stage) stage);
                 }
-
-                wordToDrawText.setText(gameInfo.getWord());
-
-                countDownSecondsLeft = gameInfo.getSecondsPerRound();
-
-                countDownTimer = new Timer();
-
-                // Create a timer task that decreases and keeps track of the remaining time.
-                TimerTask countDownTask = new TimerTask() {
-                    @Override
-                    public void run() {
-                        countDownSecondsLeft -= 1;
-                        if(countDownSecondsLeft < 0) {     
-                            // finishDrawing() is not safe to run from a separate thread.
-                            // Platform.runLater schedules the function to be run on the main UI thread.
-                            Platform.runLater(new Runnable() {
-                                @Override public void run() {
-                                    finishDrawing();
-                                }
-                            });                            
-                        }else {
-                            countDown.setText(countDownSecondsLeft.toString());
-                        }                        
-                    }
-                };
-                // Run timer once every second.
-                countDownTimer.schedule(countDownTask, 1000, 1000);
             }
         });
     }
+
+    private void onStageLoaded(Stage stage) {
+        gameInfoPersistence = (GameInfoPersistence) stage.getUserData();
+        if (gameInfoPersistence == null)
+            throw new IllegalStateException("Stage has no gameInfoPersistence set");
+
+        gameInfo = gameInfoPersistence.getActiveGameInfo();
+        //
+        if (gameInfo == null)
+            throw new IllegalArgumentException("Loaded PaintController but activeGameInfo was not set in stage");
+
+        // Load the current image into the canvas, unless this is the first iteration.
+        // In that case there is no image.
+        if (gameInfo.getCurrentIterations() > 0) {
+            loadImage(gameInfoPersistence.getImagePath(gameInfo));
+        }
+
+        wordToDrawText.setText(gameInfo.getWord());
+
+        countDownSecondsLeft = gameInfo.getSecondsPerRound();
+
+        countDownTimer = new Timer();
+
+        // Create a timer task that decreases and keeps track of the remaining time.
+        TimerTask countDownTask = new TimerTask() {
+            @Override
+            public void run() {
+                countDownSecondsLeft -= 1;
+                if (countDownSecondsLeft < 0) {
+                    // finishDrawing() is not safe to run from a separate thread.
+                    // Platform.runLater schedules the function to be run on the main UI thread.
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            finishDrawing();
+                        }
+                    });
+                } else {
+                    countDown.setText(countDownSecondsLeft.toString());
+                }
+            }
+        };
+        // Run timer once every second.
+        countDownTimer.schedule(countDownTask, 1000, 1000);
+
+    }
+
     @FXML
-    private void finishDrawing()  {
-        if(countDownTimer != null)
+    private void finishDrawing() {
+        if (countDownTimer != null)
             countDownTimer.cancel();
-            
+
         gameInfo.addIteration("UnknownEditor");
-        //TODO: Save gameinfo and image to json and png respectively
-        saveImageToPath(gameInfo.getImagePath());
+        // TODO: Save gameinfo and image to json and png respectively
+        saveImageToPath(gameInfoPersistence.getImagePath(gameInfo));
 
         try {
-            gameInfoPersistence.saveGameInfo(gameInfo);  
+            gameInfoPersistence.saveGameInfo(gameInfo);
             App.setRoot("GameSelectView");
-        } catch(IOException ex) {
+        } catch (IOException ex) {
             ex.printStackTrace();
-            AlertUtil.ErrorAlert("ERROR", "Error occured while saving drawing.");
+            AlertUtil.errorAlert("ERROR", "Error occured while saving drawing.");
         }
     }
-    private void saveImageToPath(String path) {
+
+    void saveImageToPath(String path) {
         WritableImage image = new WritableImage((int) drawingCanvas.getWidth(), (int) drawingCanvas.getHeight());
-        image = drawingCanvas.snapshot(new SnapshotParameters(), image);    
-        System.out.println("Saving to path: " + path);
+        image = drawingCanvas.snapshot(new SnapshotParameters(), image);
+
         try {
             imagePersistence.save(image, path);
         } catch (IOException ex) {
             ex.printStackTrace();
-            AlertUtil.ErrorAlert("ERROR","Failed to save image!");
+            AlertUtil.errorAlert("ERROR", "Failed to save image!");
         }
     }
 
@@ -218,8 +232,10 @@ public class PaintController {
 
     @FXML
     private void resetCanvas() {
-        loadImage(gameInfo.getImagePath());
+        drawingCanvas.getGraphicsContext2D().clearRect(0, 0, drawingCanvas.getWidth(), drawingCanvas.getHeight());
+        loadImage(gameInfoPersistence.getImagePath(gameInfo));
     }
+
     @FXML
     private void updatePaintColor() {
         settings.setColor(colorPicker.getValue());
