@@ -33,3 +33,21 @@ Viktig å kunne gjøre:
 - Velge pensel og male på lerretet med valgt farge
 - Kunne viske ut det man har malt
 - Kunne lagre tegningen til senere bruk
+
+## Brukerhistorie US2-2:
+Som bruker vil jeg kunne bli med i et spill og tegne på et lerret.
+
+Brukeren skal kunne bli med i en tegning som andre personer har tegnet på. Brukeren skal motta et ord med en angitt tid og deretter kunne tegne på et lerret.
+
+Viktig å kunne se: 
+- en knapp som tilsier at du blir med i et lerret.
+- se hva slags ord du skal tegne
+- en tid som teller ned som viser hvor lang tid man har før tiden går ut
+- en ferdig knapp man trykker på hvis man er ferdig før tiden er ute
+- hvor mange som har tegnet før deg, samt hvor mange som skal få lov til å tegne på lerretet
+- skal se farger man kan bruke, ulik størrelse og form på pensler, samt viskelær på den en selv har tegnet
+
+Viktig å kunne gjøre:
+- bli med i en tegning
+- kunne tegne med ulike farger og ulik form og størrelse på pensler. 
+- Bruke viskelær på det en selv har tegnet. 
