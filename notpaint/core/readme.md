@@ -1,8 +1,9 @@
-# Core
 
-Modulen core inneholder kode for lagring, lasting, og opprettelse av nye spill.
+# Innhold
 
-Hvert spill lagres til en egen JSON-fil, som har en tilsvarende bildefil med samme navn, bortsett fra .png som filendelse.
+Core modulen inneholder viktig funksjonalitet i forhold til malepenslene man kan velge å tegne med på lerrettet i applikasjonen, samt kode som sørger for riktig lagring av info mellom scenes.
 
-## Klassediagram
+# Klassediagramm:
+
+Klassediagrammet under spesifiserer strukturen:
 ![](klassediagram.png)
