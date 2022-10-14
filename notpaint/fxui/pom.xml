@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <artifactId>fxui</artifactId>
   <parent>
@@ -26,7 +25,7 @@
       <groupId>gr2213.notpaint</groupId>
       <artifactId>core</artifactId>
       <version>1.0-SNAPSHOT</version>
-    </dependency>  
+    </dependency>
 
     <dependency>
       <groupId>junit</groupId>
@@ -36,32 +35,31 @@
     </dependency>
 
 
+    <!-- Test with TextFX -->
+    <dependency>
+      <groupId>org.testfx</groupId>
+      <artifactId>testfx-core</artifactId>
+      <version>4.0.16-alpha</version>
+      <scope>test</scope>
+    </dependency>
 
-        <!-- Test with TextFX -->
-		<dependency>
-			<groupId>org.testfx</groupId>
-			<artifactId>testfx-core</artifactId>
-			<version>4.0.16-alpha</version>
-			<scope>test</scope>
-		</dependency>
-    
-		<dependency>
-			<groupId>org.testfx</groupId>
-			<artifactId>testfx-junit5</artifactId>
-			<version>4.0.16-alpha</version>
-			<scope>test</scope>
-        </dependency>
+    <dependency>
+      <groupId>org.testfx</groupId>
+      <artifactId>testfx-junit5</artifactId>
+      <version>4.0.16-alpha</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
-  
+
   <build>
-  <plugins>
+    <plugins>
       <plugin>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-surefire-plugin</artifactId>
-      <configuration>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
           <skipTests>${skipUiTests}</skipTests>
           <systemPropertyVariables>
-              <headless>${headlessTests}</headless>
+            <headless>${headlessTests}</headless>
           </systemPropertyVariables>
           <argLine>
           ${argLine}
@@ -69,9 +67,29 @@
           --add-opens javafx.graphics/com.sun.glass.ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.glass.ui=ALL-UNNAMED
           --add-exports javafx.graphics/com.sun.glass.ui.delegate=ALL-UNNAMED
           </argLine>
-      </configuration>
-  </plugin>
-  </plugins>
-  
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>plantuml-generator-maven-plugin</artifactId>
+        <groupId>de.elnarion.maven</groupId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <phase>generate-test-sources</phase>
+          </execution>
+        </executions>
+        <configuration>
+          <outputFilename>uiClassDiagram.uml</outputFilename>
+          <scanPackages>
+            <scanPackage>notpaint.ui</scanPackage>
+          </scanPackages>
+          <maxVisibilityFields>PACKAGE_PRIVATE</maxVisibilityFields>
+          <maxVisibilityMethods>PACKAGE_PRIVATE</maxVisibilityMethods>
+        </configuration>
+      </plugin>
+    </plugins>
+
   </build>
 </project>
