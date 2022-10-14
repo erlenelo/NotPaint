@@ -109,7 +109,7 @@ public class GameSelectController {
         }
     }
 
-    void setSelectedGameInfo(GameInfo info) {
+    private void setSelectedGameInfo(GameInfo info) {
         selectedGameInfo = info;
         secondsPerRound.setText(Integer.toString(info.getSecondsPerRound()));
         iterations.setText(String.format("%s / %s", info.getCurrentIterations(), info.getMaxIterations()));

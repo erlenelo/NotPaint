@@ -16,17 +16,6 @@ størrelse
 - Save skal åpne lageret, så nåværende tegning kan lagres
 - View2 er en placeholder for når vi etterhvert skal style fillageret i et sekundært view.
 
-## Klassediagram
-
-Vi bruker [PlantUML Generator](https://mvnrepository.com/artifact/de.elnarion.maven/plantuml-generator-maven-plugin) for å generere klassediagram.
-
-For å generere eller oppdatere de eksisterende klassediagrammene, kjør:
-`mvn generate-test-sources`
-
-Dette vil generere PlantUML-diagram i hver modul sin `target/generated-docs` mappe
-
-
-
 ## Brukerhistorie (US-1)
 
 Som bruker ønsker jeg å kunne tegne på et lerret og lagre tegningen lokalt.
