@@ -2,29 +2,40 @@
 
 # Gruppe gr2213 repo 
 
-Dette er prosjektet til gruppe 13 i emnet IT1901 høsten 2022. Målet er å lage en trelagsapplikasjon med et domenelag, brukergrensenitt og persistenslag. Bygget skal være rigget til å rapportere testdekningsgrad (vha. **JaCoCo**). Prosjektet skal være konfigurert med **Maven** og ha støtte for direkte tilgang til **Gitpod**.
+Dette er prosjektet til gruppe 13 i emnet IT1901 høsten 2022. Målet er å lage en trelagsapplikasjon med et domenelag, brukergrensenitt og persistenslag. Prosjektet skal være rigget til å rapportere testdekningsgrad (vha. **JaCoCo**). Prosjektet skal være konfigurert med **Maven** og ha støtte for **Gitpod**.
 
 
 ## Not Paint
+Formålet med applikajsonen er å kunne samarbeide om å lage tegninger, hvor hver person som deltar iterativt legger til noe nytt i tegningen.
 
-Formålet med applikajsonen er å lage en canvas hvor man kan tegne. I applikasjonen skal man tegne og lagre opp til en sky, og laste dem ned igjen for så å kunne fortsette med å tegne. 
 
+## Bygging og kjøring
+**Bygging:** Kjør `mvn install` fra kodings-prosjektet (**notpaint**-mappa) for å 
+bygge alle moduler i prosjektet. Dette vil også kjøre tester og analysere kodekvalitet (se kodekvalitet).
 
-### Bygging og kjøring
-**Bygging:** Kjør `mvn install` fra kodings-prosjektet (**not-paint**-mappa).
-
-**Kjøring:** Åpne ny terminal, kjør først `cd notpaint`, `cd fxui` og deretter `mvn javafx:run`. Dette vil da åpne applikajsonen.
-
-**Testing:** For å teste prosjektet kjør kommandoen `mvn test`. For å sjekke testdekningsgraden kjør kommandoen `mvn jacoco:report`. Dette vil generer en rapport for forrige test i *target/site/jacoco/index.html*. 
-
+**Kjøring:** Kjør `mvn javafx:run` i mappa **notpaint/fxui**. Alle moduler fxui modulen avhenger av må bygges først.
 
 ## Applikasjonen 
-Inne i **notpaint**-mappen inneholder koden til prosjektet. Brukergrensenittet er laget med **JavaFX** og **FXML**.
-Her finner man også to undermapper som tar for seg to forskjellige logikker med ulike klasser innen for hver mappe; *Brushes* og *PaintTools*. Her vil man også finne hovedklassen som er *PaintSettings*.
+**notpaint**-mappen inneholder koden til prosjektet. Brukergrensenittet er laget med **JavaFX** og **FXML**.
 
-- I *Brushes*-mappen finner man tre klasser; Brush, CircleBrush og SquareBrush. I disse klassene er det funksjoner for hva slags størrelse og form man vil ha på "penselen" når man skal tegne på lerretet. 
- 
-- I *PaintTools*-mappen finner man tre klasser; EraserTool, PenTool og Tool. I disse klassene er det funksjoner for å faktisk tegne på lerretet i tillegg til å kunne fjerne det man har tegnet. 
+## Testing og kodekvalitet
+
+### Testing
+ For å teste prosjektet kjør kommandoen `mvn test`. For å sjekke testdekningsgraden kjør kommandoen `mvn jacoco:report`. Dette vil generere en rapport for forrige test i **target/site/jacoco/index.html** for hver modul.
+For å få se rapport for alle modulene, åpne **notpaint/codecoverage.html**
+
+### Kodekvalitet
+ Vi bruker tre verktøy for å opprettholde kodekvaliteten:
+ * **checkstyle**: Gir varlser om stilmessige uregelmessigheter som ikke følger de
+ gitte reglene for kodestil. Disse innstillingene er konfigurert i `notpaint/custom_checks.xml` som er en litt modifisert versjon av "Google Java Style"
+ * **spotbugs**: Utfører statisk analyse av den kompilerte koden for å se etter vanlige feil. Konfigurasjon for unntak av disse reglene gjøres i `notpaint/spotbugs-exclude.xml`
+ * **JaCoCo**: Verktøy som analyserer testdekningsgraden etter testing.
+
+## Modularisering
+Prosjektet består av 2 moduler:
+* `core`: Inneholder kode for lagring, lasting, og opprettelse av nye spill.
+* `fxui`: Inneholder kode som interagerer med eller er avhengig av JavaFX. 
+
 
 ## Klassediagram
 
