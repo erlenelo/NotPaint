@@ -186,9 +186,8 @@
                         <configuration>
                             <outputFilename>classDiagram.uml</outputFilename>
                             <scanPackages>                                
-                                <scanPackage>
-                                notpaint.core
-                                </scanPackage>
+                                <scanPackage>notpaint.core</scanPackage>
+                                <scanPackage>notpaint.fxui</scanPackage>
                             </scanPackages>
                         </configuration>
                     </execution>
