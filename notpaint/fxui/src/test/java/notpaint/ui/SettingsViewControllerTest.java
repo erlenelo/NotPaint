@@ -46,6 +46,10 @@ public class SettingsViewControllerTest extends ApplicationTest {
 
     @AfterAll
     public static void cleanUp() throws IOException {
+        if (!Files.exists(dataPath)) {
+            return;
+        }
+
         var files = Files.list(dataPath).toList();
         for (var file : files) { // Delete every file in datapath dir
             Files.delete(file);
