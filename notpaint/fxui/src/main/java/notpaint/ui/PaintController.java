@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
 import notpaint.core.Brushes.CircleBrush;
 import notpaint.core.Brushes.SquareBrush;
 import notpaint.ui.PaintTools.Tool;
@@ -47,7 +46,8 @@ public class PaintController {
     @FXML
     Canvas drawingCanvas;
 
-    @FXML Text countDown, wordToDrawText;
+    @FXML
+    Text countDown, wordToDrawText;
 
     @FXML
     ColorPicker colorPicker;
@@ -56,7 +56,6 @@ public class PaintController {
 
     private Tool selectedTool;
 
-   
     private FileChooser chooser;
     private GameInfoPersistence gameInfoPersistence;
     private ImagePersistence imagePersistence;
@@ -74,9 +73,9 @@ public class PaintController {
         // Set the default settings and tools
 
         loadGameInfo();
-        
+
         settings = new PaintSettings();
-        
+
         settings.setColor(Color.BLACK);
         selectedTool = new PenTool(settings);
         setCircleBrush(10);
@@ -92,31 +91,32 @@ public class PaintController {
 
         // Init file chooser settings. TODO: Remove when moving to REST API
         imagePersistence = new LocalImagePersistence();
-        
+
         colorPicker.setValue(Color.BLACK);
 
         chooser = new FileChooser();
         chooser.getExtensionFilters().add(new ExtensionFilter("PNG Image", "*.png"));
     }
 
-
-    private void loadGameInfo() {        
+    private void loadGameInfo() {
         drawingCanvas.sceneProperty().addListener((observableScene, oldScene, newScene) -> {
-            if(newScene != null) {
-                Stage stage = (Stage)newScene.getWindow();
-                gameInfoPersistence = (GameInfoPersistence)stage.getUserData();
-                if(gameInfoPersistence == null)
+            if (newScene != null) {
+                Stage stage = (Stage) newScene.getWindow();
+                gameInfoPersistence = (GameInfoPersistence) stage.getUserData();
+                if (gameInfoPersistence == null)
                     throw new IllegalStateException("Stage has no gameInfoPersistence set");
 
                 gameInfo = gameInfoPersistence.getActiveGameInfo();
 
-                if(gameInfo == null) 
-                    throw new IllegalArgumentException("Loaded PaintController but activeGameInfo was not set in stage");
+                if (gameInfo == null)
+                    throw new IllegalArgumentException(
+                            "Loaded PaintController but activeGameInfo was not set in stage");
 
                 System.out.println("GameInfo loaded: " + gameInfo.toString());
 
-                // Load the current image into the canvas, unless this is the first iteration. In that case there is no image.
-                if(gameInfo.getCurrentIterations() > 0) {
+                // Load the current image into the canvas, unless this is the first iteration.
+                // In that case there is no image.
+                if (gameInfo.getCurrentIterations() > 0) {
                     loadImage(gameInfo.getImagePath());
                 }
 
@@ -131,17 +131,18 @@ public class PaintController {
                     @Override
                     public void run() {
                         countDownSecondsLeft -= 1;
-                        if(countDownSecondsLeft < 0) {     
+                        if (countDownSecondsLeft < 0) {
                             // finishDrawing() is not safe to run from a separate thread.
                             // Platform.runLater schedules the function to be run on the main UI thread.
                             Platform.runLater(new Runnable() {
-                                @Override public void run() {
+                                @Override
+                                public void run() {
                                     finishDrawing();
                                 }
-                            });                            
-                        }else {
+                            });
+                        } else {
                             countDown.setText(countDownSecondsLeft.toString());
-                        }                        
+                        }
                     }
                 };
                 // Run timer once every second.
@@ -149,32 +150,34 @@ public class PaintController {
             }
         });
     }
+
     @FXML
-    private void finishDrawing()  {
-        if(countDownTimer != null)
+    private void finishDrawing() {
+        if (countDownTimer != null)
             countDownTimer.cancel();
-            
+
         gameInfo.addIteration("UnknownEditor");
-        //TODO: Save gameinfo and image to json and png respectively
+        // TODO: Save gameinfo and image to json and png respectively
         saveImageToPath(gameInfo.getImagePath());
 
         try {
-            gameInfoPersistence.saveGameInfo(gameInfo);  
+            gameInfoPersistence.saveGameInfo(gameInfo);
             App.setRoot("GameSelectView");
-        } catch(IOException ex) {
+        } catch (IOException ex) {
             ex.printStackTrace();
-            AlertUtil.ErrorAlert("ERROR", "Error occured while saving drawing.");
+            AlertUtil.errorAlert("ERROR", "Error occured while saving drawing.");
         }
     }
+
     private void saveImageToPath(String path) {
         WritableImage image = new WritableImage((int) drawingCanvas.getWidth(), (int) drawingCanvas.getHeight());
-        image = drawingCanvas.snapshot(new SnapshotParameters(), image);    
+        image = drawingCanvas.snapshot(new SnapshotParameters(), image);
         System.out.println("Saving to path: " + path);
         try {
             imagePersistence.save(image, path);
         } catch (IOException ex) {
             ex.printStackTrace();
-            AlertUtil.ErrorAlert("ERROR","Failed to save image!");
+            AlertUtil.errorAlert("ERROR", "Failed to save image!");
         }
     }
 
@@ -220,6 +223,7 @@ public class PaintController {
     private void resetCanvas() {
         loadImage(gameInfo.getImagePath());
     }
+
     @FXML
     private void updatePaintColor() {
         settings.setColor(colorPicker.getValue());

@@ -1,8 +1,7 @@
-package notpaint.core;
+package notpaint.ui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +9,6 @@ import javafx.scene.paint.Color;
 import notpaint.core.Brushes.Brush;
 import notpaint.core.Brushes.CircleBrush;
 import notpaint.core.Brushes.SquareBrush;
-
 
 public class PaintSettingsTest {
     @Test
@@ -30,9 +28,6 @@ public class PaintSettingsTest {
         Color test = paintSettings.getColor();
         assertNotNull(test);
     }
-        
-
-    
 
     @Test
     public void testSetBrush() {
@@ -49,7 +44,6 @@ public class PaintSettingsTest {
         paintSettings.setColor(Color.BLACK);
         paintSettings.getColor();
         assertNotNull(paintSettings.color);
-        
 
-    } 
+    }
 }
