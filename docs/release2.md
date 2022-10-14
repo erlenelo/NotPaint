@@ -19,5 +19,12 @@ Vi har atskilt alt av Core-logikk fra UI, og laget en mappe for core, og en mapp
 ## Tester
 Begge moduler (core og fxui) har nå tester til classene, og prosjektet har nå en testdekningsgrad på over 80% i begge moduler. Checkstyle og spotbugs er også blitt implementert.
 
+## Om valg knyttet til arbeid og progresjon under sprint 2
+Den formelle koordineringen av arbeidet mellom gruppen foregår på GitLab. Vi har først samlet oss fysiskt for å gå gjennom alt av krav, og utvikle issues til sprint 2. Deretter har vi delt opp ansvar for hver issue ut ifra hva hvert medlem har vært interessert i å jobbe med, samt med et mål om at alle skal erfaring med flere forskjellige oppgaver. Endringer i hvem som har hatt ansvaret for hva har endret seg litt underveis, etter behov og tidshensyn.
+
+Parprogrammering har blitt utført under flere deler av kode-utviklingen, slik at alle har fått tatt del i programmeringen. Hovedsaklig har vi tatt ibruk liveshare på VScode på de fleste av parprogrammerings-sessionene. Vi har også hatt faste dager hvor vi har møtt fysisk for å jobbe sammen.
+
+Utvikling av tester ble gjort etter etter at både modulariseringen var fullført, og de fleste klassene for sprint 2 var programmert. Dette fordi det var lite hensiktsmessig å lage tester for klasser som ikke var ferdige ennå. Checkstyle og Spotbugs har også blitt brukt for forbedret kodekvalitet.
+
 ## Om innleveringen
 Vi støtte på den del problemer knyttet til at flere av gruppemedlemene måtte reise siste uka mot innlevering. Dette førte til noen mangler på release2 som ikke ble ferdig helt i tide, samt merge utfordringer med de forskjellige branchene. Læringsassisten ble informert 13/10 om at vi ønsket å levere dagen etter for å rette opp i arbeidet. Vi fikk så beskjed om at det var greit, men at vi også skulle sende en mail til fagstaben. Vi fikk så bekreftelse om at dette var iorden, gitt at vi la til litt tekst om dette i dokumentasjonen. 
