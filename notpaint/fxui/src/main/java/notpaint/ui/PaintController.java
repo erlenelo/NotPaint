@@ -11,7 +11,6 @@ import notpaint.ui.PaintTools.Tool;
 import notpaint.ui.PaintTools.EraserTool;
 import notpaint.ui.PaintTools.PenTool;
 import notpaint.core.GameInfo;
-import notpaint.core.PaintSettings;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.SnapshotParameters;
@@ -31,6 +30,7 @@ import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
 import notpaint.core.Persistence.GameInfoPersistence;
 import notpaint.ui.Persistence.*;
+import notpaint.ui.Util.AlertUtil;
 
 /**
  * Controller for the view that handles the painting.
@@ -111,14 +111,13 @@ public class PaintController {
                 gameInfo = gameInfoPersistence.getActiveGameInfo();
 
                 if(gameInfo == null) 
-                    throw new IllegalArgumentException("Loaded PaintController but gameInfo was not set in stage");
+                    throw new IllegalArgumentException("Loaded PaintController but activeGameInfo was not set in stage");
 
                 System.out.println("GameInfo loaded: " + gameInfo.toString());
 
                 // Load the current image into the canvas, unless this is the first iteration. In that case there is no image.
                 if(gameInfo.getCurrentIterations() > 0) {
-                    Image loadedImage = imagePersistence.load(gameInfo.getImagePath());
-                    drawingCanvas.getGraphicsContext2D().drawImage(loadedImage, 0, 0);
+                    loadImage(gameInfo.getImagePath());
                 }
 
                 wordToDrawText.setText(gameInfo.getWord());
@@ -139,12 +138,10 @@ public class PaintController {
                                 @Override public void run() {
                                     finishDrawing();
                                 }
-                            });
-                            
+                            });                            
                         }else {
                             countDown.setText(countDownSecondsLeft.toString());
-                        }
-                        
+                        }                        
                     }
                 };
                 // Run timer once every second.
@@ -166,25 +163,26 @@ public class PaintController {
             App.setRoot("GameSelectView");
         } catch(IOException ex) {
             ex.printStackTrace();
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setContentText("Error occured while saving drawing.");
-            alert.setHeaderText("ERROR");
-            alert.show();
+            AlertUtil.ErrorAlert("ERROR", "Error occured while saving drawing.");
         }
     }
-    void saveImageToPath(String path) {
+    private void saveImageToPath(String path) {
         WritableImage image = new WritableImage((int) drawingCanvas.getWidth(), (int) drawingCanvas.getHeight());
         image = drawingCanvas.snapshot(new SnapshotParameters(), image);    
         System.out.println("Saving to path: " + path);
         try {
             imagePersistence.save(image, path);
-        } catch (IOException e) {
-            Alert error = new Alert(AlertType.ERROR);
-            error.setTitle("Failed to save image!");
-            error.setContentText(e.getMessage());
-            error.showAndWait();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            AlertUtil.ErrorAlert("ERROR","Failed to save image!");
         }
     }
+
+    private void loadImage(String path) {
+        Image loadedImage = imagePersistence.load(path);
+        drawingCanvas.getGraphicsContext2D().drawImage(loadedImage, 0, 0);
+    }
+
     /**
      * Set the brush to be a circle
      * 
@@ -219,47 +217,12 @@ public class PaintController {
     }
 
     @FXML
-    private void clearCanvas() {
-        drawingCanvas.getGraphicsContext2D().clearRect(0, 0, drawingCanvas.getWidth(), drawingCanvas.getHeight());
-        initialize();
+    private void resetCanvas() {
+        loadImage(gameInfo.getImagePath());
     }
     @FXML
     private void updatePaintColor() {
         settings.setColor(colorPicker.getValue());
     }
-    // @FXML
-    // private void save() {
-    //     File file = chooser.showSaveDialog(null);
-    //     if (file == null)
-    //         return;
-
-    //     WritableImage image = new WritableImage((int) drawingCanvas.getWidth(), (int) drawingCanvas.getHeight());
-    //     drawingCanvas.snapshot(new Callback<SnapshotResult, Void>() {
-    //         @Override
-    //         public Void call(SnapshotResult arg0) {
-    //             System.out.println("Saving to path: " + file.toString());
-    //             try {
-    //                 persistence.Save(image, file.toString());
-    //             } catch (IOException e) {
-    //                 Alert error = new Alert(AlertType.ERROR);
-    //                 error.setTitle("Failed to save image!");
-    //                 error.setContentText(e.getMessage());
-    //                 error.showAndWait();
-    //             }
-    //             return null;
-    //         }
-    //     }, new SnapshotParameters(), image);
-    // }
-
-    // @FXML
-    // private void load() {
-    //     File file = chooser.showOpenDialog(null);
-    //     if (file == null)
-    //         return;
-
-    //     System.out.println("Loading image at path: " + file.toURI().toString());
-    //     Image loadedImage = persistence.Load(file.toURI().toString());
-    //     drawingCanvas.getGraphicsContext2D().drawImage(loadedImage, 0, 0);
-    // }
 
 }

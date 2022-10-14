@@ -15,6 +15,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import notpaint.core.Persistence.GameInfoPersistence;
+import notpaint.ui.Util.AlertUtil;
+
 import java.util.Comparator;
 
 public class GameSelectController {
@@ -24,7 +26,6 @@ public class GameSelectController {
 
     @FXML
     private TilePane activeTilePane, completedTilePane;
-
 
     @FXML
     private Text secondsPerRound, iterations, lastEdit, lastEditor;
@@ -57,13 +58,14 @@ public class GameSelectController {
     @FXML
     private void initialize() {
         // Get the scene from any Node object.
-        // Because the scene is not set in initialize, we need to listen for the property to update.
+        // Because the scene is not set in initialize, we need to listen for the
+        // property to update.
         secondsPerRound.sceneProperty().addListener((observableScene, oldScene, newScene) -> {
             if (newScene != null) {
                 var stage = newScene.getWindow();
                 // The window property is also initially not set the first time the app starts.
                 // If it is null, listen for the property to update an then set it
-                if (stage == null) {                    
+                if (stage == null) {
                     newScene.windowProperty().addListener((observableWindow, oldWindow, newWindow) -> {
                         // Create a persistence instance and set it as the user data for the stage.
                         // This makes it accessible from all other scenes.
@@ -90,10 +92,7 @@ public class GameSelectController {
             displayGameInfos(allInfos);
         } catch (IOException ex) {
             ex.printStackTrace();
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setContentText("Error occured while loading games.");
-            alert.setHeaderText("ERROR");
-            alert.show();
+            AlertUtil.errorAlert("ERROR", "Error occured while loading games.");
         }
     }
 
@@ -112,7 +111,8 @@ public class GameSelectController {
     private void setSelectedGameInfo(GameInfo info) {
         selectedGameInfo = info;
         secondsPerRound.setText(Integer.toString(info.getSecondsPerRound()));
-        iterations.setText(String.format("%s / %s", info.getCurrentIterations(), info.getMaxIterations()));;
+        iterations.setText(String.format("%s / %s", info.getCurrentIterations(), info.getMaxIterations()));
+        ;
         lastEdit.setText(info.getLastEditTime().toString());
         lastEditor.setText(info.getLastEditor());
     }
@@ -124,7 +124,13 @@ public class GameSelectController {
 
     @FXML
     private void handleJoinProject() throws IOException {
-        gameInfoPersistence.setActiveGameInfo(selectedGameInfo);
-        App.setRoot("PaintView");
+        if (selectedGameInfo == null) {
+            AlertUtil.warningAlert("Warning", "You must select a project to join first.");
+        }else if(selectedGameInfo.isFinished()) {
+            AlertUtil.warningAlert("Warning", "You cannot join a completed project.");
+        } else {
+            gameInfoPersistence.setActiveGameInfo(selectedGameInfo);
+            App.setRoot("PaintView");
+        }
     }
 }

@@ -1,4 +1,4 @@
-package notpaint.core;
+package notpaint.ui;
 
 import notpaint.core.Brushes.Brush;
 import javafx.scene.paint.Color;

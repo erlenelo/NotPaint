@@ -1,7 +1,7 @@
 package notpaint.ui.PaintTools;
 
-import notpaint.core.PaintSettings;
 import javafx.scene.canvas.Canvas;
+import notpaint.ui.PaintSettings;
 
 public abstract class Tool {
 
