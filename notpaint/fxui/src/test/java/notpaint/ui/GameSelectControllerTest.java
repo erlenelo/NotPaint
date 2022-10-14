@@ -1,7 +1,7 @@
 package notpaint.ui;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxAssert;
@@ -12,8 +12,10 @@ import org.testfx.util.WaitForAsyncUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import notpaint.core.GameInfo;
 
 public class GameSelectControllerTest extends ApplicationTest {
     private GameSelectController controller;
@@ -32,6 +34,21 @@ public class GameSelectControllerTest extends ApplicationTest {
     @Test
     public void testController() {
         assertNotNull(controller);
+    }
+
+    @Test
+    public void testSetSelectedGameInfo() {
+        GameInfo info = new GameInfo(44, 12, false);
+        info.addIteration("testAuthor");
+        controller.setSelectedGameInfo(info);
+        Text secondsPerRoundText = lookup("#secondsPerRound").query();
+        Text iterationsText = lookup("#iterations").query();
+        Text lastEditText = lookup("#lastEdit").query();
+        Text lastEditorText = lookup("#lastEditor").query();
+        assertEquals("12", secondsPerRoundText.getText());
+        assertEquals("1 / 44", iterationsText.getText());
+        assertEquals("testAuthor", lastEditorText.getText());
+        assertEquals(info.getLastEditTime().toString(), lastEditText.getText());
     }
 
     @Test
