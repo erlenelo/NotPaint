@@ -73,4 +73,3 @@ Viktig å kunne gjøre:
 - bli med i en tegning
 - kunne tegne med ulike farger og ulik form og størrelse på pensler. 
 - Bruke viskelær på det en selv har tegnet. 
-
