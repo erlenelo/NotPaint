@@ -1,4 +1,4 @@
-package notpaint.core.Persistence;
+package notpaint.core.persistence;
 
 import java.io.IOException;
 import java.nio.file.Files;

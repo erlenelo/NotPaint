@@ -10,7 +10,7 @@ import notpaint.core.GameInfo;
 import notpaint.core.Brushes.Brush;
 import notpaint.core.Brushes.CircleBrush;
 import notpaint.core.Brushes.SquareBrush;
-import notpaint.core.Persistence.GameInfoPersistence;
+import notpaint.core.persistence.GameInfoPersistence;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

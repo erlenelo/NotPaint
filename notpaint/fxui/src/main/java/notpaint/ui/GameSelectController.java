@@ -11,7 +11,7 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.text.Text;
 import notpaint.core.GameInfo;
 import javafx.stage.Stage;
-import notpaint.core.Persistence.GameInfoPersistence;
+import notpaint.core.persistence.GameInfoPersistence;
 import notpaint.ui.Util.AlertUtil;
 
 import java.util.Comparator;

@@ -12,7 +12,7 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import notpaint.core.GameInfo;
-import notpaint.core.Persistence.GameInfoPersistence;
+import notpaint.core.persistence.GameInfoPersistence;
 import notpaint.ui.Util.AlertUtil;
 
 public class SettingsViewController {

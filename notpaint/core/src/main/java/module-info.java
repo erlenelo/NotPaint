@@ -3,7 +3,7 @@ module notpaint.core {
 
     exports notpaint.core;
     exports notpaint.core.Brushes;
-    exports notpaint.core.Persistence;
+    exports notpaint.core.persistence;
     
     opens notpaint.core to com.fasterxml.jackson.databind;
 }

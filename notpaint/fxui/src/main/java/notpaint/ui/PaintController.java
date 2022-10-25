@@ -23,7 +23,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import notpaint.core.Persistence.GameInfoPersistence;
+import notpaint.core.persistence.GameInfoPersistence;
 import notpaint.ui.Persistence.*;
 import notpaint.ui.Util.AlertUtil;
 

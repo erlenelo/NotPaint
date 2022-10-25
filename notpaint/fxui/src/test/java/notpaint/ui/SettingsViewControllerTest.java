@@ -20,7 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import notpaint.core.Persistence.GameInfoPersistence;
+import notpaint.core.persistence.GameInfoPersistence;
 
 public class SettingsViewControllerTest extends ApplicationTest {
     private SettingsViewController controller;
