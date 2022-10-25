@@ -21,7 +21,7 @@
     <Bug code="UrF" />
 </Match>
 <Match>
-    <Class name="notpaint.ui.Persistence.LocalImagePersistence" />
+    <Class name="notpaint.ui.persistence.LocalImagePersistence" />
     <Bug code="RV" />
 </Match>
 </FindBugsFilter>

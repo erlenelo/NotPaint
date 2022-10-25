@@ -1,4 +1,4 @@
-package notpaint.ui.Persistence;
+package notpaint.ui.persistence;
 
 import java.io.File;
 import java.io.IOException;
