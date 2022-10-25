@@ -6,15 +6,14 @@ import java.util.function.UnaryOperator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import notpaint.core.GameInfo;
 import notpaint.core.Persistence.GameInfoPersistence;
+import notpaint.ui.Util.AlertUtil;
 
 public class SettingsViewController {
 
@@ -71,10 +70,7 @@ public class SettingsViewController {
             stage.show();
         } catch(IOException IOException) {
             IOException.printStackTrace();
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setContentText("Error opening PaintView");
-            alert.setHeaderText("ERROR");
-            alert.show();
+            AlertUtil.errorAlert("ERROR", "Error opening paintview");
         }
     }
 }
