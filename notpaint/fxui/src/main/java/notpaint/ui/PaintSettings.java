@@ -1,8 +1,11 @@
 package notpaint.ui;
 
-import notpaint.core.Brushes.Brush;
 import javafx.scene.paint.Color;
+import notpaint.core.brushes.Brush;
 
+/**
+ * Data class that stores data about the current paint settings.
+ */
 public class PaintSettings {
     Color color;
     private Brush brush;

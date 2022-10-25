@@ -3,20 +3,11 @@ package notpaint.ui;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import notpaint.core.Brushes.CircleBrush;
-import notpaint.core.Brushes.SquareBrush;
-import notpaint.ui.PaintTools.Tool;
-import notpaint.ui.PaintTools.EraserTool;
-import notpaint.ui.PaintTools.PenTool;
-import notpaint.core.GameInfo;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
@@ -24,12 +15,17 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.FileChooser.ExtensionFilter;
-import notpaint.core.Persistence.GameInfoPersistence;
-import notpaint.ui.Persistence.*;
-import notpaint.ui.Util.AlertUtil;
+import notpaint.core.GameInfo;
+import notpaint.core.brushes.CircleBrush;
+import notpaint.core.brushes.SquareBrush;
+import notpaint.core.persistence.GameInfoPersistence;
+import notpaint.ui.painttools.EraserTool;
+import notpaint.ui.painttools.PenTool;
+import notpaint.ui.painttools.Tool;
+import notpaint.ui.persistence.ImagePersistence;
+import notpaint.ui.persistence.LocalImagePersistence;
+import notpaint.ui.util.AlertUtil;
 
 /**
  * Controller for the view that handles the painting.
@@ -38,16 +34,31 @@ import notpaint.ui.Util.AlertUtil;
 public class PaintController {
 
     @FXML
-    Circle circleSmall, circleMedium, circleBig;
+    Circle circleSmall;
 
     @FXML
-    Rectangle squareSmall, squareMedium, squareBig;
+    Circle circleMedium;
+
+    @FXML
+    Circle circleBig;
+
+    @FXML
+    Rectangle squareSmall;
+
+    @FXML
+    Rectangle squareMedium;
+
+    @FXML
+    Rectangle squareBig;
 
     @FXML
     Canvas drawingCanvas;
 
     @FXML
-    Text countDown, wordToDrawText;
+    Text countDown;
+
+    @FXML
+    Text wordToDrawText;
 
     @FXML
     ColorPicker colorPicker;
@@ -56,7 +67,6 @@ public class PaintController {
 
     Tool selectedTool;
 
-    private FileChooser chooser;
     private GameInfoPersistence gameInfoPersistence;
     private ImagePersistence imagePersistence;
     private GameInfo gameInfo;
@@ -68,10 +78,13 @@ public class PaintController {
         App.setRoot("GameSelectView");
     }
 
-    @FXML
-    public void initialize() {
-        // Set the default settings and tools
+    
+    
 
+    /**
+     * Set the default settings and tools.
+     */
+    @FXML public void initialize() {
         loadGameInfo();
 
         settings = new PaintSettings();
@@ -89,13 +102,9 @@ public class PaintController {
         squareMedium.setOnMouseClicked(e -> setSquareBrush(10));
         squareBig.setOnMouseClicked(e -> setSquareBrush(17));
 
-        // Init file chooser settings. TODO: Remove when moving to REST API
         imagePersistence = new LocalImagePersistence();
 
         colorPicker.setValue(Color.BLACK);
-
-        chooser = new FileChooser();
-        chooser.getExtensionFilters().add(new ExtensionFilter("PNG Image", "*.png"));
     }
 
     private void loadGameInfo() {
@@ -105,9 +114,12 @@ public class PaintController {
                 // The window property is also initially not set the first time the app starts.
                 // If it is null, listen for the property to update an then set it
                 if (stage == null) {
-                    newScene.windowProperty().addListener((observableWindow, oldWindow, newWindow) -> {
-                        if (newWindow != null)
+                    newScene.windowProperty().addListener((
+                        observableWindow, oldWindow, newWindow) -> {
+                        // Cell onStageLoaded when window(stage) is populated with a value
+                        if (newWindow != null) {
                             onStageLoaded((Stage) newWindow);
+                        }
                     });
                 } else {
                     onStageLoaded((Stage) stage);
@@ -118,14 +130,15 @@ public class PaintController {
 
     private void onStageLoaded(Stage stage) {
         gameInfoPersistence = (GameInfoPersistence) stage.getUserData();
-        if (gameInfoPersistence == null)
+        if (gameInfoPersistence == null) {
             throw new IllegalStateException("Stage has no gameInfoPersistence set");
-
+        }
         gameInfo = gameInfoPersistence.getActiveGameInfo();
         //
-        if (gameInfo == null)
-            throw new IllegalArgumentException("Loaded PaintController but activeGameInfo was not set in stage");
-
+        if (gameInfo == null) {
+            throw new IllegalArgumentException(
+                "Loaded PaintController but activeGameInfo was not set in stage");
+        }
         // Load the current image into the canvas, unless this is the first iteration.
         // In that case there is no image.
         if (gameInfo.getCurrentIterations() > 0) {
@@ -164,11 +177,12 @@ public class PaintController {
 
     @FXML
     private void finishDrawing() {
-        if (countDownTimer != null)
+        if (countDownTimer != null) {
             countDownTimer.cancel();
+        }
 
         gameInfo.addIteration("UnknownEditor");
-        // TODO: Save gameinfo and image to json and png respectively
+
         saveImageToPath(gameInfoPersistence.getImagePath(gameInfo));
 
         try {
@@ -181,7 +195,8 @@ public class PaintController {
     }
 
     void saveImageToPath(String path) {
-        WritableImage image = new WritableImage((int) drawingCanvas.getWidth(), (int) drawingCanvas.getHeight());
+        WritableImage image = new WritableImage(
+            (int) drawingCanvas.getWidth(), (int) drawingCanvas.getHeight());
         image = drawingCanvas.snapshot(new SnapshotParameters(), image);
 
         try {
@@ -198,8 +213,8 @@ public class PaintController {
     }
 
     /**
-     * Set the brush to be a circle
-     * 
+     * Set the brush to be a circle.
+     *
      * @param size Radius of the brush
      */
     private void setCircleBrush(int size) {
@@ -207,8 +222,8 @@ public class PaintController {
     }
 
     /**
-     * Set the brush to be a square
-     * 
+     * Set the brush to be a square.
+     *
      * @param size 'Radius' of the brush (half of the square side length)
      */
     private void setSquareBrush(int size) {
@@ -232,7 +247,8 @@ public class PaintController {
 
     @FXML
     private void resetCanvas() {
-        drawingCanvas.getGraphicsContext2D().clearRect(0, 0, drawingCanvas.getWidth(), drawingCanvas.getHeight());
+        drawingCanvas.getGraphicsContext2D().clearRect(
+            0, 0, drawingCanvas.getWidth(), drawingCanvas.getHeight());
         loadImage(gameInfoPersistence.getImagePath(gameInfo));
     }
 

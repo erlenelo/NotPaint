@@ -2,32 +2,41 @@ package notpaint.ui;
 
 import java.io.IOException;
 import java.util.function.UnaryOperator;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import notpaint.core.GameInfo;
-import notpaint.core.Persistence.GameInfoPersistence;
+import notpaint.core.persistence.GameInfoPersistence;
+import notpaint.ui.util.AlertUtil;
 
+/**
+ * Controller for the view that handles the settings when configuring a new game.
+ */
 public class SettingsViewController {
 
+    @FXML
+    TextField setTimeTextField;
 
     @FXML
-    TextField setTimeTextField, maxIterationsTextField;
+    TextField maxIterationsTextField;
 
     @FXML
-    RadioButton checkboxYes, checkboxNo;
+    RadioButton checkboxYes;
+
+    @FXML
+    RadioButton checkboxNo;
 
     @FXML
     ToggleGroup newWordToggleGroup;
 
+    /**
+     * Configure the controller to have integer filters for the text fields.
+     */
     @FXML
     public void initialize() {
 
@@ -41,8 +50,6 @@ public class SettingsViewController {
 
         setTimeTextField.setTextFormatter(new TextFormatter<Integer>(integerFilter));
         maxIterationsTextField.setTextFormatter(new TextFormatter<Integer>(integerFilter));
-
-        
     }
 
 
@@ -60,25 +67,18 @@ public class SettingsViewController {
         boolean newWordEachRound = checkboxYes.isSelected();        
     
         GameInfo newGameInfo = new GameInfo(maxIterations, secondsPerRound, newWordEachRound);
-        // TODO: SAVE GAMEINFO TO JSON!
         Node node = (Node) event.getSource();
-
         Stage stage = (Stage) node.getScene().getWindow();
 
-        
-        
         try {
             stage.close();
-            GameInfoPersistence gameInfoPersistence = (GameInfoPersistence)stage.getUserData();
+            GameInfoPersistence gameInfoPersistence = (GameInfoPersistence) stage.getUserData();
             gameInfoPersistence.setActiveGameInfo(newGameInfo);
             App.setRoot("PaintView");            
             stage.show();
-        } catch(IOException IOException) {
-            IOException.printStackTrace();
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setContentText("Error opening PaintView");
-            alert.setHeaderText("ERROR");
-            alert.show();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+            AlertUtil.errorAlert("ERROR", "Error opening paintview");
         }
     }
 }

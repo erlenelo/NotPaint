@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FindBugsFilter>
 <Match>
-   <Class name="notpaint.core.Persistence.GameInfoPersistence" />
+   <Class name="notpaint.core.persistence.GameInfoPersistence" />
    <Bug code="EI,EI2" />
 </Match>
 <Match>
@@ -13,7 +13,7 @@
     <Bug code="UrF" />
 </Match>
 <Match>
-    <Class name="notpaint.ui.PaintTools.Tool" />
+    <Class name="notpaint.ui.painttools.Tool" />
     <Bug code="EI2" />
 </Match>
 <Match>
@@ -21,7 +21,7 @@
     <Bug code="UrF" />
 </Match>
 <Match>
-    <Class name="notpaint.ui.Persistence.LocalImagePersistence" />
+    <Class name="notpaint.ui.persistence.LocalImagePersistence" />
     <Bug code="RV" />
 </Match>
 </FindBugsFilter>
