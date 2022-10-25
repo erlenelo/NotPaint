@@ -22,9 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.FileChooser.ExtensionFilter;
 import notpaint.core.Persistence.GameInfoPersistence;
 import notpaint.ui.Persistence.*;
 import notpaint.ui.Util.AlertUtil;
@@ -54,7 +52,6 @@ public class PaintController {
 
     Tool selectedTool;
 
-    private FileChooser chooser;
     private GameInfoPersistence gameInfoPersistence;
     private ImagePersistence imagePersistence;
     private GameInfo gameInfo;
@@ -87,13 +84,9 @@ public class PaintController {
         squareMedium.setOnMouseClicked(e -> setSquareBrush(10));
         squareBig.setOnMouseClicked(e -> setSquareBrush(17));
 
-        // Init file chooser settings. TODO: Remove when moving to REST API
         imagePersistence = new LocalImagePersistence();
 
         colorPicker.setValue(Color.BLACK);
-
-        chooser = new FileChooser();
-        chooser.getExtensionFilters().add(new ExtensionFilter("PNG Image", "*.png"));
     }
 
     private void loadGameInfo() {
