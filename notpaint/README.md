@@ -40,9 +40,10 @@ Dette er grensesnittet til instillinger ved laging av nytt prosjekt.
 
 ## Brukerhistorie (US-1)
 
-Som bruker ønsker jeg å kunne tegne på et lerret og lagre tegningen lokalt.
+Som bruker ønsker jeg å ha en komfortabel tegneopplevelse, uten forsinkelser i tegningen, samt å fortløpende kunne angre og gjøre om endringer jeg gjør mens jeg tegner.
 
-Brukeren skal kunne tegne med forskjellige farger, samt størrelse og form på pensel. Det som har blitt tegnet skal også kunne viskes ut med et innebygd viskelær. Til slutt, når tegningen er ferdigstilt, skal bruker kunne lagre den, slik at de senere kan fortsette der de slapp og tegne videre.
+Brukeren skal kunne, etter valg av innstillinger, tegne på lerretet med ønskede funksjoner og såpass lite forsinkelse i bevegelse av penselen at det ikke forstyrrer utseende til det som ble tegnet. Under selve tegningen skal brukeren nå kunne angre (undo) eller gjøre om (redo) endringer som brukeren gjør fortløpende mens de tegner. Dette skal kunne utføres med både utpekte frem- og tilbake knapper som er synlig ved siden av lerretet, og knapper på tastaturet som brukeren selv har tildelt angre- og gjøre om funksjonen.
+
 
 Viktig å kunne se:
 - Et lerret
@@ -50,26 +51,33 @@ Viktig å kunne se:
 - Valg av form på pensel
 - Valg av farge
 - Viskelær
+- knapper (i form av piler) for undo og redo
 
 Viktig å kunne gjøre:
 - Velge pensel og male på lerretet med valgt farge
+- Kunne tegne uten at forsinkelsen på børsten påvirker utseendet til penselstrøket
 - Kunne viske ut det man har malt
+- Kunne angre (undo) og gjøre om (redo) endringer man gjør fortløpende under tegningen
 - Kunne lagre tegningen til senere bruk
 
 ## Brukerhistorie US2-2:
-Som bruker vil jeg kunne bli med i et spill og tegne på et lerret.
 
-Brukeren skal kunne bli med i en tegning som andre personer har tegnet på. Brukeren skal motta et ord med en angitt tid og deretter kunne tegne på et lerret.
+Som bruker ønsker jeg å kunne se hvem som redigerte både mine og andres prosjekter sist.
+
+Bruker skal kunne opprette et kallenavn for sin bruker. Dette brukernavnet skal bli brukt til å fremheve hvem som opprettet, eller sist redigerte, hvert av prosjektene som ligger i oversiktssiden. Brukernavnet skal velges i et vindu som vises når bruker åpner applikasjonen. Bruker skal også ha mulighet til å enten bli, eller ikke bli husket til neste gang de åpner appen; d.v.s. at bruker skal kunne trykke på en avmerkingsboks og beholde brukernavnet til neste gang, eller ikke, alt etter hva bruker ønsker.
+
 
 Viktig å kunne se: 
-- en knapp som tilsier at du blir med i et lerret.
-- se hva slags ord du skal tegne
-- en tid som teller ned som viser hvor lang tid man har før tiden går ut
-- en ferdig knapp man trykker på hvis man er ferdig før tiden er ute
-- hvor mange som har tegnet før deg, samt hvor mange som skal få lov til å tegne på lerretet
-- skal se farger man kan bruke, ulik størrelse og form på pensler, samt viskelær på den en selv har tegnet
+- På vinduet for opprettelse av brukernavn:
+  - En tekstfelt hvor bruker kan skrive inn ønsket brukernavn
+  - En knapp for å bekrefte og opprette ønsket brukernavn
+- På oversiktssiden som kommer opp etter valg av brukernavn:
+  - en oversikt over alle pågående prosjekter og hvem som redigerte prosjektet sist
+  
 
 Viktig å kunne gjøre:
-- bli med i en tegning
-- kunne tegne med ulike farger og ulik form og størrelse på pensler. 
-- Bruke viskelær på det en selv har tegnet. 
+- På vinduet for opprettelse av brukernavn:
+  - Kunne velge tekstfeltet og skrive inn ønsket brukernavn
+  - Kunne trykke på knappen som setter valgt brukernavn - videre er det viktig at å trykke på denne knappen fører brukeren til oversiktssiden
+- På oversiktssiden som kommer opp etter valg av brukernavn:
+  - Kunne trykke på vilkårlig prosjekt og få opp informasjon om hvem som redigerte prosjektet sist
