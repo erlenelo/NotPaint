@@ -182,8 +182,7 @@ public class PaintController {
         }
 
         gameInfo.addIteration("UnknownEditor");
-        // TODO: Image saving should be done on another class, so we can
-        // have an implementation for both local and remote saving
+
         saveImageToPath(gameInfoPersistence.getImagePath(gameInfo));
 
         try {
