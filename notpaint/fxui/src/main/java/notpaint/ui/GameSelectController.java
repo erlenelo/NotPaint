@@ -1,31 +1,47 @@
 package notpaint.ui;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
 import javafx.scene.text.Text;
-import notpaint.core.GameInfo;
 import javafx.stage.Stage;
+import notpaint.core.GameInfo;
 import notpaint.core.persistence.GameInfoPersistence;
-import notpaint.ui.Util.AlertUtil;
+import notpaint.ui.util.AlertUtil;
 
-import java.util.Comparator;
-
+/**
+ * Controller for the view that handles the game selection.
+ */
 public class GameSelectController {
 
     @FXML
-    private ScrollPane activeProjectsScrollPane, completedProjectsScrollPane;
+    private ScrollPane activeProjectsScrollPane;
 
     @FXML
-    private TilePane activeTilePane, completedTilePane;
+    private ScrollPane completedProjectsScrollPane;
 
     @FXML
-    private Text secondsPerRound, iterations, lastEdit, lastEditor;
+    private TilePane activeTilePane;
+
+    @FXML
+    private TilePane completedTilePane;
+
+    @FXML
+    private Text secondsPerRound;
+
+    @FXML
+    private Text iterations;
+
+    @FXML
+    private Text lastEdit;
+
+    @FXML
+    private Text lastEditor;
 
     private GameInfoPersistence gameInfoPersistence;
     private GameInfo selectedGameInfo;
@@ -35,14 +51,16 @@ public class GameSelectController {
     }
 
     void addImage(GameInfo info) {
-        if (info.isFinished())
+        if (info.isFinished()) {
             addImageToTab(info, completedTilePane);
-        else
+        } else {
             addImageToTab(info, activeTilePane);
+        }
     }
 
     private void addImageToTab(GameInfo info, TilePane pane) {
-        ImageView imageView = new ImageView(new Image(gameInfoPersistence.getImagePath(info), 200, 140, true, true));
+        ImageView imageView = new ImageView(
+            new Image(gameInfoPersistence.getImagePath(info), 200, 140, true, true));
         imageView.maxHeight(150);
         imageView.maxWidth(200);
         imageView.setOnMouseClicked(event -> {
@@ -62,12 +80,13 @@ public class GameSelectController {
                 // The window property is also initially not set the first time the app starts.
                 // If it is null, listen for the property to update an then set it
                 if (stage == null) {
-                    newScene.windowProperty().addListener((observableWindow, oldWindow, newWindow) -> {
-
+                    newScene.windowProperty().addListener((
+                        observableWindow, oldWindow, newWindow) -> {
                         // Create a persistence instance and set it as the user data for the stage.
                         // This makes it accessible from all other scenes.
-                        if (newWindow != null)
+                        if (newWindow != null) {
                             onStageLoaded((Stage) newWindow);
+                        }
                     });
                 } else {
                     onStageLoaded((Stage) stage);
@@ -109,7 +128,8 @@ public class GameSelectController {
     void setSelectedGameInfo(GameInfo info) {
         selectedGameInfo = info;
         secondsPerRound.setText(Integer.toString(info.getSecondsPerRound()));
-        iterations.setText(String.format("%s / %s", info.getCurrentIterations(), info.getMaxIterations()));
+        iterations.setText(String.format(
+            "%s / %s", info.getCurrentIterations(), info.getMaxIterations()));
         lastEdit.setText(info.getLastEditTime().toString());
         lastEditor.setText(info.getLastEditor());
     }
@@ -123,7 +143,7 @@ public class GameSelectController {
     private void handleJoinProject() throws IOException {
         if (selectedGameInfo == null) {
             AlertUtil.warningAlert("Warning", "You must select a project to join first.");
-        }else if(selectedGameInfo.isFinished()) {
+        } else if (selectedGameInfo.isFinished()) {
             AlertUtil.warningAlert("Warning", "You cannot join a completed project.");
         } else {
             gameInfoPersistence.setActiveGameInfo(selectedGameInfo);

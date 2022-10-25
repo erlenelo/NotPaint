@@ -1,9 +1,12 @@
-package notpaint.ui.PaintTools;
+package notpaint.ui.painttools;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 import notpaint.ui.PaintSettings;
 
+/**
+ * Tool that draws on the canvas, using the current brush and color.
+ */
 public class PenTool extends Tool {
 
     public PenTool(PaintSettings settings) {

@@ -3,12 +3,6 @@ package notpaint.ui;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import org.junit.jupiter.api.Test;
-import org.testfx.api.FxAssert;
-import org.testfx.framework.junit5.ApplicationTest;
-import org.testfx.matcher.base.NodeMatchers;
-import org.testfx.util.WaitForAsyncUtils;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,13 +10,22 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import notpaint.core.GameInfo;
+import org.junit.jupiter.api.Test;
+import org.testfx.api.FxAssert;
+import org.testfx.framework.junit5.ApplicationTest;
+import org.testfx.matcher.base.NodeMatchers;
+import org.testfx.util.WaitForAsyncUtils;
 
+/**
+ * Test class for {@link GameSelectController}.
+ */
 public class GameSelectControllerTest extends ApplicationTest {
     private GameSelectController controller;
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(GameSelectController.class.getResource("GameSelectView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(
+            GameSelectController.class.getResource("GameSelectView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         App.scene = scene;
         stage.setScene(scene);
@@ -42,13 +45,16 @@ public class GameSelectControllerTest extends ApplicationTest {
         info.addIteration("testAuthor");
         controller.setSelectedGameInfo(info);
         Text secondsPerRoundText = lookup("#secondsPerRound").query();
-        Text iterationsText = lookup("#iterations").query();
-        Text lastEditText = lookup("#lastEdit").query();
-        Text lastEditorText = lookup("#lastEditor").query();
         assertEquals("12", secondsPerRoundText.getText());
+        
+        Text iterationsText = lookup("#iterations").query();
         assertEquals("1 / 44", iterationsText.getText());
-        assertEquals("testAuthor", lastEditorText.getText());
+
+        Text lastEditText = lookup("#lastEdit").query();
         assertEquals(info.getLastEditTime().toString(), lastEditText.getText());
+
+        Text lastEditorText = lookup("#lastEditor").query();
+        assertEquals("testAuthor", lastEditorText.getText());
     }
 
 

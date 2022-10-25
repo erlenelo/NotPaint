@@ -1,8 +1,11 @@
-package notpaint.ui.PaintTools;
+package notpaint.ui.painttools;
 
 import javafx.scene.canvas.Canvas;
 import notpaint.ui.PaintSettings;
 
+/**
+ * Abstract class that represents a tool that can be used to manipulate the canvas.
+ */
 public abstract class Tool {
 
     protected PaintSettings settings;
