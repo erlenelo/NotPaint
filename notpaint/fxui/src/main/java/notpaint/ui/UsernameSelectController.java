@@ -32,14 +32,12 @@ public class UsernameSelectController {
 
         try {
             stage.close();
-            GameInfoPersistence gameInfoPersistence = (GameInfoPersistence)stage.getUserData();
-            gameInfoPersistence.setActiveGameInfo(newGameInfo);
-            App.setRoot("PaintView");            
+            App.setRoot("GameSelectView");            
             stage.show();
         } catch(IOException IOException) {
             IOException.printStackTrace();
             Alert alert = new Alert(AlertType.ERROR);
-            alert.setContentText("Error opening PaintView");
+            alert.setContentText("Error opening GameSelectView");
             alert.setHeaderText("ERROR");
             alert.show();
         }        
