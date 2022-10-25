@@ -13,7 +13,7 @@
     <Bug code="UrF" />
 </Match>
 <Match>
-    <Class name="notpaint.ui.PaintTools.Tool" />
+    <Class name="notpaint.ui.painttools.Tool" />
     <Bug code="EI2" />
 </Match>
 <Match>
