@@ -92,8 +92,6 @@ public class GameInfoPersistence {
      *         address.
      */
     public String getImagePath(GameInfo info) {
-        // TODO: Determine location where this will be saved. For now will be saved
-        // relative to where program is running from
         String imageName = info.getUuid().toString() + ".png";
         return "file:" + Paths.get(dataPath.toString(), imageName).toString();
     }

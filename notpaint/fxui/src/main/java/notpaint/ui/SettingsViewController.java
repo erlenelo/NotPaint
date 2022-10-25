@@ -60,13 +60,9 @@ public class SettingsViewController {
         boolean newWordEachRound = checkboxYes.isSelected();        
     
         GameInfo newGameInfo = new GameInfo(maxIterations, secondsPerRound, newWordEachRound);
-        // TODO: SAVE GAMEINFO TO JSON!
         Node node = (Node) event.getSource();
-
         Stage stage = (Stage) node.getScene().getWindow();
 
-        
-        
         try {
             stage.close();
             GameInfoPersistence gameInfoPersistence = (GameInfoPersistence)stage.getUserData();

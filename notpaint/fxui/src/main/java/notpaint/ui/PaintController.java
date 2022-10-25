@@ -159,7 +159,8 @@ public class PaintController {
             countDownTimer.cancel();
 
         gameInfo.addIteration("UnknownEditor");
-        // TODO: Save gameinfo and image to json and png respectively
+        // TODO: Image saving should be done on another class, so we can
+        // have an implementation for both local and remote saving
         saveImageToPath(gameInfoPersistence.getImagePath(gameInfo));
 
         try {
