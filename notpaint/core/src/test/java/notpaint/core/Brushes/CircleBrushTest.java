@@ -3,7 +3,6 @@ package notpaint.core.Brushes;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
-import javafx.scene.canvas.Canvas;
 
 public class CircleBrushTest {
 
