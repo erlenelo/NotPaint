@@ -38,7 +38,69 @@ Dette er grensesnittet til instillinger ved laging av nytt prosjekt.
 - Radio-buttonsene indikerer om prosjektet skal ha et nytt randomisert ord som skal tegnes for hver iterasjon, eller om samme ord skal beholdes gjennom hele prosjektet.
 - Create-knappen skaper selve prosjektet. Da blir det et active project, som kan interageres med i GameSelectView.
 
-## Brukerhistorie (US-1)
+
+## Brukerhistorier
+Brukerhistoriene blir laget til hver sprint i prosjektet. Dette innebærer at US1 tilhører første sprint, US2 tilhører andre sprint og US3 tilhører tredje sprint. 
+
+### Brukerhistorie  (US1-1)
+
+Som bruker ønsker jeg å kunne tegne på et lerret og lagre tegningen lokalt.
+
+Brukeren skal kunne tegne med forskjellige farger, samt størrelse og form på pensel. Det som har blitt tegnet skal også kunne viskes ut med et innebygd viskelær. Til slutt, når tegningen er ferdigstilt, skal bruker kunne lagre den, slik at de senere kan fortsette der de slapp og tegne videre.
+
+Viktig å kunne se:
+- Et lerret
+- Valg av størrelse på pensel
+- Valg av form på pensel
+- Valg av farge
+- Viskelær
+
+Viktig å kunne gjøre:
+- Velge pensel og male på lerretet med valgt farge
+- Kunne viske ut det man har malt
+- Kunne lagre tegningen til senere bruk
+
+
+### Brukerhistorie US2-1:
+Som bruker ønsker jeg å kunne opprette et nytt lerret som andre også kan tegne på.
+
+Brukeren skal kunne opprette et nytt lerret og velge hvor lang tid (opptil 2 min) man har for å tegne en tegning. Brukeren skal også kunne velge om hver person som tegner på lerretet skal tegne samme randomisert ord eller om alle skal få forskjellige randomiserte ord. Samt skal brukeren velge hvor mange personer som skal tegne på lerretet før tegningen er ferdig.
+
+Viktig å kunne se:
+- EN tilbakeknapp øverst i venstre hjørne
+- En knapp som indikerer oprettelsen av et nytt lerret
+- Tydelig hvor lang tid man angir at en bruker skal kunne tegne på lerretet
+- Et tekstfelt hvor man angir hvorvidt brukerne skal tegne basert på samme- eller forskjellig ord
+- Et tekstfelt hvor bruker kan angi antall iterasjoner prosjektet kan gjennomgå (antall personer som kan redigere det totalt)
+
+Viktig å kunne gjøre:
+- Lage et nytt lerret
+- Sette en gitt tid, velge hvordan man skal tegne et ord og hvor mange som skal tegne på lerretet
+- Avbryte hvis man ikke vil lage nytt prosjekt likevel
+
+
+### Brukerhistorie US2-2:
+Som bruker vil jeg kunne bli med i et spill og tegne på et lerret.
+
+Brukeren skal kunne bli med i en tegning som andre personer har tegnet på. Brukeren skal motta et ord med en angitt tid og deretter kunne tegne på et lerret.
+
+Viktig å kunne se: 
+- En knapp som tilsier at du blir med i et lerret
+- Hva slags ord du skal tegne
+- En tid som teller ned som viser hvor lang tid man har før tiden går ut
+- En ferdig knapp man trykker på dersom man blir ferdig før tiden er ute
+- Hvor mange som har tegnet før deg, samt hvor mange som skal få lov til å tegne på lerretet
+- Skal se farger man kan bruke, ulik størrelse og form på pensler, samt viskelær på den en selv har tegnet
+
+Viktig å kunne gjøre:
+- Bli med i en tegning
+- Kunne tegne med ulike farger og ulik form og størrelse på pensler
+- Bruke viskelær på det en selv har tegnet
+
+
+
+
+## Brukerhistorie (US3-1)
 
 Som bruker ønsker jeg å ha en komfortabel tegneopplevelse, uten forsinkelser i tegningen, samt å fortløpende kunne angre og gjøre om endringer jeg gjør mens jeg tegner.
 
@@ -60,7 +122,7 @@ Viktig å kunne gjøre:
 - Kunne angre (undo) og gjøre om (redo) endringer man gjør fortløpende under tegningen
 - Kunne lagre tegningen til senere bruk
 
-## Brukerhistorie US2-2:
+## Brukerhistorie US3-2:
 
 Som bruker ønsker jeg å kunne se hvem som redigerte både mine og andres prosjekter sist.
 
