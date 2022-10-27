@@ -10,8 +10,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import notpaint.core.GameInfo;
-import notpaint.core.persistence.GameInfoPersistence;
+import notpaint.persistence.GameInfo;
+import notpaint.persistence.GameInfoPersistence;
 import notpaint.ui.util.AlertUtil;
 import notpaint.ui.util.StageUtil;
 

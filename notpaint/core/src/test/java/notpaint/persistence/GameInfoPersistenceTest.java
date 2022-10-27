@@ -1,4 +1,4 @@
-package notpaint.core.persistence;
+package notpaint.persistence;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -8,8 +8,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
-import notpaint.core.GameInfo;
+
 import org.junit.jupiter.api.Test;
+
+
 
 /**
  * Test class for {@link GameInfoPersistence}.
