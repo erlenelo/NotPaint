@@ -26,6 +26,7 @@ import notpaint.ui.painttools.Tool;
 import notpaint.ui.persistence.ImagePersistence;
 import notpaint.ui.persistence.LocalImagePersistence;
 import notpaint.ui.util.AlertUtil;
+import notpaint.ui.util.StageUtil;
 
 /**
  * Controller for the view that handles the painting.
@@ -85,7 +86,8 @@ public class PaintController {
      * Set the default settings and tools.
      */
     @FXML public void initialize() {
-        loadGameInfo();
+        
+        StageUtil.onStageLoaded(drawingCanvas, this::onStageLoaded);
 
         settings = new PaintSettings();
 
@@ -105,27 +107,6 @@ public class PaintController {
         imagePersistence = new LocalImagePersistence();
 
         colorPicker.setValue(Color.BLACK);
-    }
-
-    private void loadGameInfo() {
-        drawingCanvas.sceneProperty().addListener((observableScene, oldScene, newScene) -> {
-            if (newScene != null) {
-                var stage = newScene.getWindow();
-                // The window property is also initially not set the first time the app starts.
-                // If it is null, listen for the property to update an then set it
-                if (stage == null) {
-                    newScene.windowProperty().addListener((
-                        observableWindow, oldWindow, newWindow) -> {
-                        // Cell onStageLoaded when window(stage) is populated with a value
-                        if (newWindow != null) {
-                            onStageLoaded((Stage) newWindow);
-                        }
-                    });
-                } else {
-                    onStageLoaded((Stage) stage);
-                }
-            }
-        });
     }
 
     private void onStageLoaded(Stage stage) {
