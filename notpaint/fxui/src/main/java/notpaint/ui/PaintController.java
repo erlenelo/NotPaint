@@ -26,6 +26,7 @@ import notpaint.ui.painttools.Tool;
 import notpaint.ui.persistence.ImagePersistence;
 import notpaint.ui.persistence.LocalImagePersistence;
 import notpaint.ui.util.AlertUtil;
+import notpaint.ui.util.LineUtil;
 import notpaint.ui.util.StageUtil;
 
 /**
@@ -211,10 +212,30 @@ public class PaintController {
         settings.setBrush(new SquareBrush(size));
     }
 
+    private int lastX;
+    private int lastY;
+
     @FXML
     private void handleCavasClick(MouseEvent event) {
-        selectedTool.paint(drawingCanvas, (int) event.getX(), (int) event.getY());
+        int x = (int) event.getX();
+        int y = (int) event.getY();
+        
+        // If we are dragging the mouse, we might have moved over some pixels since the last event.
+        // Paint on all pixels between the last event and this one.
+        if (event.getEventType() == MouseEvent.MOUSE_DRAGGED) {
+            var pixels = LineUtil.getAllPixelsBetween(lastX, lastY, x, y);
+            for (var pixel : pixels) {
+                selectedTool.paint(drawingCanvas, pixel.getKey(), pixel.getValue());
+            }
+        } else {
+            selectedTool.paint(drawingCanvas, x, y);
+        }
+
+        lastX = x;
+        lastY = y;
     }
+
+    
 
     @FXML
     private void setToolEraser() {
