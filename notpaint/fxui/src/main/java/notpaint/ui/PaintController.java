@@ -167,7 +167,7 @@ public class PaintController {
         if (countDownTimer != null)
             countDownTimer.cancel();
 
-        gameInfo.addIteration("UnknownEditor");
+        gameInfo.addIteration(gameInfoPersistence.getUsername());
         // TODO: Save gameinfo and image to json and png respectively
         saveImageToPath(gameInfoPersistence.getImagePath(gameInfo));
 

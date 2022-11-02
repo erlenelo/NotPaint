@@ -54,6 +54,16 @@ public class GameSelectController {
         pane.getChildren().add(imageView);
     }
 
+    // ANDRINE
+    // public void addUsernameInfo (GameInfo info) {}
+
+    // private void addUsernameToTextField (GameInfo info) {
+    //     lastEditor.setText(gameInfoPersistence.getUsernamePath(info));
+    //     setSelectedGameInfo(info);
+
+    // }
+       
+
     @FXML
     private void initialize() {
         // Get the scene from any Node object.
@@ -114,7 +124,7 @@ public class GameSelectController {
         secondsPerRound.setText(Integer.toString(info.getSecondsPerRound()));
         iterations.setText(String.format("%s / %s", info.getCurrentIterations(), info.getMaxIterations()));
         lastEdit.setText(info.getLastEditTime().toString());
-        lastEditor.setText(info.getLastEditor());
+        lastEditor.setText(gameInfoPersistence.getUsername()); //ANDRINE
     }
 
     @FXML
@@ -128,7 +138,9 @@ public class GameSelectController {
             AlertUtil.warningAlert("Warning", "You must select a project to join first.");
         }else if(selectedGameInfo.isFinished()) {
             AlertUtil.warningAlert("Warning", "You cannot join a completed project.");
-        } else {
+        }else if (gameInfoPersistence.getUsername().equals(selectedGameInfo.getLastEditor())) {
+            AlertUtil.warningAlert("Warning", "You cannot draw on the same prosject two times in a row.");// Andrine
+        }else {
             gameInfoPersistence.setActiveGameInfo(selectedGameInfo);
             App.setRoot("PaintView");
         }
