@@ -1,10 +1,11 @@
 package notpaint.ui;
 
 
-import java.io.File;
-import java.io.FileNotFoundException;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Scanner;
+import java.io.PrintWriter;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,8 +16,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import notpaint.core.Persistence.GameInfoPersistence;
-import notpaint.core.Persistence.IUsername;
-import notpaint.core.Persistence.Username;
 import notpaint.ui.Util.AlertUtil;
 
 
@@ -37,7 +36,6 @@ public class UsernameSelectController {
 
     GameInfoPersistence gameInfoPersistence;
 
-    private IUsername file = new Username();
 
 
     @FXML
@@ -73,7 +71,6 @@ public class UsernameSelectController {
         
         if (yesRadioButton.isSelected()) {
             try {
-                file.readUsername("usernameFile");
                 App.setRoot("GameSelectView");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -86,25 +83,19 @@ public class UsernameSelectController {
     
     @FXML
     public void createUsername(ActionEvent event) throws IOException {
-        // File usernameFile = new File("username.txt");
         
         String username = setUsernameTextField.getText();
+        
+        try (PrintWriter out = new PrintWriter(new BufferedWriter(
+                new FileWriter("usernameFile.txt", true)))) {
+            out.println(setUsernameTextField.getText());
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
         
         if (username.isEmpty()) {
             AlertUtil.errorAlert("Username Required!", "Please enter a username");
             return;
-        }
-
-        // gameInfoPersistence.createFolder();
-        // gameInfoPersistence.readUsernameFile();
-        // gameInfoPersistence.addUsername(username);
-
-        try {
-            file.writeUsername("usernameFile", username);
-        } catch (IllegalArgumentException e) {
-            AlertUtil.errorAlert("ERROR!", "Something went wrong");
-        } catch (IOException i) {
-            AlertUtil.errorAlert("ERROR", "Could noe save file!");
         }
 
         Node node = (Node) event.getSource();
@@ -125,14 +116,6 @@ public class UsernameSelectController {
     }
 
     
-
-    
-   
-
-    
-
-
-
 
 
 }
