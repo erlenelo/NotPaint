@@ -1,0 +1,45 @@
+.button{
+    -fx-background-color: LightBlue;
+    -fx-border-color: gray; 
+    -fx-border-radius: 5; 
+    -fx-background-radius: 5;
+}
+.button:hover{
+    -fx-background-color: rgb(142, 208, 230);
+    -fx-background-radius: 3;
+    -fx-border-color: rgb(103, 100, 100);
+    -fx-border-radius: 3;
+    -fx-border-width: 3;
+}
+
+#brushClass{
+    -fx-fill:Black;
+    -fx-stroke: BLACK;
+}
+
+#brushClass:hover{
+    -fx-fill:Black;
+    -fx-stroke:orange;
+    -fx-stroke-width:3
+}
+#brushClass:pressed{
+    -fx-fill:Black;
+    -fx-stroke:lightBlue;
+    -fx-stroke-width:3
+}
+
+#toolPane{
+    -fx-border-color: DEB59D;
+    -fx-border-radius:7;
+}
+#toolPane:hover{
+    -fx-border-color: orange;
+    -fx-border-radius:5;
+    -fx-border-width:3;
+
+}
+#toolPane:pressed{
+    -fx-border-color: lightBlue;
+    -fx-border-radius:5;
+    -fx-border-width:3;
+}
