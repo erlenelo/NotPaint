@@ -13,6 +13,11 @@
     <name>restserver</name>
 
     <dependencies>
+        <dependency>
+            <groupId>gr2213.notpaint</groupId>
+            <artifactId>core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

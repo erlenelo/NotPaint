@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 import notpaint.core.GameInfo;
 import notpaint.core.brushes.CircleBrush;
 import notpaint.core.brushes.SquareBrush;
-import notpaint.core.persistence.GameInfoPersistence;
+import notpaint.core.persistence.LocalGameInfoPersistence;
 import notpaint.ui.painttools.EraserTool;
 import notpaint.ui.painttools.PenTool;
 import notpaint.ui.painttools.Tool;
@@ -69,7 +69,7 @@ public class PaintController {
 
     Tool selectedTool;
 
-    private GameInfoPersistence gameInfoPersistence;
+    private LocalGameInfoPersistence gameInfoPersistence;
     private ImagePersistence imagePersistence;
     private GameInfo gameInfo;
     private Integer countDownSecondsLeft;
@@ -111,7 +111,7 @@ public class PaintController {
     }
 
     private void onStageLoaded(Stage stage) {
-        gameInfoPersistence = (GameInfoPersistence) stage.getUserData();
+        gameInfoPersistence = (LocalGameInfoPersistence) stage.getUserData();
         if (gameInfoPersistence == null) {
             throw new IllegalStateException("Stage has no gameInfoPersistence set");
         }

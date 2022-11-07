@@ -18,7 +18,7 @@ import notpaint.core.GameInfo;
 import notpaint.core.brushes.Brush;
 import notpaint.core.brushes.CircleBrush;
 import notpaint.core.brushes.SquareBrush;
-import notpaint.core.persistence.GameInfoPersistence;
+import notpaint.core.persistence.LocalGameInfoPersistence;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -32,12 +32,12 @@ public class PaintControllerTest extends ApplicationTest {
     // weird name because this folder will be removed after tests,
     // make sure it's not a folder anyone will use
     static Path dataPath = Paths.get("testData_INALKN434NJN");
-    GameInfoPersistence gameInfoPersistence;
+    LocalGameInfoPersistence gameInfoPersistence;
     GameInfo gameInfo;
 
     @Override
     public void start(Stage stage) throws Exception {
-        gameInfoPersistence = new GameInfoPersistence(dataPath);
+        gameInfoPersistence = new LocalGameInfoPersistence(dataPath);
         gameInfo = new GameInfo(5, 10, true);
         gameInfoPersistence.setActiveGameInfo(gameInfo);        
         stage.setUserData(gameInfoPersistence);

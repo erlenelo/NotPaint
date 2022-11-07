@@ -12,7 +12,7 @@ import notpaint.core.GameInfo;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test class for {@link GameInfoPersistence}.
+ * Test class for {@link LocalGameInfoPersistence}.
  */
 public class GameInfoPersistenceTest {
 
@@ -29,7 +29,7 @@ public class GameInfoPersistenceTest {
 
     @Test
     public void testGetActiveGameInfo() {
-        GameInfoPersistence gameInfoPersistence = new GameInfoPersistence();
+        LocalGameInfoPersistence gameInfoPersistence = new LocalGameInfoPersistence();
         GameInfo gameInfo = new GameInfo(2, 5, true);
         gameInfoPersistence.setActiveGameInfo(gameInfo);
         GameInfo testGameInfo = gameInfoPersistence.getActiveGameInfo();
@@ -39,7 +39,7 @@ public class GameInfoPersistenceTest {
 
     @Test
     public void testGetAllGameInfos() throws IOException {
-        GameInfoPersistence gameInfoPersistence = new GameInfoPersistence();
+        LocalGameInfoPersistence gameInfoPersistence = new LocalGameInfoPersistence();
         gameInfoPersistence.getAllGameInfos();
         assertNotNull(gameInfoPersistence);
 
@@ -49,7 +49,7 @@ public class GameInfoPersistenceTest {
     public void testSaveGameInfo() throws IOException {
         Path dataPath = Paths.get("testData_" + UUID.randomUUID().toString()); // Random path
 
-        GameInfoPersistence gameInfoPersistence = new GameInfoPersistence(dataPath);
+        LocalGameInfoPersistence gameInfoPersistence = new LocalGameInfoPersistence(dataPath);
         GameInfo gameInfo = new GameInfo(2, 5, true);
         gameInfoPersistence.setActiveGameInfo(gameInfo);
         gameInfoPersistence.saveGameInfo(gameInfo);
@@ -63,7 +63,7 @@ public class GameInfoPersistenceTest {
 
     @Test
     public void testSetActiveGameInfo() {
-        GameInfoPersistence gameInfoPersistence = new GameInfoPersistence();
+        LocalGameInfoPersistence gameInfoPersistence = new LocalGameInfoPersistence();
         GameInfo gameInfo = new GameInfo(2, 5, true);
         gameInfoPersistence.setActiveGameInfo(gameInfo);
         assertNotNull(gameInfoPersistence.getActiveGameInfo());

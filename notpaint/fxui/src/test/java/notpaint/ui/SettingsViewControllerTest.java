@@ -14,7 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import notpaint.core.persistence.GameInfoPersistence;
+import notpaint.core.persistence.LocalGameInfoPersistence;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -30,7 +30,7 @@ public class SettingsViewControllerTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws Exception {
-        var gameInfoPersistence = new GameInfoPersistence(dataPath);
+        var gameInfoPersistence = new LocalGameInfoPersistence(dataPath);
         stage.setUserData(gameInfoPersistence);
 
         FXMLLoader fxmlLoader = new FXMLLoader(
