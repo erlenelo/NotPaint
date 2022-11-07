@@ -10,8 +10,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
-import notpaint.core.GameInfo;
-import notpaint.core.persistence.GameInfoPersistence;
+import notpaint.persistence.GameInfo;
+import notpaint.persistence.GameInfoPersistence;
 import notpaint.ui.util.AlertUtil;
 
 /**
