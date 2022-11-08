@@ -108,19 +108,12 @@ Brukeren skal kunne, etter valg av innstillinger, tegne på lerretet med ønsked
 
 
 Viktig å kunne se:
-- Et lerret
-- Valg av størrelse på pensel
-- Valg av form på pensel
-- Valg av farge
-- Viskelær
 - knapper (i form av piler) for undo og redo
+- et kontinuerlig og jevnt penselstrøk på lerrettet
 
 Viktig å kunne gjøre:
-- Velge pensel og male på lerretet med valgt farge
 - Kunne tegne uten at forsinkelsen på børsten påvirker utseendet til penselstrøket
-- Kunne viske ut det man har malt
 - Kunne angre (undo) og gjøre om (redo) endringer man gjør fortløpende under tegningen
-- Kunne lagre tegningen til senere bruk
 
 ## Brukerhistorie US3-2:
 
