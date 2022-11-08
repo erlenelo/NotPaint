@@ -104,7 +104,7 @@ Viktig å kunne gjøre:
 
 Som bruker ønsker jeg å ha en komfortabel tegneopplevelse, uten forsinkelser i tegningen, samt å fortløpende kunne angre og gjøre om endringer jeg gjør mens jeg tegner.
 
-Brukeren skal kunne, etter valg av innstillinger, tegne på lerretet med ønskede funksjoner og såpass lite forsinkelse i bevegelse av penselen at det ikke forstyrrer utseende til det som ble tegnet. Under selve tegningen skal brukeren nå kunne angre (undo) eller gjøre om (redo) endringer som brukeren gjør fortløpende mens de tegner. Dette skal kunne utføres med både utpekte frem- og tilbake knapper som er synlig ved siden av lerretet, og knapper på tastaturet som brukeren selv har tildelt angre- og gjøre om funksjonen.
+Brukeren skal kunne, etter valg av innstillinger, tegne på lerretet med ønskede funksjoner og såpass lite forsinkelse i bevegelse av penselen at det ikke forstyrrer utseende til det som ble tegnet. Under selve tegningen skal brukeren nå kunne angre (undo) eller gjøre om (redo) endringer som brukeren gjør fortløpende mens de tegner. Dette skal kunne utføres med både utpekte frem- og tilbake knapper som er synlig ved siden av lerretet, samt control-z for undo og control-y for redo på tastaturet.
 
 
 Viktig å kunne se:
