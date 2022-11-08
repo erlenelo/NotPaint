@@ -228,8 +228,10 @@ public class PaintController {
         drawingCanvas.getGraphicsContext2D().drawImage(loadedImage, 0, 0);
 
         // Add the loaded image to the undo stack so that it can be undone.
-        undoStack.push(new WritableImage(loadedImage.getPixelReader(),
-                (int) loadedImage.getWidth(), (int) loadedImage.getHeight()));
+        if (loadedImage.getWidth() > 0 && loadedImage.getHeight() > 0) {
+            undoStack.push(new WritableImage(loadedImage.getPixelReader(),
+                    (int) loadedImage.getWidth(), (int) loadedImage.getHeight()));
+        }
 
         return loadedImage;
     }
