@@ -1,0 +1,14 @@
+.image-view-wrapper:border {
+    -fx-border-color: black;
+    -fx-border-style: solid;
+    -fx-border-width: 5;
+}
+.image-view-wrapper{
+    -fx-background-color: purple;
+    -fx-border-color: black;
+    -fx-border-width:5;
+}
+.projectImage{
+    -fx-margin:3px;
+    -fx-border: 3px solid black;
+}

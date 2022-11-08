@@ -5,12 +5,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -18,9 +16,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import notpaint.core.brushes.CircleBrush;
 import notpaint.core.brushes.SquareBrush;
@@ -106,7 +101,7 @@ public class PaintController {
         selectedTool = new PenTool(settings);
         setCircleBrush(10);
 
-        // Create event handlers for brush changes and highlight the selected brush
+        // Create event handlers for brush changes and highlight the selected brush/tool
         circleSmall.setOnMouseClicked(e -> {
             setCircleBrush(5);
             handleHighlightCircle(circleSmall);
@@ -320,11 +315,11 @@ public class PaintController {
             }
             
         }
+        // Tool selection highlights
     @FXML
     private void handleEraserClick() {
         eraserPane.setId("toolPaneHighlight");
         pencilPane.setId("toolPane");
-
         }
     
     @FXML
