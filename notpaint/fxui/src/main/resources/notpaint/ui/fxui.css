@@ -1,3 +1,5 @@
+
+/* Styling for generic buttons */
 .button{
     -fx-background-color: LightBlue;
     -fx-border-color: gray; 
@@ -11,7 +13,8 @@
     -fx-border-radius: 3;
     -fx-border-width: 3;
 }
-
+/* Styling for highlighting brushes and tools in PaintView*/
+    /* Brushes */
 #highlightedBrush{
     -fx-fill:lightgray;
     -fx-stroke:black;
@@ -29,9 +32,7 @@
     -fx-stroke:yellow;
     -fx-stroke-width:2
 }
-
-
-
+    /* Tools */
 #toolPaneHighlight{
     -fx-border-color: black;
     -fx-border-radius:3;
@@ -50,9 +51,18 @@
     -fx-border-width:3;
 }
 
-.image-view-wrapper:border {
-    -fx-border-color: black;
-    -fx-border-style: solid;
-    -fx-border-width: 5;
+/* Styling for highlighting projects in GameSelectView */
+#unselected{
+    -fx-border-color: transparent;
+    -fx-border-width: 4px;
 }
+#selected{
+    -fx-border-color: lightblue; 
+    -fx-border-width: 4px;
+    -fx-border-radius: 2px;
+}
+#projectBorder{
+    -fx-border-color: black;
+    -fx-border-width: 1px;
 
+}

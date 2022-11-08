@@ -4,15 +4,13 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
+
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import notpaint.persistence.GameInfo;
@@ -65,29 +63,36 @@ public class GameSelectController {
     }
 
     private void addImageToTab(GameInfo info, TilePane pane) {
-        PseudoClass imageViewBorder = PseudoClass.getPseudoClass("border");
+
         ImageView imageView = new ImageView(
             new Image(gameInfoPersistence.getImagePath(info), 200, 140, true, true));
         imageView.maxHeight(150);
         imageView.maxWidth(200);
-        
-        BorderPane imageViewWrapper = new BorderPane(imageView);
-        
-        imageViewWrapper.getStyleClass().add("image-view-wrapper");
-        BooleanProperty imageViewBorderActive = new SimpleBooleanProperty() {
-            @Override
-            protected void invalidated() {
-                imageViewWrapper.pseudoClassStateChanged(imageViewBorder, get());
-            }
-        };
-        imageView.setOnMouseClicked(event -> {
-            setSelectedGameInfo(info);
-            imageViewBorderActive.set((!imageViewBorderActive.get()));
-        });
 
-            //highlight goes here
+        // Dark border for each project
+        HBox imageHBox = new HBox();
+        imageHBox.setId("projectBorder");
+        imageHBox.getChildren().add(imageView);
+
+        // Blank border to add margins to projects, and highlight selected project.
+        HBox imageSpace = new HBox();
+        imageSpace.setId("unselected");
+        imageSpace.getChildren().add(imageHBox);
+
+        imageView.setOnMouseClicked(event -> {
+            try {
+                pane.lookupAll("#selected").forEach(node -> {
+                    node.setId("unselected");
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            setSelectedGameInfo(info);
+            imageSpace.setId("selected");
+
+        });
         
-        pane.getChildren().add(imageView);
+        pane.getChildren().add(imageSpace);
     }
 
     @FXML
