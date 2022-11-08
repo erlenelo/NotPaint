@@ -1,6 +1,5 @@
 package notpaint.ui;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
@@ -24,17 +23,34 @@ import notpaint.ui.util.StageUtil;
 public class GameSelectController {
 
     @FXML
+    private ScrollPane completedProjectsScrollPane;
+    
+    @FXML
     private ScrollPane activeProjectsScrollPane;
 
     @FXML
-    private ScrollPane completedProjectsScrollPane;
+    private Text secondsPerRound;
 
     @FXML
-    private Text secondsPerRound, iterations, lastEdit, lastEditor, usernameText;
+    private Text iterations;
+    
+    @FXML
+    private Text lastEdit;
+    
+    @FXML
+    private Text lastEditor;
+    
+    @FXML
+    private Text usernameText;
+   
+    @FXML
+    private TilePane completedTilePane; 
+
+    @FXML
+    private TilePane activeTilePane;
 
     private GameInfoPersistence gameInfoPersistence;
     private GameInfo selectedGameInfo;
-    // private UsernameSelectController usernameSelected;
 
     public void addImageToActiveTap(GameInfo info) {
 
@@ -113,7 +129,8 @@ public class GameSelectController {
         App.setRoot("UsernameSelectView");
     }
 
-    public void deleteUsername() throws IOException {
+    
+    private void deleteUsername() throws IOException {
         PrintWriter writer = new PrintWriter("usernameFile.txt", Charset.forName("UTF-16"));
         writer.print("");
         writer.close();
@@ -130,9 +147,10 @@ public class GameSelectController {
             AlertUtil.warningAlert("Warning", "You must select a project to join first.");
         } else if (selectedGameInfo.isFinished()) {
             AlertUtil.warningAlert("Warning", "You cannot join a completed project.");
-        }else if (gameInfoPersistence.getUsername().equals(selectedGameInfo.getLastEditor())) {
-            AlertUtil.warningAlert("Warning", "You cannot draw on the same prosject two times in a row.");// Andrine
-        }else {
+        } else if (gameInfoPersistence.getUsername().equals(selectedGameInfo.getLastEditor())) {
+            AlertUtil.warningAlert("Warning", 
+                "You cannot draw on the same prosject two times in a row.");
+        } else {
             gameInfoPersistence.setActiveGameInfo(selectedGameInfo);
             App.setRoot("PaintView");
         }

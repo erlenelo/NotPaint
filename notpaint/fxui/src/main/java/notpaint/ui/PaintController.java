@@ -164,7 +164,6 @@ public class PaintController {
         }
 
         gameInfo.addIteration(gameInfoPersistence.getUsername());
-        // TODO: Save gameinfo and image to json and png respectively
         saveImageToPath(gameInfoPersistence.getImagePath(gameInfo));
 
         try {

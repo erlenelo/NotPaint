@@ -10,7 +10,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -19,18 +18,21 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
-import notpaint.core.Persistence.GameInfoPersistence;
-import notpaint.ui.Util.AlertUtil;
+import notpaint.persistence.GameInfoPersistence;
+import notpaint.ui.util.AlertUtil;
 
 
-
+/**
+ * Controller for making an username.
+ * Saves the username if the user choose to be remembered.
+ */
 public class UsernameSelectController {
     
     @FXML
     private TextField setUsernameTextField;
 
     @FXML
-    private RadioButton yesRadioButton, NoRadioButton;
+    private RadioButton yesRadioButton;
 
     @FXML
     private Button doneButton;
@@ -53,12 +55,14 @@ public class UsernameSelectController {
                 // The window property is also initially not set the first time the app starts.
                 // If it is null, listen for the property to update an then set it
                 if (stage == null) {
-                    newScene.windowProperty().addListener((observableWindow, oldWindow, newWindow) -> {
+                    newScene.windowProperty().addListener((observableWindow, 
+                        oldWindow, newWindow) -> {
 
                         // Create a persistence instance and set it as the user data for the stage.
                         // This makes it accessible from all other scenes.
-                        if (newWindow != null)
+                        if (newWindow != null) {
                             onStageLoaded((Stage) newWindow);
+                        }     
                     });
                 } else {
                     onStageLoaded((Stage) stage);
@@ -83,7 +87,7 @@ public class UsernameSelectController {
         
     }
 
-    public void rememberMeSelected() {
+    private void rememberMeSelected() {
         handleRememberMe();
         try {
             readUsernameFile();
@@ -94,7 +98,7 @@ public class UsernameSelectController {
         }
     }
 
-    public void handleRememberMe() {
+    private void handleRememberMe() {
         if (yesRadioButton.isSelected()) {
             try (PrintWriter out = new PrintWriter(new BufferedWriter(
                 new FileWriter("usernameFile.txt", Charset.forName("UTF-16"), true)))) {
@@ -105,7 +109,7 @@ public class UsernameSelectController {
         }
     }
 
-    public boolean readUsernameFile() throws IOException {
+    private boolean readUsernameFile() throws IOException {
         
         File file = new File("usernameFile.txt");
         String usernameFileString = "";
@@ -114,14 +118,14 @@ public class UsernameSelectController {
         if (file.length() == 0) {
             return false;
         } else {
-            try (BufferedReader br = new BufferedReader(new FileReader(file, Charset.forName("UTF-16")))) {
+            try (BufferedReader br = new BufferedReader(new FileReader(file, 
+                Charset.forName("UTF-16")))) {
 
                 String line;
                 while ((line = br.readLine()) != null) {
                     sb.append(line).append("\n");
                 }
-            } 
-            catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
             usernameFileString = sb.toString();
@@ -132,7 +136,7 @@ public class UsernameSelectController {
    
     
     @FXML
-    public void createUsername(ActionEvent event) throws IOException {
+    private void createUsername(ActionEvent event) throws IOException {
         
         String username = setUsernameTextField.getText();
         
@@ -147,13 +151,13 @@ public class UsernameSelectController {
 
         try {
             stage.close();
-            GameInfoPersistence gameInfoPersistence = (GameInfoPersistence)stage.getUserData();
+            GameInfoPersistence gameInfoPersistence = (GameInfoPersistence) stage.getUserData();
             gameInfoPersistence.setUsername(username);
             handleRememberMe();
             App.setRoot("GameSelectView");            
             stage.show();
-        } catch(IOException IOException) {
-            IOException.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
             AlertUtil.errorAlert("ERROR", "Error opening GameSelectView");
         }
 
