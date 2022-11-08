@@ -29,20 +29,20 @@
       </Text>
       <Pane pickOnBounds="false" prefHeight="500.0" prefWidth="800.0">
          <children>
-            <Circle id = "brushClass" fx:id="circleSmall" layoutX="667.0" layoutY="210.0" radius="5.0"  />
-            <Circle id = "brushClass" fx:id="circleMedium" layoutX="709.0" layoutY="210.0" radius="10.0"  />
-            <Circle id = "brushClass" fx:id="circleBig"  layoutX="762.0" layoutY="210.0" radius="17.0"  />
-            <Rectangle id = "brushClass" fx:id="squareSmall" arcHeight="5.0" arcWidth="5.0" height="10.0" layoutX="662.0" layoutY="262.0" fill = "BLACK" stroke = "BLACK" strokeType="INSIDE" width="10.0" />
-            <Rectangle id = "brushClass" fx:id="squareMedium" arcHeight="5.0" arcWidth="5.0" height="20.0" layoutX="699.0" layoutY="257.0" stroke="BLACK" strokeType="INSIDE" width="20.0" />
-            <Rectangle id = "brushClass" fx:id="squareBig" arcHeight="5.0" arcWidth="5.0" height="34.0" layoutX="745.0" layoutY="250.0" stroke="BLACK" strokeType="INSIDE" width="34.0" />
-            <StackPane id = "toolPane" layoutX="662.0" layoutY="310.0">
+            <Circle id = "clear" fx:id="circleSmall" layoutX="667.0" layoutY="210.0" radius="5.0"  />
+            <Circle id = "highlightedBrush" fx:id="circleMedium" layoutX="709.0" layoutY="210.0" radius="10.0"  />
+            <Circle id = "clear" fx:id="circleBig"  layoutX="762.0" layoutY="210.0" radius="17.0"  />
+            <Rectangle id = "clear" fx:id="squareSmall" arcHeight="5.0" arcWidth="5.0" height="10.0" layoutX="662.0" layoutY="262.0" fill = "BLACK" stroke = "BLACK" strokeType="INSIDE" width="10.0" />
+            <Rectangle id = "clear" fx:id="squareMedium" arcHeight="5.0" arcWidth="5.0" height="20.0" layoutX="699.0" layoutY="257.0" stroke="BLACK" strokeType="INSIDE" width="20.0" />
+            <Rectangle id = "clear" fx:id="squareBig" arcHeight="5.0" arcWidth="5.0" height="34.0" layoutX="745.0" layoutY="250.0" stroke="BLACK" strokeType="INSIDE" width="34.0"  />
+            <StackPane fx:id ="eraserPane" id = "toolPane" layoutX="662.0" layoutY="310.0">
                <ImageView fx:id="eraser" fitHeight="42.0" fitWidth="42.0" layoutX="662.0" layoutY="310.0" onMouseClicked="#setToolEraser" pickOnBounds="true" preserveRatio="true">
                   <image>
                      <Image url="@images/eraser.png" />
                   </image>
                </ImageView>
             </StackPane>
-            <StackPane id = "toolPane" layoutX="732.0" layoutY="310.0">
+            <StackPane fx:id = "pencilPane" id = "toolPaneHighlight" layoutX="732.0" layoutY="310.0">
                <ImageView fx:id="pencil" fitHeight="42.0" fitWidth="42.0" layoutX="732.0" layoutY="310.0" onMouseClicked="#setToolPen" pickOnBounds="true" preserveRatio="true">
                   <image>
                      <Image url="@images/pencil.png" />

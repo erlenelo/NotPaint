@@ -12,34 +12,42 @@
     -fx-border-width: 3;
 }
 
-#brushClass{
-    -fx-fill:Black;
-    -fx-stroke: BLACK;
+#highlightedBrush{
+    -fx-fill:lightgray;
+    -fx-stroke:black;
+    -fx-stroke-width: 2;
+    
 }
 
-#brushClass:hover{
+#clear:hover{
     -fx-fill:Black;
-    -fx-stroke:orange;
-    -fx-stroke-width:3
+    -fx-stroke:gray;
+    -fx-stroke-width:2
 }
 #brushClass:pressed{
     -fx-fill:Black;
-    -fx-stroke:lightBlue;
-    -fx-stroke-width:3
+    -fx-stroke:yellow;
+    -fx-stroke-width:2
 }
 
-#toolPane{
-    -fx-border-color: DEB59D;
-    -fx-border-radius:7;
+
+
+#toolPaneHighlight{
+    -fx-border-color: black;
+    -fx-border-radius:3;
+    -fx-border-width: 1;
+    -fx-background-color: lightgray;
 }
 #toolPane:hover{
-    -fx-border-color: orange;
+    -fx-border-color: lightBlue;
     -fx-border-radius:5;
-    -fx-border-width:3;
+    -fx-border-width:2;
 
 }
 #toolPane:pressed{
-    -fx-border-color: lightBlue;
+    -fx-border-color: yellow;
     -fx-border-radius:5;
     -fx-border-width:3;
 }
+
+
