@@ -1,8 +1,12 @@
 package notpaint.ui;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.charset.Charset;
 import java.util.List;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Alert.AlertType;
@@ -11,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
 import javafx.scene.text.Text;
 import notpaint.core.GameInfo;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
@@ -28,10 +33,11 @@ public class GameSelectController {
     private TilePane activeTilePane, completedTilePane;
 
     @FXML
-    private Text secondsPerRound, iterations, lastEdit, lastEditor;
+    private Text secondsPerRound, iterations, lastEdit, lastEditor, usernameText;
 
     private GameInfoPersistence gameInfoPersistence;
     private GameInfo selectedGameInfo;
+    // private UsernameSelectController usernameSelected;
 
     public void addImageToActiveTap(GameInfo info) {
 
@@ -54,14 +60,7 @@ public class GameSelectController {
         pane.getChildren().add(imageView);
     }
 
-    // ANDRINE
-    // public void addUsernameInfo (GameInfo info) {}
-
-    // private void addUsernameToTextField (GameInfo info) {
-    //     lastEditor.setText(gameInfoPersistence.getUsernamePath(info));
-    //     setSelectedGameInfo(info);
-
-    // }
+    
        
 
     @FXML
@@ -98,6 +97,7 @@ public class GameSelectController {
     }
 
     private void onGameInfoPersistenceLoaded() {
+        usernameText.setText(gameInfoPersistence.getUsername());
         try {
             var allInfos = gameInfoPersistence.getAllGameInfos();
             displayGameInfos(allInfos);
@@ -124,7 +124,19 @@ public class GameSelectController {
         secondsPerRound.setText(Integer.toString(info.getSecondsPerRound()));
         iterations.setText(String.format("%s / %s", info.getCurrentIterations(), info.getMaxIterations()));
         lastEdit.setText(info.getLastEditTime().toString());
-        lastEditor.setText(gameInfoPersistence.getUsername()); //ANDRINE
+        lastEditor.setText(info.getLastEditor()); 
+    }
+
+    @FXML
+    private void handleChangeUsername() throws IOException {
+        deleteUsername();  
+        App.setRoot("UsernameSelectView");
+    }
+
+    public void deleteUsername() throws IOException {
+        PrintWriter writer = new PrintWriter("usernameFile.txt", Charset.forName("UTF-16"));
+        writer.print("");
+        writer.close();
     }
 
     @FXML

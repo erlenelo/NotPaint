@@ -31,6 +31,9 @@ For å få se rapport for alle modulene, åpne **notpaint/codecoverage.html**
  * **spotbugs**: Utfører statisk analyse av den kompilerte koden for å se etter vanlige feil. Konfigurasjon for unntak av disse reglene gjøres i `notpaint/spotbugs-exclude.xml`
  * **JaCoCo**: Verktøy som analyserer testdekningsgraden etter testing.
 
+ For å sjekke kodekvaliteten kjører man kommandoen `mvn verify`. 
+
+
 ## Modularisering
 Prosjektet består av 2 moduler:
 * `core`: Inneholder kode for lagring, lasting, og opprettelse av nye spill.

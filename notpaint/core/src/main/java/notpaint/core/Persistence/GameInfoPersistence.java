@@ -6,7 +6,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,6 +17,16 @@ public class GameInfoPersistence {
     private Path dataPath;
 
     private GameInfo activeGameInfo;
+
+    private String username;
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public GameInfoPersistence(Path dataPath) {
         this.dataPath = dataPath;
@@ -57,6 +66,7 @@ public class GameInfoPersistence {
         return gameInfoList;
     }
 
+    
     private static GameInfo parseFromJson(String jsonString) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         // Stop mapper from considering getXxx() and isXxx() methods for serialization
@@ -98,6 +108,8 @@ public class GameInfoPersistence {
         return "file:" + Paths.get(dataPath.toString(), imageName).toString();
     }
 
+
+
     /**
      * Returns the active gameinfo, which is the one that should be used by
      * PaintController to draw
@@ -117,5 +129,10 @@ public class GameInfoPersistence {
     public void setActiveGameInfo(GameInfo activeGameInfo) {
         this.activeGameInfo = activeGameInfo;
     }
+
+
+
+
+
 
 }
