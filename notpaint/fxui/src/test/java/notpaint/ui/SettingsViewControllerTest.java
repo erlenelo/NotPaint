@@ -34,7 +34,7 @@ public class SettingsViewControllerTest extends ApplicationTest {
         stage.setUserData(gameInfoPersistence);
 
         FXMLLoader fxmlLoader = new FXMLLoader(
-            GameSelectController.class.getResource("SettingsView.fxml"));
+                GameSelectController.class.getResource("SettingsView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         App.scene = scene;
         stage.setScene(scene);
@@ -103,13 +103,15 @@ public class SettingsViewControllerTest extends ApplicationTest {
 
     // test if clicking on the create button opens paintview
     @Test
-    public void testCreateButton() throws InterruptedException {
+    public void testCreateButton() {
         clickOn("#setTimeTextField");
         write("10");
         clickOn("#maxIterationsTextField");
         write("2");
+
         clickOn("#createButton");
-        WaitForAsyncUtils.waitForFxEvents();
+
+        // WaitForAsyncUtils.waitForFxEvents();
         assertNotNull(findSceneRootWithId("paintRoot"));
     }
 
