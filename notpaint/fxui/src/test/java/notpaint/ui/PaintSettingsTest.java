@@ -3,13 +3,15 @@ package notpaint.ui;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import javafx.scene.paint.Color;
+import notpaint.core.brushes.Brush;
+import notpaint.core.brushes.CircleBrush;
+import notpaint.core.brushes.SquareBrush;
 import org.junit.jupiter.api.Test;
 
-import javafx.scene.paint.Color;
-import notpaint.core.Brushes.Brush;
-import notpaint.core.Brushes.CircleBrush;
-import notpaint.core.Brushes.SquareBrush;
-
+/**
+ * Test class for {@link PaintSettings}.
+ */
 public class PaintSettingsTest {
     @Test
     public void testGetBrush() {

@@ -1,5 +1,7 @@
-package notpaint.core;
+package notpaint.persistence;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -7,13 +9,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+
 
 
 /**
  * One instance of the GameInfo class represents a Game (either ongoing or
- * finished)
+ * finished).
  */
 public class GameInfo {
 
@@ -39,7 +41,8 @@ public class GameInfo {
     private static final Random random = new Random();
 
     /**
-     * 
+     * Create a new GameInfo object with the given parameters.
+     *
      * @param maxIterations    The number of iterations before this game is finished
      * @param secondsPerRound  How many seconds the users should have to draw each
      *                         iteration
@@ -48,11 +51,14 @@ public class GameInfo {
      *                         iteration.
      */
     public GameInfo(int maxIterations, int secondsPerRound, boolean newWordEachRound) {
-        if (maxIterations < 1)
+        if (maxIterations < 1) {
             throw new IllegalArgumentException("Argument maxIterations must be greater than 0");
+        }
 
-        if (secondsPerRound < 5 || secondsPerRound > 120)
-            throw new IllegalArgumentException("Argument secondsPerRound must be on interval [5, 120]");
+        if (secondsPerRound < 5 || secondsPerRound > 120) {
+            throw new 
+                IllegalArgumentException("Argument secondsPerRound must be on interval [5, 120]");
+        }
 
         this.words = new ArrayList<String>();
         this.maxIterations = maxIterations;
@@ -65,12 +71,14 @@ public class GameInfo {
 
         uuid = UUID.randomUUID();
     }
+
+    // This constructor is used by Jackson to deserialize the object from json
     protected GameInfo() {}
 
     /**
      * Add a new iteration to the Game. Generates a new word if newWordEachRound was
      * set to true
-     * 
+     *
      * @param editor The nickname of the person who edited the image for this
      *               iteration
      */
@@ -80,16 +88,17 @@ public class GameInfo {
         increaseCurrentIterations();
 
         if (!isFinished()) {
-            if (newWordEachRound)
+            if (newWordEachRound) {
                 generateNewWord();
+            }
         }
     }
 
 
 
     /**
-     * Chech if the game is finished (currentIterations has reached maxIterations)
-     * 
+     * Chech if the game is finished (currentIterations has reached maxIterations).
+     *
      * @return true if finished, false if not
      */
     public boolean isFinished() {
@@ -97,8 +106,10 @@ public class GameInfo {
     }
 
     private void increaseCurrentIterations() {
-        if (currentIterations + 1 > maxIterations)
-            throw new UnsupportedOperationException("Cannot increase currentIterations over maxIterations");
+        if (currentIterations + 1 > maxIterations) {
+            throw new UnsupportedOperationException(
+                "Cannot increase currentIterations over maxIterations");
+        }
         currentIterations++;
     }
 
@@ -121,7 +132,7 @@ public class GameInfo {
     private void generateNewWord() {
         // get a new random word from a text file (in resources)
         String wordListString = null;
-        try(var inputStream = getClass().getResourceAsStream("words.txt")) {
+        try (var inputStream = getClass().getResourceAsStream("words.txt")) {
             wordListString = new String(inputStream.readAllBytes(), Charset.forName("UTF-8"));
     
             var wordListArray = wordListString.split("\\r?\\n|\\r");
@@ -136,8 +147,8 @@ public class GameInfo {
 
     /**
      * Returns the word that is currently to be drawn.
-     * 
-     * @return
+     *
+     * @return the word that is currently to be drawn
      */
     public String getWord() {
         return words.get(words.size() - 1);

@@ -1,18 +1,5 @@
 package notpaint.ui;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
-import javafx.stage.Window;
-import notpaint.core.GameInfo;
-import notpaint.core.Brushes.Brush;
-import notpaint.core.Brushes.CircleBrush;
-import notpaint.core.Brushes.SquareBrush;
-import notpaint.core.Persistence.GameInfoPersistence;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -21,15 +8,29 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
+import javafx.stage.Window;
+import notpaint.persistence.GameInfo;
+import notpaint.core.brushes.Brush;
+import notpaint.core.brushes.CircleBrush;
+import notpaint.core.brushes.SquareBrush;
+import notpaint.persistence.GameInfoPersistence;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
+/**
+ * Test class for {@link GameSelectController}.
+ */
 public class PaintControllerTest extends ApplicationTest {
     private PaintController controller;
 
-    // weird name because this folder will be removed after tests, make sure it's not a folder anyone will use
+    // weird name because this folder will be removed after tests,
+    // make sure it's not a folder anyone will use
     static Path dataPath = Paths.get("testData_INALKN434NJN");
     GameInfoPersistence gameInfoPersistence;
     GameInfo gameInfo;
@@ -93,7 +94,8 @@ public class PaintControllerTest extends ApplicationTest {
         // assert that the image is completely white
         for (int x = 0; x < image.getWidth(); x++) {
             for (int y = 0; y < image.getHeight(); y++) {
-                assertTrue(image.getPixelReader().getColor(x, y).equals(javafx.scene.paint.Color.WHITE));
+                assertTrue(image.getPixelReader()
+                    .getColor(x, y).equals(javafx.scene.paint.Color.WHITE));
             }
         }
     }
@@ -102,8 +104,10 @@ public class PaintControllerTest extends ApplicationTest {
     public void testDone() {
         clickOn("#doneButton");
         assertNotNull(findSceneRootWithId("gameSelectRoot"), "GameSelectView should be visible");
-        boolean jsonExists = Files.exists(Paths.get(dataPath.toString(), gameInfo.getUuid().toString() + ".json"));
-        System.out.println(Paths.get(dataPath.toString(), gameInfo.getUuid().toString() + ".json").toAbsolutePath());
+        boolean jsonExists = Files.exists(Paths.get(
+            dataPath.toString(), gameInfo.getUuid().toString() + ".json"));
+        System.out.println(Paths.get(
+            dataPath.toString(), gameInfo.getUuid().toString() + ".json").toAbsolutePath());
         assertTrue(jsonExists, "GameInfo json should exist after clicking done on PaintView");
         Image image = new Image(gameInfoPersistence.getImagePath(gameInfo));
         assertNotNull(image, "Image should exist after clicking done on PaintView");

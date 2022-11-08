@@ -1,4 +1,4 @@
-package notpaint.core.Persistence;
+package notpaint.persistence;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -10,11 +10,18 @@ import java.nio.file.Paths;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
-import notpaint.core.GameInfo;
 
+
+
+/**
+ * Test class for {@link GameInfoPersistence}.
+ */
 public class GameInfoPersistenceTest {
 
-    public static void cleanUp(Path dataPath) throws IOException {
+    /*
+     * Helper method that deletes the folder at the given path.
+     */
+    private static void cleanUp(Path dataPath) throws IOException {
         var files = Files.list(dataPath).toList();
         for (var file : files) { // Delete every file in datapath dir
             Files.delete(file);
