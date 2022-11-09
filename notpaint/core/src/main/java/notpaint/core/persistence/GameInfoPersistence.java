@@ -1,8 +1,10 @@
 package notpaint.core.persistence;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.List;
-
 import notpaint.core.GameInfo;
 
 public interface GameInfoPersistence {
@@ -44,4 +46,14 @@ public interface GameInfoPersistence {
      * @param activeGameInfo The gameinfo to set as active
      */
     public void setActiveGameInfo(GameInfo activeGameInfo);
+
+    static GameInfo parseFromJson(String jsonString) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        // Stop mapper from considering getXxx() and isXxx() methods for serialization
+        mapper.setVisibility(PropertyAccessor.GETTER, Visibility.NONE);
+        mapper.setVisibility(PropertyAccessor.IS_GETTER, Visibility.NONE);
+
+        GameInfo parsedGameInfo = mapper.readValue(jsonString, GameInfo.class);
+        return parsedGameInfo;
+    }
 }

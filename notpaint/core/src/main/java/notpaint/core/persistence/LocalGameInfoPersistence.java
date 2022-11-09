@@ -50,24 +50,16 @@ public class LocalGameInfoPersistence implements GameInfoPersistence {
                 if (gameInfoPath.toString().endsWith(".json") == false) {
                     continue;
                 }
-
+                
                 String jsonString = Files.readString(gameInfoPath);
-                gameInfoList.add(parseFromJson(jsonString));
+                gameInfoList.add(GameInfoPersistence.parseFromJson(jsonString));
             }
         }
 
         return gameInfoList;
     }
 
-    private static GameInfo parseFromJson(String jsonString) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        // Stop mapper from considering getXxx() and isXxx() methods for serialization
-        mapper.setVisibility(PropertyAccessor.GETTER, Visibility.NONE);
-        mapper.setVisibility(PropertyAccessor.IS_GETTER, Visibility.NONE);
-
-        GameInfo parsedGameInfo = mapper.readValue(jsonString, GameInfo.class);
-        return parsedGameInfo;
-    }
+    
 
     /**
      * Save a gameInfo to datapath. Its name will be its uuid + .json

@@ -15,11 +15,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import notpaint.core.GameInfo;
 import notpaint.core.brushes.CircleBrush;
 import notpaint.core.brushes.SquareBrush;
-import notpaint.core.persistence.LocalGameInfoPersistence;
+import notpaint.core.persistence.GameInfoPersistence;
 import notpaint.ui.painttools.EraserTool;
 import notpaint.ui.painttools.PenTool;
 import notpaint.ui.painttools.Tool;
@@ -69,7 +68,7 @@ public class PaintController {
 
     Tool selectedTool;
 
-    private LocalGameInfoPersistence gameInfoPersistence;
+    private GameInfoPersistence gameInfoPersistence;
     private ImagePersistence imagePersistence;
     private GameInfo gameInfo;
     private Integer countDownSecondsLeft;
@@ -88,7 +87,7 @@ public class PaintController {
      */
     @FXML public void initialize() {
         
-        StageUtil.onStageLoaded(drawingCanvas, this::onStageLoaded);
+        StageUtil.onGameInfoPersistenceLoaded(drawingCanvas, this::onGameInfoPersistenceLoaded);
 
         settings = new PaintSettings();
 
@@ -110,13 +109,10 @@ public class PaintController {
         colorPicker.setValue(Color.BLACK);
     }
 
-    private void onStageLoaded(Stage stage) {
-        gameInfoPersistence = (LocalGameInfoPersistence) stage.getUserData();
-        if (gameInfoPersistence == null) {
-            throw new IllegalStateException("Stage has no gameInfoPersistence set");
-        }
+    private void onGameInfoPersistenceLoaded(GameInfoPersistence gameInfoPersistence) {
+        this.gameInfoPersistence = gameInfoPersistence;
         gameInfo = gameInfoPersistence.getActiveGameInfo();
-        //
+
         if (gameInfo == null) {
             throw new IllegalArgumentException(
                 "Loaded PaintController but activeGameInfo was not set in stage");

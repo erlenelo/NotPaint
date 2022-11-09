@@ -9,9 +9,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import notpaint.core.GameInfo;
-import notpaint.core.persistence.LocalGameInfoPersistence;
+import notpaint.core.persistence.GameInfoPersistence;
 import notpaint.ui.util.AlertUtil;
 import notpaint.ui.util.StageUtil;
 
@@ -44,7 +43,7 @@ public class GameSelectController {
     @FXML
     private Text lastEditor;
 
-    private LocalGameInfoPersistence gameInfoPersistence;
+    private GameInfoPersistence gameInfoPersistence;
     private GameInfo selectedGameInfo;
 
     public void addImageToActiveTap(GameInfo info) {
@@ -72,18 +71,12 @@ public class GameSelectController {
 
     @FXML
     private void initialize() {
-        StageUtil.onStageLoaded(secondsPerRound, this::onStageLoaded);        
+        StageUtil.onGameInfoPersistenceLoaded(
+            secondsPerRound, this::onGameInfoPersistenceLoaded);        
     }
 
-    private void onStageLoaded(Stage stage) {
-        if (stage.getUserData() == null) {
-            stage.setUserData(new LocalGameInfoPersistence());
-        }
-        gameInfoPersistence = (LocalGameInfoPersistence) stage.getUserData();
-        onGameInfoPersistenceLoaded();
-    }
 
-    private void onGameInfoPersistenceLoaded() {
+    private void onGameInfoPersistenceLoaded(GameInfoPersistence persistence) {
         try {
             var allInfos = gameInfoPersistence.getAllGameInfos();
             displayGameInfos(allInfos);

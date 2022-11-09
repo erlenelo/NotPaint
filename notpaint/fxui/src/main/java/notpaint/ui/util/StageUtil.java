@@ -1,8 +1,11 @@
 package notpaint.ui.util;
 
+import java.net.URI;
 import java.util.function.Consumer;
 import javafx.scene.Node;
 import javafx.stage.Stage;
+import notpaint.core.persistence.GameInfoPersistence;
+import notpaint.core.persistence.RemoteGameInfoPersistence;
 
 /**
  * Utility class for stage loading.
@@ -15,7 +18,7 @@ public class StageUtil {
      * @param node Node to get stage reference from
      * @param callback Method to call when stage is set
      */
-    public static void onStageLoaded(Node node, Consumer<Stage> callback) {
+    public static void onGameInfoPersistenceLoaded(Node node, Consumer<GameInfoPersistence> callback) {
         // Get the scene from any Node object.
         // Because the scene is not set in initialize, we need to listen for the
         // property to update.
@@ -30,14 +33,24 @@ public class StageUtil {
                         // Create a persistence instance and set it as the user data for the stage.
                         // This makes it accessible from all other scenes.
                         if (newWindow != null) {
-                            callback.accept((Stage) newWindow);
-                            
+                            setGameInfoPersistanceOnStage(
+                                (Stage) stage, callback);                           
                         }
                     });
                 } else {
-                    callback.accept((Stage) stage);
+                    setGameInfoPersistanceOnStage((Stage) stage, callback);
                 }
             }
         });
+    }
+
+    private static void setGameInfoPersistanceOnStage(
+        Stage stage, Consumer<GameInfoPersistence> callback) {
+        if (stage.getUserData() == null) {
+            
+            stage.setUserData(new RemoteGameInfoPersistence(URI.create("http://localhost:8080/")));
+        }
+        var gameInfoPersistence = (GameInfoPersistence) stage.getUserData();
+        callback.accept(gameInfoPersistence);
     }
 }
