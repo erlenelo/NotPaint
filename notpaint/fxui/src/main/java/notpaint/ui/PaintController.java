@@ -19,21 +19,24 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import notpaint.core.GameInfo;
 import notpaint.core.brushes.CircleBrush;
 import notpaint.core.brushes.SquareBrush;
-import notpaint.core.persistence.GameInfoPersistence;
+import notpaint.persistence.GameInfo;
+import notpaint.persistence.GameInfoPersistence;
 import notpaint.ui.painttools.EraserTool;
 import notpaint.ui.painttools.PenTool;
 import notpaint.ui.painttools.Tool;
 import notpaint.ui.persistence.ImagePersistence;
 import notpaint.ui.persistence.LocalImagePersistence;
 import notpaint.ui.util.AlertUtil;
+import notpaint.ui.util.LineUtil;
+import notpaint.ui.util.StageUtil;
 
 /**
  * Controller for the view that handles the painting.
@@ -74,6 +77,10 @@ public class PaintController {
     PaintSettings settings;
 
     Tool selectedTool;
+    @FXML
+    StackPane pencilPane;
+    @FXML
+    StackPane eraserPane;
 
     private GameInfoPersistence gameInfoPersistence;
     private ImagePersistence imagePersistence;
@@ -95,7 +102,6 @@ public class PaintController {
      */
     @FXML
     public void initialize() {
-        loadGameInfo();
 
         settings = new PaintSettings();
 
@@ -103,43 +109,46 @@ public class PaintController {
         selectedTool = new PenTool(settings);
         setCircleBrush(10);
 
-        // Create event handlers for brush changes
-        circleSmall.setOnMouseClicked(e -> setCircleBrush(5));
-        circleMedium.setOnMouseClicked(e -> setCircleBrush(10));
-        circleBig.setOnMouseClicked(e -> setCircleBrush(17));
+        // Create event handlers for brush changes and highlight the selected brush/tool
+        circleSmall.setOnMouseClicked(e -> {
+            setCircleBrush(5);
+            handleHighlightCircle(circleSmall);
+        });
+        circleMedium.setOnMouseClicked(e -> {
+            setCircleBrush(10);
+            handleHighlightCircle(circleMedium);
+        });
+        ;
+        circleBig.setOnMouseClicked(e -> {
+            setCircleBrush(17);
+            handleHighlightCircle(circleBig);
+        });
 
-        squareSmall.setOnMouseClicked(e -> setSquareBrush(5));
-        squareMedium.setOnMouseClicked(e -> setSquareBrush(10));
-        squareBig.setOnMouseClicked(e -> setSquareBrush(17));
+        squareSmall.setOnMouseClicked(e -> {
+            setSquareBrush(5);
+            handleHighlightSquare(squareSmall);
+
+        });
+        squareMedium.setOnMouseClicked(e -> {
+            setSquareBrush(10);
+            handleHighlightSquare(squareMedium);
+
+        });
+        squareBig.setOnMouseClicked(e -> {
+            setSquareBrush(17);
+            handleHighlightSquare(squareBig);
+        });
+        eraserPane.setOnMouseClicked(e -> {
+            handleEraserClick();
+        });
+        pencilPane.setOnMouseClicked(e -> {
+            handlePencilClick();
+        });
 
         imagePersistence = new LocalImagePersistence();
 
         colorPicker.setValue(Color.BLACK);
 
-    }
-
-    private void loadGameInfo() {
-        drawingCanvas.sceneProperty().addListener((observableScene, oldScene, newScene) -> {
-            if (newScene != null) {
-                var stage = newScene.getWindow();
-                // The window property is also initially not set the first time the app starts.
-                // If it is null, listen for the property to update an then set it
-                if (stage == null) {
-                    newScene.windowProperty().addListener((
-                            observableWindow, oldWindow, newWindow) -> {
-                        // Cell onStageLoaded when window(stage) is populated with a value
-                        if (newWindow != null) {
-                            onStageLoaded((Stage) newWindow);
-                        }
-
-                    });
-
-                } else {
-                    onStageLoaded((Stage) stage);
-                }
-
-            }
-        });
     }
 
     private void onStageLoaded(Stage stage) {
@@ -254,14 +263,96 @@ public class PaintController {
         settings.setBrush(new SquareBrush(size));
     }
 
+    private int lastX;
+    private int lastY;
+
     @FXML
     private void handleCavasClick(MouseEvent event) {
-        selectedTool.paint(drawingCanvas, (int) event.getX(), (int) event.getY());
+        int x = (int) event.getX();
+        int y = (int) event.getY();
+
+        // If we are dragging the mouse, we might have moved over some pixels since the
+        // last event.
+        // Paint on all pixels between the last event and this one.
+        if (event.getEventType() == MouseEvent.MOUSE_DRAGGED) {
+            var pixels = LineUtil.getAllPixelsBetween(lastX, lastY, x, y);
+            for (var pixel : pixels) {
+                selectedTool.paint(drawingCanvas, pixel.getKey(), pixel.getValue());
+            }
+        } else {
+            selectedTool.paint(drawingCanvas, x, y);
+        }
+
+        lastX = x;
+        lastY = y;
+    }
+
+    @FXML // Highlight the selected circle brush, clear other highlights
+    private void handleHighlightCircle(Circle circle) {
+        circle.setId("highlightedBrush");
+        if (circle == circleSmall) {
+            circleMedium.setId("clear");
+            circleBig.setId("clear");
+            squareBig.setId("clear");
+            squareMedium.setId("clear");
+            squareSmall.setId("clear");
+        } else if (circle == circleMedium) {
+            circleSmall.setId("clear");
+            circleBig.setId("clear");
+            squareBig.setId("clear");
+            squareMedium.setId("clear");
+            squareSmall.setId("clear");
+        } else if (circle == circleBig) {
+            circleSmall.setId("clear");
+            circleMedium.setId("clear");
+            squareBig.setId("clear");
+            squareMedium.setId("clear");
+            squareSmall.setId("clear");
+        }
+    }
+
+    @FXML // Highlight the selected square brush, clear other highlights
+    private void handleHighlightSquare(Rectangle rectangle) {
+        rectangle.setId("highlightedBrush");
+        if (rectangle == squareSmall) {
+            squareMedium.setId("clear");
+            squareBig.setId("clear");
+            circleBig.setId("clear");
+            circleMedium.setId("clear");
+            circleSmall.setId("clear");
+        } else if (rectangle == squareMedium) {
+            squareSmall.setId("clear");
+            squareBig.setId("clear");
+            circleBig.setId("clear");
+            circleMedium.setId("clear");
+            circleSmall.setId("clear");
+        } else if (rectangle == squareBig) {
+            squareSmall.setId("clear");
+            squareMedium.setId("clear");
+            circleBig.setId("clear");
+            circleMedium.setId("clear");
+            circleSmall.setId("clear");
+        }
+
+    }
+
+    // Tool selection highlights
+    @FXML
+    private void handleEraserClick() {
+        eraserPane.setId("toolPaneHighlight");
+        pencilPane.setId("toolPane");
+    }
+
+    @FXML
+    private void handlePencilClick() {
+        pencilPane.setId("toolPaneHighlight");
+        eraserPane.setId("toolPane");
     }
 
     @FXML
     private void setToolEraser() {
         selectedTool = new EraserTool(settings);
+
     }
 
     @FXML

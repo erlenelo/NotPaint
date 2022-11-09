@@ -14,7 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import notpaint.core.persistence.GameInfoPersistence;
+import notpaint.persistence.GameInfoPersistence;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;

@@ -3,16 +3,20 @@ package notpaint.ui;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import notpaint.core.GameInfo;
-import notpaint.core.persistence.GameInfoPersistence;
+import notpaint.persistence.GameInfo;
+import notpaint.persistence.GameInfoPersistence;
 import notpaint.ui.util.AlertUtil;
+import notpaint.ui.util.StageUtil;
 
 /**
  * Controller for the view that handles the game selection.
@@ -59,40 +63,41 @@ public class GameSelectController {
     }
 
     private void addImageToTab(GameInfo info, TilePane pane) {
+
         ImageView imageView = new ImageView(
             new Image(gameInfoPersistence.getImagePath(info), 200, 140, true, true));
         imageView.maxHeight(150);
         imageView.maxWidth(200);
+
+        // Dark border for each project
+        HBox imageHBox = new HBox();
+        imageHBox.setId("projectBorder");
+        imageHBox.getChildren().add(imageView);
+
+        // Blank border to add margins to projects, and highlight selected project.
+        HBox imageSpace = new HBox();
+        imageSpace.setId("unselected");
+        imageSpace.getChildren().add(imageHBox);
+
         imageView.setOnMouseClicked(event -> {
+            try {
+                pane.lookupAll("#selected").forEach(node -> {
+                    node.setId("unselected");
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             setSelectedGameInfo(info);
+            imageSpace.setId("selected");
+
         });
-        pane.getChildren().add(imageView);
+        
+        pane.getChildren().add(imageSpace);
     }
 
     @FXML
     private void initialize() {
-        // Get the scene from any Node object.
-        // Because the scene is not set in initialize, we need to listen for the
-        // property to update.
-        secondsPerRound.sceneProperty().addListener((observableScene, oldScene, newScene) -> {
-            if (newScene != null) {
-                var stage = newScene.getWindow();
-                // The window property is also initially not set the first time the app starts.
-                // If it is null, listen for the property to update an then set it
-                if (stage == null) {
-                    newScene.windowProperty().addListener((
-                        observableWindow, oldWindow, newWindow) -> {
-                        // Create a persistence instance and set it as the user data for the stage.
-                        // This makes it accessible from all other scenes.
-                        if (newWindow != null) {
-                            onStageLoaded((Stage) newWindow);
-                        }
-                    });
-                } else {
-                    onStageLoaded((Stage) stage);
-                }
-            }
-        });
+        StageUtil.onStageLoaded(secondsPerRound, this::onStageLoaded);        
     }
 
     private void onStageLoaded(Stage stage) {

@@ -1,9 +1,10 @@
 module notpaint.core {
     requires transitive com.fasterxml.jackson.databind;
 
-    exports notpaint.core;
+
     exports notpaint.core.brushes;
-    exports notpaint.core.persistence;
+    exports notpaint.persistence;
     
-    opens notpaint.core to com.fasterxml.jackson.databind;
+    // Denne brukes for å aksessere private fields i GameInfo slik at de kan serializes:
+    opens notpaint.persistence to com.fasterxml.jackson.databind;
 }

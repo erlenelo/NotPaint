@@ -38,7 +38,11 @@ Dette er grensesnittet til instillinger ved laging av nytt prosjekt.
 - Radio-buttonsene indikerer om prosjektet skal ha et nytt randomisert ord som skal tegnes for hver iterasjon, eller om samme ord skal beholdes gjennom hele prosjektet.
 - Create-knappen skaper selve prosjektet. Da blir det et active project, som kan interageres med i GameSelectView.
 
-## Brukerhistorie (US-1)
+
+## Brukerhistorier
+Brukerhistoriene blir laget til hver sprint i prosjektet. Dette innebærer at US1 tilhører første sprint, US2 tilhører andre sprint og US3 tilhører tredje sprint. 
+
+### Brukerhistorie  (US1-1)
 
 Som bruker ønsker jeg å kunne tegne på et lerret og lagre tegningen lokalt.
 
@@ -56,20 +60,79 @@ Viktig å kunne gjøre:
 - Kunne viske ut det man har malt
 - Kunne lagre tegningen til senere bruk
 
-## Brukerhistorie US2-2:
+
+### Brukerhistorie US2-1:
+Som bruker ønsker jeg å kunne opprette et nytt lerret som andre også kan tegne på.
+
+Brukeren skal kunne opprette et nytt lerret og velge hvor lang tid (opptil 2 min) man har for å tegne en tegning. Brukeren skal også kunne velge om hver person som tegner på lerretet skal tegne samme randomisert ord eller om alle skal få forskjellige randomiserte ord. Samt skal brukeren velge hvor mange personer som skal tegne på lerretet før tegningen er ferdig.
+
+Viktig å kunne se:
+- EN tilbakeknapp øverst i venstre hjørne
+- En knapp som indikerer oprettelsen av et nytt lerret
+- Tydelig hvor lang tid man angir at en bruker skal kunne tegne på lerretet
+- Et tekstfelt hvor man angir hvorvidt brukerne skal tegne basert på samme- eller forskjellig ord
+- Et tekstfelt hvor bruker kan angi antall iterasjoner prosjektet kan gjennomgå (antall personer som kan redigere det totalt)
+
+Viktig å kunne gjøre:
+- Lage et nytt lerret
+- Sette en gitt tid, velge hvordan man skal tegne et ord og hvor mange som skal tegne på lerretet
+- Avbryte hvis man ikke vil lage nytt prosjekt likevel
+
+
+### Brukerhistorie US2-2:
 Som bruker vil jeg kunne bli med i et spill og tegne på et lerret.
 
 Brukeren skal kunne bli med i en tegning som andre personer har tegnet på. Brukeren skal motta et ord med en angitt tid og deretter kunne tegne på et lerret.
 
 Viktig å kunne se: 
-- en knapp som tilsier at du blir med i et lerret.
-- se hva slags ord du skal tegne
-- en tid som teller ned som viser hvor lang tid man har før tiden går ut
-- en ferdig knapp man trykker på hvis man er ferdig før tiden er ute
-- hvor mange som har tegnet før deg, samt hvor mange som skal få lov til å tegne på lerretet
-- skal se farger man kan bruke, ulik størrelse og form på pensler, samt viskelær på den en selv har tegnet
+- En knapp som tilsier at du blir med i et lerret
+- Hva slags ord du skal tegne
+- En tid som teller ned som viser hvor lang tid man har før tiden går ut
+- En ferdig knapp man trykker på dersom man blir ferdig før tiden er ute
+- Hvor mange som har tegnet før deg, samt hvor mange som skal få lov til å tegne på lerretet
+- Skal se farger man kan bruke, ulik størrelse og form på pensler, samt viskelær på den en selv har tegnet
 
 Viktig å kunne gjøre:
-- bli med i en tegning
-- kunne tegne med ulike farger og ulik form og størrelse på pensler. 
-- Bruke viskelær på det en selv har tegnet. 
+- Bli med i en tegning
+- Kunne tegne med ulike farger og ulik form og størrelse på pensler
+- Bruke viskelær på det en selv har tegnet
+
+
+
+
+## Brukerhistorie (US3-1)
+
+Som bruker ønsker jeg å ha en komfortabel tegneopplevelse, uten forsinkelser i tegningen, samt å fortløpende kunne angre og gjøre om endringer jeg gjør mens jeg tegner.
+
+Brukeren skal kunne, etter valg av innstillinger, tegne på lerretet med ønskede funksjoner og såpass lite forsinkelse i bevegelse av penselen at det ikke forstyrrer utseende til det som ble tegnet. Under selve tegningen skal brukeren nå kunne angre (undo) eller gjøre om (redo) endringer som brukeren gjør fortløpende mens de tegner. Dette skal kunne utføres med både utpekte frem- og tilbake knapper som er synlig ved siden av lerretet, samt control-z for undo og control-y for redo på tastaturet.
+
+
+Viktig å kunne se:
+- knapper (i form av piler) for undo og redo
+- et kontinuerlig og jevnt penselstrøk på lerrettet
+
+Viktig å kunne gjøre:
+- Kunne tegne uten at forsinkelsen på børsten påvirker utseendet til penselstrøket
+- Kunne angre (undo) og gjøre om (redo) endringer man gjør fortløpende under tegningen
+
+## Brukerhistorie US3-2:
+
+Som bruker ønsker jeg å kunne se hvem som redigerte både mine og andres prosjekter sist.
+
+Bruker skal kunne opprette et kallenavn for sin bruker. Dette brukernavnet skal bli brukt til å fremheve hvem som opprettet, eller sist redigerte, hvert av prosjektene som ligger i oversiktssiden. Brukernavnet skal velges i et vindu som vises når bruker åpner applikasjonen. Bruker skal også ha mulighet til å enten bli, eller ikke bli husket til neste gang de åpner appen; d.v.s. at bruker skal kunne trykke på en avmerkingsboks og beholde brukernavnet til neste gang, eller ikke, alt etter hva bruker ønsker.
+
+
+Viktig å kunne se: 
+- På vinduet for opprettelse av brukernavn:
+  - En tekstfelt hvor bruker kan skrive inn ønsket brukernavn
+  - En knapp for å bekrefte og opprette ønsket brukernavn
+- På oversiktssiden som kommer opp etter valg av brukernavn:
+  - en oversikt over alle pågående prosjekter og hvem som redigerte prosjektet sist
+  
+
+Viktig å kunne gjøre:
+- På vinduet for opprettelse av brukernavn:
+  - Kunne velge tekstfeltet og skrive inn ønsket brukernavn
+  - Kunne trykke på knappen som setter valgt brukernavn - videre er det viktig at å trykke på denne knappen fører brukeren til oversiktssiden
+- På oversiktssiden som kommer opp etter valg av brukernavn:
+  - Kunne trykke på vilkårlig prosjekt og få opp informasjon om hvem som redigerte prosjektet sist
