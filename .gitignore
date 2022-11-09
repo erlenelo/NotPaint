@@ -4,3 +4,5 @@ target/
 notpaint/.vscode/settings.json
 .vscode/settings.json
 notpaint/fxui/data/
+**/usernameFile.txt
+notpaint/fxui/usernameFile.txt

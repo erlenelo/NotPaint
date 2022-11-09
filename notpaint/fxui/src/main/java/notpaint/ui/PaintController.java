@@ -196,8 +196,7 @@ public class PaintController {
             countDownTimer.cancel();
         }
 
-        gameInfo.addIteration("UnknownEditor");
-
+        gameInfo.addIteration(gameInfoPersistence.getUsername());
         saveImageToPath(gameInfoPersistence.getImagePath(gameInfo));
 
         try {

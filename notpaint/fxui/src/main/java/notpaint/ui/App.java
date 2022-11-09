@@ -16,8 +16,10 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFxml("GameSelectView"), 800, 500);
+
+        scene = new Scene(loadFxml("UsernameSelectView"), 800, 500);
         scene.getStylesheets().add(getClass().getResource("fxui.css").toExternalForm());
+
         stage.setScene(scene);
         stage.show();
         stage.setResizable(false);

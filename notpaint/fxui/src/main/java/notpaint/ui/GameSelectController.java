@@ -1,6 +1,8 @@
 package notpaint.ui;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.charset.Charset;
 import java.util.Comparator;
 import java.util.List;
 
@@ -24,28 +26,31 @@ import notpaint.ui.util.StageUtil;
 public class GameSelectController {
 
     @FXML
-    private ScrollPane activeProjectsScrollPane;
-
-    @FXML
     private ScrollPane completedProjectsScrollPane;
-
+    
     @FXML
-    private TilePane activeTilePane;
-
-    @FXML
-    private TilePane completedTilePane;
+    private ScrollPane activeProjectsScrollPane;
 
     @FXML
     private Text secondsPerRound;
 
     @FXML
     private Text iterations;
-
+    
     @FXML
     private Text lastEdit;
-
+    
     @FXML
     private Text lastEditor;
+    
+    @FXML
+    private Text usernameText;
+   
+    @FXML
+    private TilePane completedTilePane; 
+
+    @FXML
+    private TilePane activeTilePane;
 
     private GameInfoPersistence gameInfoPersistence;
     private GameInfo selectedGameInfo;
@@ -59,7 +64,7 @@ public class GameSelectController {
             addImageToTab(info, completedTilePane);
         } else {
             addImageToTab(info, activeTilePane);
-        }
+        } 
     }
 
     private void addImageToTab(GameInfo info, TilePane pane) {
@@ -95,6 +100,9 @@ public class GameSelectController {
         pane.getChildren().add(imageSpace);
     }
 
+    
+       
+
     @FXML
     private void initialize() {
         StageUtil.onStageLoaded(secondsPerRound, this::onStageLoaded);        
@@ -109,6 +117,7 @@ public class GameSelectController {
     }
 
     private void onGameInfoPersistenceLoaded() {
+        usernameText.setText(gameInfoPersistence.getUsername());
         try {
             var allInfos = gameInfoPersistence.getAllGameInfos();
             displayGameInfos(allInfos);
@@ -136,7 +145,20 @@ public class GameSelectController {
         iterations.setText(String.format(
             "%s / %s", info.getCurrentIterations(), info.getMaxIterations()));
         lastEdit.setText(info.getLastEditTime().toString());
-        lastEditor.setText(info.getLastEditor());
+        lastEditor.setText(info.getLastEditor()); 
+    }
+
+    @FXML
+    private void handleChangeUsername() throws IOException {
+        deleteUsername();  
+        App.setRoot("UsernameSelectView");
+    }
+
+    
+    private void deleteUsername() throws IOException {
+        PrintWriter writer = new PrintWriter("usernameFile.txt", Charset.forName("UTF-16"));
+        writer.print("");
+        writer.close();
     }
 
     @FXML
@@ -150,6 +172,9 @@ public class GameSelectController {
             AlertUtil.warningAlert("Warning", "You must select a project to join first.");
         } else if (selectedGameInfo.isFinished()) {
             AlertUtil.warningAlert("Warning", "You cannot join a completed project.");
+        } else if (gameInfoPersistence.getUsername().equals(selectedGameInfo.getLastEditor())) {
+            AlertUtil.warningAlert("Warning", 
+                "You cannot draw on the same prosject two times in a row.");
         } else {
             gameInfoPersistence.setActiveGameInfo(selectedGameInfo);
             App.setRoot("PaintView");
