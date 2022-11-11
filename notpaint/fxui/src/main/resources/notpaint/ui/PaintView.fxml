@@ -15,11 +15,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="paintRoot" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: DEB59D;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="notpaint.ui.PaintController" >
+<AnchorPane fx:id="paintRoot" onKeyPressed="#keyPressed" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: DEB59D;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="notpaint.ui.PaintController">
    <children>
       <StackPane layoutX="14.0" layoutY="50.0" prefHeight="153.0" prefWidth="444.0" style="-fx-background-color: white; -fx-border-color: gray;">
          <children>
-            <Canvas fx:id="drawingCanvas" height="436.0" onMouseDragged="#handleCavasClick" onMousePressed="#handleCavasClick" width="620.0" />
+            <Canvas fx:id="drawingCanvas" height="436.0" onMouseDragged="#handleCavasClick" onMousePressed="#handleCavasClick" onMouseReleased="#saveToStack" width="620.0" />
          </children>
       </StackPane>
       <Text layoutX="14.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Not Paint" wrappingWidth="217.13671875">
@@ -59,7 +59,7 @@
                   <Font size="14.0" />
                </font></Button>
 
-            <ColorPicker fx:id="colorPicker" onAction="#updatePaintColor" layoutX="655.0" layoutY="143.0" />
+            <ColorPicker fx:id="colorPicker" layoutX="655.0" layoutY="143.0" onAction="#updatePaintColor" />
             <Text fx:id="wordToDrawText" boundsType="VISUAL" layoutX="619.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="196.2109375">
                <font>
                   <Font size="20.0" />
@@ -75,7 +75,17 @@
                <font>
                   <Font size="32.0" />
                </font>
-            </Text>      
+            </Text>
+            <ImageView fx:id="undoArrow" fitHeight="42.0" fitWidth="53.0" layoutX="667.0" layoutY="357.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true" onMouseClicked="#undo">
+               <image>
+                  <Image url="@images/arrow.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="redoArrow" fitHeight="42.0" fitWidth="53.0" layoutX="726.0" layoutY="357.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#redo">
+               <image>
+                  <Image url="@images/arrow.png" />
+               </image>
+            </ImageView>      
          </children>
       </Pane>
    </children>
