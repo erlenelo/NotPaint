@@ -44,6 +44,7 @@ public class PaintControllerTest extends ApplicationTest {
          
         FXMLLoader fxmlLoader = new FXMLLoader(PaintController.class.getResource("PaintView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
+        scene.getStylesheets().add(getClass().getResource("fxui.css").toExternalForm());
         App.scene = scene;
         stage.setScene(scene);
         stage.show();

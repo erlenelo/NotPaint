@@ -28,6 +28,7 @@ public class GameSelectControllerTest extends ApplicationTest {
             GameSelectController.class.getResource("GameSelectView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         App.scene = scene;
+        scene.getStylesheets().add(getClass().getResource("fxui.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
         controller = fxmlLoader.getController();
