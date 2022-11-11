@@ -103,6 +103,8 @@ public class PaintController {
     @FXML
     public void initialize() {
 
+        StageUtil.onStageLoaded(drawingCanvas, this::onStageLoaded);
+
         settings = new PaintSettings();
 
         settings.setColor(Color.BLACK);

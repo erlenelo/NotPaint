@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="paintRoot" onKeyPressed="#keyPressed" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: DEB59D;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="notpaint.ui.PaintController">
+<AnchorPane fx:id="paintRoot" onKeyPressed="#keyPressed" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: DEB59D;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="notpaint.ui.PaintController">
    <children>
       <StackPane layoutX="14.0" layoutY="50.0" prefHeight="153.0" prefWidth="444.0" style="-fx-background-color: white; -fx-border-color: gray;">
          <children>
@@ -29,20 +29,20 @@
       </Text>
       <Pane pickOnBounds="false" prefHeight="500.0" prefWidth="800.0">
          <children>
-            <Circle id = "clear" fx:id="circleSmall" layoutX="667.0" layoutY="210.0" radius="5.0"  />
-            <Circle id = "highlightedBrush" fx:id="circleMedium" layoutX="709.0" layoutY="210.0" radius="10.0"  />
-            <Circle id = "clear" fx:id="circleBig"  layoutX="762.0" layoutY="210.0" radius="17.0"  />
-            <Rectangle id = "clear" fx:id="squareSmall" arcHeight="5.0" arcWidth="5.0" height="10.0" layoutX="662.0" layoutY="262.0" fill = "BLACK" stroke = "BLACK" strokeType="INSIDE" width="10.0" />
-            <Rectangle id = "clear" fx:id="squareMedium" arcHeight="5.0" arcWidth="5.0" height="20.0" layoutX="699.0" layoutY="257.0" stroke="BLACK" strokeType="INSIDE" width="20.0" />
-            <Rectangle id = "clear" fx:id="squareBig" arcHeight="5.0" arcWidth="5.0" height="34.0" layoutX="745.0" layoutY="250.0" stroke="BLACK" strokeType="INSIDE" width="34.0"  />
-            <StackPane fx:id ="eraserPane" id = "toolPane" layoutX="662.0" layoutY="310.0">
+            <Circle id="clear" fx:id="circleSmall" layoutX="667.0" layoutY="210.0" radius="5.0" />
+            <Circle id="highlightedBrush" fx:id="circleMedium" layoutX="709.0" layoutY="210.0" radius="10.0" />
+            <Circle id="clear" fx:id="circleBig" layoutX="762.0" layoutY="210.0" radius="17.0" />
+            <Rectangle id="clear" fx:id="squareSmall" arcHeight="5.0" arcWidth="5.0" fill="BLACK" height="10.0" layoutX="662.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+            <Rectangle id="clear" fx:id="squareMedium" arcHeight="5.0" arcWidth="5.0" height="20.0" layoutX="699.0" layoutY="257.0" stroke="BLACK" strokeType="INSIDE" width="20.0" />
+            <Rectangle id="clear" fx:id="squareBig" arcHeight="5.0" arcWidth="5.0" height="34.0" layoutX="745.0" layoutY="250.0" stroke="BLACK" strokeType="INSIDE" width="34.0" />
+            <StackPane id="toolPane" fx:id="eraserPane" layoutX="662.0" layoutY="310.0">
                <ImageView fx:id="eraser" fitHeight="42.0" fitWidth="42.0" layoutX="662.0" layoutY="310.0" onMouseClicked="#setToolEraser" pickOnBounds="true" preserveRatio="true">
                   <image>
                      <Image url="@images/eraser.png" />
                   </image>
                </ImageView>
             </StackPane>
-            <StackPane fx:id = "pencilPane" id = "toolPaneHighlight" layoutX="732.0" layoutY="310.0">
+            <StackPane id="toolPaneHighlight" fx:id="pencilPane" layoutX="732.0" layoutY="310.0">
                <ImageView fx:id="pencil" fitHeight="42.0" fitWidth="42.0" layoutX="732.0" layoutY="310.0" onMouseClicked="#setToolPen" pickOnBounds="true" preserveRatio="true">
                   <image>
                      <Image url="@images/pencil.png" />
@@ -50,11 +50,11 @@
                </ImageView>
             </StackPane>
             
-            <Button fx:id="resetCanvasButton" layoutX="648.0" layoutY="379.0" mnemonicParsing="false" onAction="#resetCanvas" prefHeight="40.0" prefWidth="140.0"  text="Reset Canvas">
+            <Button fx:id="resetCanvasButton" layoutX="649.0" layoutY="391.0" mnemonicParsing="false" onAction="#resetCanvas" prefHeight="40.0" prefWidth="140.0" text="Reset Canvas">
                <font>
                   <Font size="14.0" />
                </font></Button>
-            <Button fx:id="doneButton" layoutX="648.0" layoutY="430.0" mnemonicParsing="false" onAction="#finishDrawing" prefHeight="40.0" prefWidth="140.0"  text="Done">
+            <Button fx:id="doneButton" layoutX="648.0" layoutY="442.0" mnemonicParsing="false" onAction="#finishDrawing" prefHeight="40.0" prefWidth="140.0" text="Done">
                <font>
                   <Font size="14.0" />
                </font></Button>
@@ -76,12 +76,12 @@
                   <Font size="32.0" />
                </font>
             </Text>
-            <ImageView fx:id="undoArrow" fitHeight="42.0" fitWidth="53.0" layoutX="667.0" layoutY="357.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true" onMouseClicked="#undo">
+            <ImageView fx:id="undoArrow" fitHeight="42.0" fitWidth="53.0" layoutX="662.0" layoutY="354.0" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#undo" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/arrow.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="redoArrow" fitHeight="42.0" fitWidth="53.0" layoutX="726.0" layoutY="357.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#redo">
+            <ImageView fx:id="redoArrow" fitHeight="42.0" fitWidth="53.0" layoutX="732.0" layoutY="354.0" onMouseClicked="#redo" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/arrow.png" />
                </image>
