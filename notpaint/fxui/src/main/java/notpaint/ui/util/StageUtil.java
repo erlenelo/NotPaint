@@ -34,7 +34,7 @@ public class StageUtil {
                         // This makes it accessible from all other scenes.
                         if (newWindow != null) {
                             setGameInfoPersistanceOnStage(
-                                (Stage) stage, callback);                           
+                                (Stage) newWindow, callback);                           
                         }
                     });
                 } else {

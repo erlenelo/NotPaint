@@ -7,17 +7,21 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
+import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
 import java.util.Arrays;
 import java.util.List;
 import notpaint.core.GameInfo;
 
-public class RemoteGameInfoPersistence implements GameInfoPersistence {
+public class RemoteGameInfoPersistence extends GameInfoPersistence {
 
     private URI serverURI;
 
     private static final String APPLICATION_JSON = "application/json";
     private static final String ACCEPT_HEADER = "Accept";
+    private static final String CONTENT_TYPE_HEADER = "Content-Type";
+
 
     public RemoteGameInfoPersistence(URI serverURI) {
         this.serverURI = serverURI;
@@ -33,14 +37,12 @@ public class RemoteGameInfoPersistence implements GameInfoPersistence {
         try {
             var response = HttpClient.newBuilder().build()
                 .send(request, HttpResponse.BodyHandlers.ofString());
-            ObjectMapper mapper = new ObjectMapper();
-            // Stop mapper from considering getXxx() and isXxx() methods for serialization
-            mapper.setVisibility(PropertyAccessor.GETTER, Visibility.NONE);
-            mapper.setVisibility(PropertyAccessor.IS_GETTER, Visibility.NONE);
+            var mapper = JacksonObjectMapperBuilder.getConfiguredObjectMapper();
 
-            return Arrays.asList(mapper.readValue(response.body(), GameInfo[].class));
+            var infoArray = mapper.readValue(response.body(), GameInfo[].class);
+            return Arrays.asList(infoArray);
         } catch (IOException | InterruptedException exception) {
-            throw new IOException(exception);
+            throw new RuntimeException(exception);
         }
 
 
@@ -48,26 +50,25 @@ public class RemoteGameInfoPersistence implements GameInfoPersistence {
 
     @Override
     public void saveGameInfo(GameInfo gameInfo) throws IOException {
-        // TODO Auto-generated method stub
+        var mapper = JacksonObjectMapperBuilder.getConfiguredObjectMapper();
+        String infoJson = mapper.writeValueAsString(gameInfo);
         
+        HttpRequest request = HttpRequest.newBuilder(serverURI.resolve("saveGameInfo"))
+            .PUT(HttpRequest.BodyPublishers.ofString(infoJson))
+            .header(CONTENT_TYPE_HEADER, APPLICATION_JSON)
+            .build();
+        try {
+            HttpClient.newBuilder().build().send(request, BodyHandlers.discarding());
+        } catch (IOException | InterruptedException exception) {
+            throw new RuntimeException(exception);
+        }
     }
 
     @Override
     public String getImagePath(GameInfo info) {
         // TODO Auto-generated method stub
-        return null;
+        // Server takes following format:
+        // {baseUri}/image?uuid={uuid}
+        return serverURI.resolve("image").toString() + "?uuid=" + info.getUuid().toString();
     }
-
-    @Override
-    public GameInfo getActiveGameInfo() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public void setActiveGameInfo(GameInfo activeGameInfo) {
-        // TODO Auto-generated method stub
-        
-    }
-    
 }

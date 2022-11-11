@@ -4,3 +4,4 @@ target/
 notpaint/.vscode/settings.json
 .vscode/settings.json
 notpaint/fxui/data/
+notpaint/restserver/data/

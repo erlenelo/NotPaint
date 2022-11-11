@@ -24,6 +24,7 @@ import notpaint.ui.painttools.PenTool;
 import notpaint.ui.painttools.Tool;
 import notpaint.ui.persistence.ImagePersistence;
 import notpaint.ui.persistence.LocalImagePersistence;
+import notpaint.ui.persistence.RemoteImagePersistence;
 import notpaint.ui.util.AlertUtil;
 import notpaint.ui.util.LineUtil;
 import notpaint.ui.util.StageUtil;
@@ -104,7 +105,7 @@ public class PaintController {
         squareMedium.setOnMouseClicked(e -> setSquareBrush(10));
         squareBig.setOnMouseClicked(e -> setSquareBrush(17));
 
-        imagePersistence = new LocalImagePersistence();
+        imagePersistence = new RemoteImagePersistence();
 
         colorPicker.setValue(Color.BLACK);
     }

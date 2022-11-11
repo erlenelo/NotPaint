@@ -14,11 +14,9 @@ import notpaint.core.GameInfo;
 /**
  * Class for saving and loading game info on local disk.
  */
-public class LocalGameInfoPersistence implements GameInfoPersistence {
+public class LocalGameInfoPersistence extends GameInfoPersistence {
 
     private Path dataPath;
-
-    private GameInfo activeGameInfo;
 
     public LocalGameInfoPersistence(Path dataPath) {
         this.dataPath = dataPath;
@@ -67,10 +65,7 @@ public class LocalGameInfoPersistence implements GameInfoPersistence {
      * @throws IOException If unable to write to dataPath
      */
     public void saveGameInfo(GameInfo gameInfo) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        // Stop mapper from considering getXxx() and isXxx() methods for serialization
-        mapper.setVisibility(PropertyAccessor.GETTER, Visibility.NONE);
-        mapper.setVisibility(PropertyAccessor.IS_GETTER, Visibility.NONE);
+        var mapper = JacksonObjectMapperBuilder.getConfiguredObjectMapper();
 
         // If the data folder doesn't exist, create it
         if (!Files.exists(dataPath)) {
@@ -93,24 +88,6 @@ public class LocalGameInfoPersistence implements GameInfoPersistence {
         return "file:" + Paths.get(dataPath.toString(), imageName).toString();
     }
 
-    /**
-     * Returns the active gameinfo, which is the one that should be used by
-     * PaintController to draw.
-     *
-     * @return The active gameinfo
-     */
-    public GameInfo getActiveGameInfo() {
-        return activeGameInfo;
-    }
 
-    /**
-     * Sets the active gameinfo, which is the one that should be used by
-     * PaintController to draw.
-     *
-     * @param activeGameInfo The gameinfo to set as active
-     */
-    public void setActiveGameInfo(GameInfo activeGameInfo) {
-        this.activeGameInfo = activeGameInfo;
-    }
 
 }

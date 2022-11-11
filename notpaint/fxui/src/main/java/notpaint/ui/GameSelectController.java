@@ -77,6 +77,7 @@ public class GameSelectController {
 
 
     private void onGameInfoPersistenceLoaded(GameInfoPersistence persistence) {
+        this.gameInfoPersistence = persistence;
         try {
             var allInfos = gameInfoPersistence.getAllGameInfos();
             displayGameInfos(allInfos);
