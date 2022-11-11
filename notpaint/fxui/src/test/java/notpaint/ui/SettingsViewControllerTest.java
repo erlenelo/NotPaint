@@ -37,6 +37,7 @@ public class SettingsViewControllerTest extends ApplicationTest {
             GameSelectController.class.getResource("SettingsView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         App.scene = scene;
+        scene.getStylesheets().add(getClass().getResource("fxui.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
         controller = fxmlLoader.getController();
