@@ -40,7 +40,7 @@
     -fx-background-color: lightgray;
 }
 #toolPane:hover{
-    -fx-border-color: lightBlue;
+    -fx-border-color: gray;
     -fx-border-radius:5;
     -fx-border-width:2;
 
@@ -50,6 +50,17 @@
     -fx-border-radius:5;
     -fx-border-width:3;
 }
+#undoredopane:hover{
+    -fx-border-color: gray;
+    -fx-border-radius:5;
+    -fx-border-width:2;
+}
+#undoredopane:pressed{
+    -fx-border-color: yellow;
+    -fx-border-radius:5;
+    -fx-border-width:3;
+}
+
 
 /* Styling for highlighting projects in GameSelectView */
 #unselected{

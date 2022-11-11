@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="paintRoot" onKeyPressed="#keyPressed" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: DEB59D;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="notpaint.ui.PaintController">
+<AnchorPane fx:id="paintRoot" onKeyPressed="#keyPressed" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: DEB59D;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="notpaint.ui.PaintController">
    <children>
       <StackPane layoutX="14.0" layoutY="50.0" prefHeight="153.0" prefWidth="444.0" style="-fx-background-color: white; -fx-border-color: gray;">
          <children>
@@ -29,12 +29,12 @@
       </Text>
       <Pane pickOnBounds="false" prefHeight="500.0" prefWidth="800.0">
          <children>
-            <Circle id = "clear" fx:id="circleSmall" styleClass = "smallCircle" layoutX="667.0" layoutY="210.0" radius="5.0"  />
-            <Circle id = "highlightedBrush" fx:id="circleMedium" styleClass = "mediumCircle" layoutX="709.0" layoutY="210.0" radius="10.0"  />
-            <Circle id = "clear" fx:id="circleBig"  styleClass = "bigCircle" layoutX="762.0" layoutY="210.0" radius="17.0"  />
-            <Rectangle id = "clear" fx:id="squareSmall" styleClass = "smallSquare" arcHeight="5.0" arcWidth="5.0" height="10.0" layoutX="662.0" layoutY="262.0" fill = "BLACK" stroke = "BLACK" strokeType="INSIDE" width="10.0" />
-            <Rectangle id = "clear" fx:id="squareMedium" styleClass = "mediumSquare" arcHeight="5.0" arcWidth="5.0" height="20.0" layoutX="699.0" layoutY="257.0" stroke="BLACK" strokeType="INSIDE" width="20.0" />
-            <Rectangle id = "clear" fx:id="squareBig" styleClass = "bigSquare" arcHeight="5.0" arcWidth="5.0" height="34.0" layoutX="745.0" layoutY="250.0" stroke="BLACK" strokeType="INSIDE" width="34.0"  />
+            <Circle id="clear" fx:id="circleSmall" layoutX="667.0" layoutY="210.0" radius="5.0" styleClass="smallCircle" />
+            <Circle id="highlightedBrush" fx:id="circleMedium" layoutX="709.0" layoutY="210.0" radius="10.0" styleClass="mediumCircle" />
+            <Circle id="clear" fx:id="circleBig" layoutX="762.0" layoutY="210.0" radius="17.0" styleClass="bigCircle" />
+            <Rectangle id="clear" fx:id="squareSmall" arcHeight="5.0" arcWidth="5.0" fill="BLACK" height="10.0" layoutX="662.0" layoutY="262.0" stroke="BLACK" strokeType="INSIDE" styleClass="smallSquare" width="10.0" />
+            <Rectangle id="clear" fx:id="squareMedium" arcHeight="5.0" arcWidth="5.0" height="20.0" layoutX="699.0" layoutY="257.0" stroke="BLACK" strokeType="INSIDE" styleClass="mediumSquare" width="20.0" />
+            <Rectangle id="clear" fx:id="squareBig" arcHeight="5.0" arcWidth="5.0" height="34.0" layoutX="745.0" layoutY="250.0" stroke="BLACK" strokeType="INSIDE" styleClass="bigSquare" width="34.0" />
             <StackPane id="toolPane" fx:id="eraserPane" layoutX="662.0" layoutY="310.0">
                <ImageView fx:id="eraser" fitHeight="42.0" fitWidth="42.0" layoutX="662.0" layoutY="310.0" onMouseClicked="#setToolEraser" pickOnBounds="true" preserveRatio="true">
                   <image>
@@ -76,16 +76,20 @@
                   <Font size="32.0" />
                </font>
             </Text>
-            <ImageView fx:id="undoArrow" fitHeight="42.0" fitWidth="53.0" layoutX="662.0" layoutY="354.0" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#undo" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/arrow.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="redoArrow" fitHeight="42.0" fitWidth="53.0" layoutX="732.0" layoutY="354.0" onMouseClicked="#redo" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/arrow.png" />
-               </image>
-            </ImageView>      
+            <StackPane id="undoredopane" fx:id="undoPane" layoutX="657.0" layoutY="361.0" >
+               <ImageView fx:id="undoArrow" fitHeight="42.0" fitWidth="53.0" layoutX="657.0" layoutY="361.0" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#undo" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@images/arrow.png" />
+                  </image>
+               </ImageView>
+            </StackPane>
+            <StackPane id="undoredopane" fx:id="redoPane" layoutX="723.0" layoutY="361.0" >
+               <ImageView fx:id="redoArrow" fitHeight="42.0" fitWidth="53.0" layoutX="723.0" layoutY="361.0" onMouseClicked="#redo" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@images/arrow.png" />
+                  </image>
+               </ImageView>     
+            </StackPane>
          </children>
       </Pane>
    </children>
