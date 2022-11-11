@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Stack;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.beans.binding.NumberExpression;
 import javafx.event.EventHandler;
@@ -25,6 +27,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import notpaint.core.brushes.CircleBrush;
 import notpaint.core.brushes.SquareBrush;
 import notpaint.persistence.GameInfo;
@@ -81,6 +84,10 @@ public class PaintController {
     StackPane pencilPane;
     @FXML
     StackPane eraserPane;
+    @FXML
+    StackPane undoPane;
+    @FXML
+    StackPane redoPane;
 
     private GameInfoPersistence gameInfoPersistence;
     private ImagePersistence imagePersistence;
@@ -423,13 +430,21 @@ public class PaintController {
         KeyCode keyCode = e.getCode();
 
         if (e.isControlDown()) {
+            //Delay for highlighting undo/redo
+            PauseTransition delay = new PauseTransition(Duration.seconds(0.2));
             System.out.println("CTRL is down");
             switch (keyCode) {
                 case Z:
                     undo();
+                    undoPane.setId("undoredopane2");
+                    delay.setOnFinished(event -> undoPane.setId("undoredopane"));
+                    delay.play();
                     break;
                 case Y:
                     redo();
+                    redoPane.setId("undoredopane2");                    
+                    delay.setOnFinished(event -> redoPane.setId("undoredopane"));
+                    delay.play();
                     break;
                 default:
                     break;
