@@ -136,7 +136,7 @@ public class PaintControllerTest extends ApplicationTest {
     @Test
     public void testPencilClick() {
         clickOn("#pencil");
-        assertTrue(lookup("#pencilPane").query().getId().contains("toolPaneHighlight"));
+        assertTrue(lookup("#toolPaneHighlight").query().getId().contains("toolPaneHighlight"));
     }
 
     @Test
@@ -165,6 +165,25 @@ public class PaintControllerTest extends ApplicationTest {
         }
         return null;
     }
+
+    @Test
+    public void testUndoRedo(){
+
+        clickOn("#drawingCanvas");
+        
+        clickOn("#undoArrow");
+        assertTrue(controller.undoStack.isEmpty());
+        
+        clickOn("#redoArrow");
+        assertTrue(controller.redoStack.isEmpty());
+
+
+
+    }
+
+    
+
+
 
     @Test
     public void testKeyUndoRedo() {
