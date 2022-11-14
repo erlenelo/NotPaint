@@ -3,15 +3,28 @@ package notpaint.ui;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+import org.junit.Before;
+import org.junit.Rule;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.rules.ExpectedException;
+import org.testfx.api.FxAssert;
 import org.testfx.framework.junit5.ApplicationTest;
+import org.testfx.matcher.base.NodeMatchers;
 import org.testfx.util.WaitForAsyncUtils;
 
 /**
@@ -24,7 +37,7 @@ public class UsernameSelectControllerTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws Exception {
-        // System.out.println("UsernameSelectControllerTest start");
+
         FXMLLoader fxmlLoader = new FXMLLoader(
                 UsernameSelectController.class.getResource("UsernameSelectView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
@@ -33,10 +46,9 @@ public class UsernameSelectControllerTest extends ApplicationTest {
         stage.setScene(scene);
         stage.show();
         controller = fxmlLoader.getController();
-        // System.out.println("Controller: " + controller.getClass().toString());
+
     }
 
-    // Test that the controller is created.
     @Test
     public void testController() {
         assertNotNull(controller);
@@ -53,22 +65,26 @@ public class UsernameSelectControllerTest extends ApplicationTest {
         }
     }
 
-    // Test if clicking on the Done-button opens GameSelectView.
     @Test
     public void testDoneButton() throws InterruptedException {
-
         clickOn("#setUsernameTextField");
         write("testAuthor");
         clickOn("#doneButton");
-        // WaitForAsyncUtils.waitForFxEvents();
         assertNotNull(findSceneRootWithId("gameSelectRoot"));
     }
 
-    private Object findSceneRootWithId(String string) {
+    private Parent findSceneRootWithId(String id) {
+        for (Window window : Window.getWindows()) {
+            if (window instanceof Stage && window.isShowing()) {
+                var root = window.getScene().getRoot();
+                if (id.equals(root.getId())) {
+                    return root;
+                }
+            }
+        }
         return null;
     }
 
-    // Test to see if radiobuttons have right values.
     @Test
     public void testRadioButtonsHaveRightValue() {
         RadioButton yesRadioButton = (RadioButton) lookup("#yesRadioButton").query();
@@ -78,6 +94,34 @@ public class UsernameSelectControllerTest extends ApplicationTest {
         assertFalse(yesRadioButton.isSelected());
         clickOn("#yesRadioButton");
         assertTrue(yesRadioButton.isSelected());
+        assertFalse(noRadioButton.isSelected());
+    }
+
+    // @Test
+    // public void read() throws IOException {
+    // Path file = this.workingDir.resolve("usernameFile.txt");
+    // String content = Files.readString(file);
+    // assertEquals(content, "");
+    // }
+
+    // test that usernameText is set to the username in the file
+    @Test
+    public void testUsernameText() throws IOException {
+        clickOn("#setUsernameTextField");
+        write("testAuthor");
+        clickOn("#yesRadioButton");
+        clickOn("#doneButton");
+
+        Path file = Path.of("usernameFile.txt");
+        String content = Files.readString(file);
+        String usernameText = "testAuthor";
+        assertEquals(content, usernameText);
+    }
+
+    @Test
+    public void testSetUserNameAlert() {
+        clickOn("#doneButton");
+        FxAssert.verifyThat("Warning", NodeMatchers.isVisible());
     }
 
 }
