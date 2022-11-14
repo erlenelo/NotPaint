@@ -5,46 +5,45 @@ Dette prosjektet er en tegneapp hvor flere brukere sammen jobber på felles tegn
 - At et randomisert ord knyttes til prosjektet, og skal tegnes (eller om nytt ord genereres for hver nye iterasjon).
 - Samme brukernavn har ikke mulighet til å tegne på prosjektet når en session er fullført. 
 
-Prosjekter som er ferdige (enten markert ferdig manuelt, eller at max antall iterasjoner er nådd), legges i en egen fane for ferdige prosjekter. Det er også en fane for nåværende, aktive prosjekter som man kan lage nye iterasjoner av, som vil overskrive det forrige (dog tidligere iterasjoners endringer kan ikke resettes).
+Prosjekter som er ferdige (enten markert ferdig manuelt, eller at maks antall iterasjoner er nådd), legges i en egen fane for ferdige prosjekter. Det er også en fane for nåværende, aktive prosjekter som man kan lage nye iterasjoner av, som vil overskrive det forrige (dog tidligere iterasjoners endringer kan ikke resettes).
 
 ## Bilder av grensesnittet
 ### UsernameSelectView
-(her skal det inn bilde)
-
-Dette er grensesnittet til det å kunne opprette brukernavn.
-- Dette grensesnittet er det som vises når man kjører applikasjonen.
+![](/notpaint/viewScreenshots/release3%20viewScreenshoot/UsernameSelectView.png)
+Dette er grensesnittet for å opprette brukernavn.
+- Dette grensesnittet er det som vises når man først kjører applikasjonen.
 - Det er et *input-felt* der man skriver inn brukernavn. Her må man skrive et navn for å kunne trykke på "Done"-knappen.
 - Det er *radiobuttons* som gir brukeren valget om man vil at spillet skal huske brukernavnet eller ikke. Hvis brukeren har trykket på at spillet skal huske brukernavnet vil man komme til `GameSelectView` neste gang man åpner spillet. 
 
 ### PaintView
-![](/notpaint/viewScreenshots/release2%20viewScreenshots/PaintView.png)
+![](/notpaint/viewScreenshots/release3%20viewScreenshoot/PaintView.png)
 Dette er grensesnittet til tegne-funksjonene.
-- Øverst til høyre står ordet som brukeren skal tegne, samt en timer som teller ned fra hvor mange sekunder brukeren har igjen på prosjektet.
+- Øverst til høyre står ordet som brukeren skal tegne, her ordet *Ice*. Det vises også en timer som teller ned fra hvor mange sekunder brukeren har igjen på prosjektet, her teller den ned fra 60 sekunder.
 - Sirklene setter pensel til indikert radius.
 - Firkantene setter pensel til indikert størrelse.
 - Viskelæret setter pensel til hvit farge, slik at tegnede områder kan viskes ut.
 - Blyanten setter pensel til farge.
 - *Color-pickeren* lar bruker velge farge på pensel.
-- Pilene gjør at brukeren kan angre (undo) og gjøre om (redo) det som hen selv har tegnet på prosjektet. Respektivit pilen som peker mot venstre er *undo* og motsatt, pilen som peker mot høyre er *redo*.
+- Pilene gjør at brukeren kan angre (undo) og gjøre om (redo) det som hen selv har tegnet på prosjektet. Respektivt pilen som peker mot venstre er *undo* og motsatt, pilen som peker mot høyre er *redo*.
 - "Reset Canvas"-knappen fjerner alle endringer gjort i nåværende iterasjon. I praksis laster den opp forrige iterasjon, som overskriver nåværende iterasjon med foreløpige endringer.
 - "Done"-knappen brukes når brukeren er ferdig med prosjektet før tiden har telt ned til null. 
 
 ### GameSelectView
-![](/notpaint/viewScreenshots/release2%20viewScreenshots/GameSelectView.png)
+![](/notpaint/viewScreenshots/release3%20viewScreenshoot/GameSelectView.png)
 Dette er grensesnittet for nye/gamle prosjekter.
 - Det er to faner; *Active projects* viser uferdige prosjekter og *Completed Prosjects* viser alle ferdige prosjekter.
 - *Seconds to Draw* viser hvor mange sekunder prosjektet tillater at en bruker gjør endringer.
-- Øverst til høyre står brukernavnet. 
+- Øverst til høyre står brukernavnet, her *TestAuthor*. 
 - "Change Username"-knappen lar brukeren opprette nytt brukernavn og tar brukeren til `UsernameSelectView`.
-- Iterations viser hvor mange ganger en endring på prosjektet er blitt lagret.
+- *Iterations* viser hvor mange ganger en endring på prosjektet er blitt lagret.
 - *Last Editor* viser brukeren som endret prosjektet sist.
-- *Last Edit* viser tiden siste iterasjon ble lagret.
+- *Last Edit* viser datoen siste iterasjon ble lagret.
 - "Join Project"-knappen engasjerer et selektert, aktivt prosjekt, slik at man kan lage en ny iterasjon av prosjektet. Sender bruker til `PaintView` for prosjektet.
 - "New Project"-knappen lager et nytt prosjekt. Sender bruker til `SettingsView`.
 
 
 ### SettingsView
-![](/notpaint/viewScreenshots/release2%20viewScreenshots/SettingsView.png)
+![](/notpaint/viewScreenshots/release3%20viewScreenshoot/SettingsView.png)
 Dette er grensesnittet til instillinger ved laging av nytt prosjekt.
 - "Back to Menu"-knappen tar bruker tilbake til `GameSelectView`.
 - *Time-inputten* lager restriksjon på hvor mange sekunder man kan tegne per iterasjon på det nye prosjektet.
