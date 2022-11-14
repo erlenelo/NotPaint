@@ -16,7 +16,7 @@
                <Button fx:id="joinProjectButton" layoutX="646.0" layoutY="382.0" onAction="#handleJoinProject" prefHeight="40.0" prefWidth="140.0" text="Join Project" />
       <TabPane prefHeight="500.0" prefWidth="633.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Active Projects">
+          <Tab fx:id="activeTab" text="Active Projects">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

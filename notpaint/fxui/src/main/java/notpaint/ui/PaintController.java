@@ -4,21 +4,15 @@ import java.io.IOException;
 import java.util.Stack;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
-import javafx.beans.binding.NumberExpression;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -425,6 +419,10 @@ public class PaintController {
 
     }
 
+    /**
+     * Keyboard functionality with ctrl z(undo) and y(redo).
+     *
+     */
     @FXML
     public void keyPressed(KeyEvent e) {
         KeyCode keyCode = e.getCode();

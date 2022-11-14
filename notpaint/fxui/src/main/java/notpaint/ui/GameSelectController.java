@@ -5,14 +5,12 @@ import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.util.Comparator;
 import java.util.List;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.TilePane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import notpaint.persistence.GameInfo;
@@ -75,14 +73,14 @@ public class GameSelectController {
         imageView.maxWidth(200);
 
         // Dark border for each project
-        HBox imageHBox = new HBox();
-        imageHBox.setId("projectBorder");
-        imageHBox.getChildren().add(imageView);
+        HBox imageHbox = new HBox();
+        imageHbox.setId("projectBorder");
+        imageHbox.getChildren().add(imageView);
 
         // Blank border to add margins to projects, and highlight selected project.
         HBox imageSpace = new HBox();
         imageSpace.setId("unselected");
-        imageSpace.getChildren().add(imageHBox);
+        imageSpace.getChildren().add(imageHbox);
 
         imageView.setOnMouseClicked(event -> {
             try {
