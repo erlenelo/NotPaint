@@ -14,11 +14,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import notpaint.core.persistence.LocalGameInfoPersistence;
+import notpaint.persistence.LocalGameInfoPersistence;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
-import org.testfx.util.WaitForAsyncUtils;
 
 /**
  * Test class for {@link SettingsViewController}.
@@ -34,9 +33,10 @@ public class SettingsViewControllerTest extends ApplicationTest {
         stage.setUserData(gameInfoPersistence);
 
         FXMLLoader fxmlLoader = new FXMLLoader(
-            GameSelectController.class.getResource("SettingsView.fxml"));
+                GameSelectController.class.getResource("SettingsView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         App.scene = scene;
+        scene.getStylesheets().add(getClass().getResource("fxui.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
         controller = fxmlLoader.getController();
@@ -103,13 +103,15 @@ public class SettingsViewControllerTest extends ApplicationTest {
 
     // test if clicking on the create button opens paintview
     @Test
-    public void testCreateButton() throws InterruptedException {
+    public void testCreateButton() {
         clickOn("#setTimeTextField");
         write("10");
         clickOn("#maxIterationsTextField");
         write("2");
+
         clickOn("#createButton");
-        WaitForAsyncUtils.waitForFxEvents();
+
+        // WaitForAsyncUtils.waitForFxEvents();
         assertNotNull(findSceneRootWithId("paintRoot"));
     }
 

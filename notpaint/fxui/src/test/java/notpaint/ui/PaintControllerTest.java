@@ -12,13 +12,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import notpaint.core.GameInfo;
 import notpaint.core.brushes.Brush;
 import notpaint.core.brushes.CircleBrush;
 import notpaint.core.brushes.SquareBrush;
-import notpaint.core.persistence.LocalGameInfoPersistence;
+import notpaint.persistence.GameInfo;
+import notpaint.persistence.LocalGameInfoPersistence;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -44,6 +45,7 @@ public class PaintControllerTest extends ApplicationTest {
          
         FXMLLoader fxmlLoader = new FXMLLoader(PaintController.class.getResource("PaintView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
+        scene.getStylesheets().add(getClass().getResource("fxui.css").toExternalForm());
         App.scene = scene;
         stage.setScene(scene);
         stage.show();
@@ -67,12 +69,12 @@ public class PaintControllerTest extends ApplicationTest {
     
     @Test
     public void testBrushButtons() {
-        assertButtonSetsBrush("#circleSmall", CircleBrush.class);
-        assertButtonSetsBrush("#squareSmall", SquareBrush.class);
-        assertButtonSetsBrush("#circleMedium", CircleBrush.class);
-        assertButtonSetsBrush("#squareMedium", SquareBrush.class);
-        assertButtonSetsBrush("#circleBig", CircleBrush.class);
-        assertButtonSetsBrush("#squareBig", SquareBrush.class);
+        assertButtonSetsBrush(".smallCircle", CircleBrush.class);
+        assertButtonSetsBrush(".smallSquare", SquareBrush.class);
+        assertButtonSetsBrush(".mediumCircle", CircleBrush.class);
+        assertButtonSetsBrush(".mediumSquare", SquareBrush.class);
+        assertButtonSetsBrush(".bigCircle", CircleBrush.class);
+        assertButtonSetsBrush(".bigSquare", SquareBrush.class);
     }
 
     private void assertButtonSetsBrush(String button, Class<? extends Brush> brushClass) {
@@ -101,6 +103,43 @@ public class PaintControllerTest extends ApplicationTest {
     }
 
     @Test
+    public void testHighlightCircle() {
+
+        assertButtonIsHighlighted(".smallCircle");
+        assertButtonIsHighlighted(".mediumCircle");
+        assertButtonIsHighlighted(".bigCircle");
+
+    }
+
+    @Test
+    public void testHighlightSquare() {
+
+        assertButtonIsHighlighted(".smallSquare");
+        assertButtonIsHighlighted(".mediumSquare");
+        assertButtonIsHighlighted(".bigSquare");
+
+    }
+    private void assertButtonIsHighlighted(String button) {
+        clickOn(button);
+        assertTrue(lookup(button).query().getId().contains("highlightedBrush"));
+    }
+
+    
+
+    @Test
+    public void testEraserClick() {
+        clickOn("#toolPane");
+        assertTrue(lookup("#toolPaneHighlight").query().getId().contains("toolPaneHighlight"));
+  
+    }
+
+    @Test
+    public void testPencilClick() {
+        clickOn("#pencil");
+        assertTrue(lookup("#toolPaneHighlight").query().getId().contains("toolPaneHighlight"));
+    }
+
+    @Test
     public void testDone() {
         clickOn("#doneButton");
         assertNotNull(findSceneRootWithId("gameSelectRoot"), "GameSelectView should be visible");
@@ -112,6 +151,8 @@ public class PaintControllerTest extends ApplicationTest {
         Image image = new Image(gameInfoPersistence.getImagePath(gameInfo));
         assertNotNull(image, "Image should exist after clicking done on PaintView");
     }
+
+
 
     private Parent findSceneRootWithId(String id) {
         for (Window window : Window.getWindows()) {
@@ -125,6 +166,37 @@ public class PaintControllerTest extends ApplicationTest {
         return null;
     }
 
+    @Test
+    public void testUndoRedo(){
+
+        clickOn("#drawingCanvas");
+        
+        clickOn("#undoArrow");
+        assertTrue(controller.undoStack.isEmpty());
+        
+        clickOn("#redoArrow");
+        assertTrue(controller.redoStack.isEmpty());
+
+
+
+    }
+
+    
+
+
+
+    @Test
+    public void testKeyUndoRedo() {
+        clickOn("#drawingCanvas");
+        press(KeyCode.CONTROL).press(KeyCode.Z);
+        assertTrue(lookup(".undoPane").query().getId().contains("undoredopane2"));
+        press(KeyCode.CONTROL).press(KeyCode.Y).release(KeyCode.Y).release(KeyCode.CONTROL);
+
+
+    }
+
 
 }
+
+
 

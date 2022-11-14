@@ -10,12 +10,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
-import notpaint.core.GameInfo;
-import notpaint.core.persistence.GameInfoPersistence;
+import notpaint.persistence.GameInfo;
+import notpaint.persistence.GameInfoPersistence;
 import notpaint.ui.util.AlertUtil;
 
 /**
- * Controller for the view that handles the settings when configuring a new game.
+ * Controller for the view that handles the settings when configuring a new
+ * game.
  */
 public class SettingsViewController {
 
@@ -52,7 +53,6 @@ public class SettingsViewController {
         maxIterationsTextField.setTextFormatter(new TextFormatter<Integer>(integerFilter));
     }
 
-
     @FXML
     private void switchToMenu() throws IOException {
         App.setRoot("GameSelectView");
@@ -60,12 +60,16 @@ public class SettingsViewController {
 
     @FXML
     private void createGame(ActionEvent event) {
-        
+
         int maxIterations = Integer.parseInt(maxIterationsTextField.getText());
         int secondsPerRound = Integer.parseInt(setTimeTextField.getText());
-        
-        boolean newWordEachRound = checkboxYes.isSelected();        
-    
+
+        boolean newWordEachRound = checkboxYes.isSelected();
+
+        if (secondsPerRound < 5 || secondsPerRound > 120) {
+            AlertUtil.warningAlert("Warning", "The time per round must be between 5 and 120 seconds.");
+        }
+
         GameInfo newGameInfo = new GameInfo(maxIterations, secondsPerRound, newWordEachRound);
         Node node = (Node) event.getSource();
         Stage stage = (Stage) node.getScene().getWindow();
@@ -74,7 +78,7 @@ public class SettingsViewController {
             stage.close();
             GameInfoPersistence gameInfoPersistence = (GameInfoPersistence) stage.getUserData();
             gameInfoPersistence.setActiveGameInfo(newGameInfo);
-            App.setRoot("PaintView");            
+            App.setRoot("PaintView");
             stage.show();
         } catch (IOException ioException) {
             ioException.printStackTrace();

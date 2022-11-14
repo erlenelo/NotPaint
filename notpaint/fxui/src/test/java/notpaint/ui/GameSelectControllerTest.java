@@ -9,7 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import notpaint.core.GameInfo;
+import notpaint.persistence.GameInfo;
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxAssert;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -28,6 +28,7 @@ public class GameSelectControllerTest extends ApplicationTest {
             GameSelectController.class.getResource("GameSelectView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         App.scene = scene;
+        scene.getStylesheets().add(getClass().getResource("fxui.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
         controller = fxmlLoader.getController();

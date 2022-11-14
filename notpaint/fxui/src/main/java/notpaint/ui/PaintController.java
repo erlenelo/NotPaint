@@ -1,24 +1,36 @@
 package notpaint.ui;
 
 import java.io.IOException;
+import java.util.Stack;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
+import javafx.beans.binding.NumberExpression;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import notpaint.core.GameInfo;
+import javafx.util.Duration;
 import notpaint.core.brushes.CircleBrush;
 import notpaint.core.brushes.SquareBrush;
-import notpaint.core.persistence.GameInfoPersistence;
+import notpaint.persistence.GameInfo;
+import notpaint.persistence.GameInfoPersistence;
 import notpaint.ui.painttools.EraserTool;
 import notpaint.ui.painttools.PenTool;
 import notpaint.ui.painttools.Tool;
@@ -68,6 +80,14 @@ public class PaintController {
     PaintSettings settings;
 
     Tool selectedTool;
+    @FXML
+    StackPane pencilPane;
+    @FXML
+    StackPane eraserPane;
+    @FXML
+    StackPane undoPane;
+    @FXML
+    StackPane redoPane;
 
     private GameInfoPersistence gameInfoPersistence;
     private ImagePersistence imagePersistence;
@@ -75,13 +95,14 @@ public class PaintController {
     private Integer countDownSecondsLeft;
     private Timer countDownTimer;
 
+    Stack<Image> undoStack = new Stack<Image>();
+    Stack<Image> redoStack = new Stack<Image>();
+
     @FXML
     private void switchToSecondary() throws IOException {
         App.setRoot("GameSelectView");
-    }
 
-    
-    
+    }
 
     /**
      * Set the default settings and tools.
@@ -96,18 +117,46 @@ public class PaintController {
         selectedTool = new PenTool(settings);
         setCircleBrush(10);
 
-        // Create event handlers for brush changes
-        circleSmall.setOnMouseClicked(e -> setCircleBrush(5));
-        circleMedium.setOnMouseClicked(e -> setCircleBrush(10));
-        circleBig.setOnMouseClicked(e -> setCircleBrush(17));
+        // Create event handlers for brush changes and highlight the selected brush/tool
+        circleSmall.setOnMouseClicked(e -> {
+            setCircleBrush(5);
+            handleHighlightCircle(circleSmall);
+        });
+        circleMedium.setOnMouseClicked(e -> {
+            setCircleBrush(10);
+            handleHighlightCircle(circleMedium);
+        });
+        ;
+        circleBig.setOnMouseClicked(e -> {
+            setCircleBrush(17);
+            handleHighlightCircle(circleBig);
+        });
 
-        squareSmall.setOnMouseClicked(e -> setSquareBrush(5));
-        squareMedium.setOnMouseClicked(e -> setSquareBrush(10));
-        squareBig.setOnMouseClicked(e -> setSquareBrush(17));
+        squareSmall.setOnMouseClicked(e -> {
+            setSquareBrush(5);
+            handleHighlightSquare(squareSmall);
+
+        });
+        squareMedium.setOnMouseClicked(e -> {
+            setSquareBrush(10);
+            handleHighlightSquare(squareMedium);
+
+        });
+        squareBig.setOnMouseClicked(e -> {
+            setSquareBrush(17);
+            handleHighlightSquare(squareBig);
+        });
+        eraserPane.setOnMouseClicked(e -> {
+            handleEraserClick();
+        });
+        pencilPane.setOnMouseClicked(e -> {
+            handlePencilClick();
+        });
 
         imagePersistence = new RemoteImagePersistence();
 
         colorPicker.setValue(Color.BLACK);
+
     }
 
     private void onGameInfoPersistenceLoaded(GameInfoPersistence gameInfoPersistence) {
@@ -116,12 +165,14 @@ public class PaintController {
 
         if (gameInfo == null) {
             throw new IllegalArgumentException(
-                "Loaded PaintController but activeGameInfo was not set in stage");
+                    "Loaded PaintController but activeGameInfo was not set in stage");
         }
         // Load the current image into the canvas, unless this is the first iteration.
         // In that case there is no image.
         if (gameInfo.getCurrentIterations() > 0) {
-            loadImage(gameInfoPersistence.getImagePath(gameInfo));
+            String image = gameInfoPersistence.getImagePath(gameInfo);
+            loadImage(image);
+            undoStack.push(loadImage(image));
         }
 
         wordToDrawText.setText(gameInfo.getWord());
@@ -130,7 +181,7 @@ public class PaintController {
 
         countDownTimer = new Timer();
 
-        // Create a timer task that decreases and keeps track of the remaining time.
+        // Creates a timer task that decreases and keeps track of the remaining time.
         TimerTask countDownTask = new TimerTask() {
             @Override
             public void run() {
@@ -160,8 +211,7 @@ public class PaintController {
             countDownTimer.cancel();
         }
 
-        gameInfo.addIteration("UnknownEditor");
-
+        gameInfo.addIteration(gameInfoPersistence.getUsername());
         saveImageToPath(gameInfoPersistence.getImagePath(gameInfo));
 
         try {
@@ -177,7 +227,7 @@ public class PaintController {
 
     void saveImageToPath(String path) {
         WritableImage image = new WritableImage(
-            (int) drawingCanvas.getWidth(), (int) drawingCanvas.getHeight());
+                (int) drawingCanvas.getWidth(), (int) drawingCanvas.getHeight());
         image = drawingCanvas.snapshot(new SnapshotParameters(), image);
 
         try {
@@ -188,9 +238,17 @@ public class PaintController {
         }
     }
 
-    private void loadImage(String path) {
+    private Image loadImage(String path) {
         Image loadedImage = imagePersistence.load(path);
         drawingCanvas.getGraphicsContext2D().drawImage(loadedImage, 0, 0);
+
+        // Add the loaded image to the undo stack so that it can be undone.
+        if (loadedImage.getWidth() > 0 && loadedImage.getHeight() > 0) {
+            undoStack.push(new WritableImage(loadedImage.getPixelReader(),
+                    (int) loadedImage.getWidth(), (int) loadedImage.getHeight()));
+        }
+
+        return loadedImage;
     }
 
     /**
@@ -218,8 +276,9 @@ public class PaintController {
     private void handleCavasClick(MouseEvent event) {
         int x = (int) event.getX();
         int y = (int) event.getY();
-        
-        // If we are dragging the mouse, we might have moved over some pixels since the last event.
+
+        // If we are dragging the mouse, we might have moved over some pixels since the
+        // last event.
         // Paint on all pixels between the last event and this one.
         if (event.getEventType() == MouseEvent.MOUSE_DRAGGED) {
             var pixels = LineUtil.getAllPixelsBetween(lastX, lastY, x, y);
@@ -234,11 +293,72 @@ public class PaintController {
         lastY = y;
     }
 
-    
+    @FXML // Highlight the selected circle brush, clear other highlights
+    private void handleHighlightCircle(Circle circle) {
+        circle.setId("highlightedBrush");
+        if (circle == circleSmall) {
+            circleMedium.setId("clear");
+            circleBig.setId("clear");
+            squareBig.setId("clear");
+            squareMedium.setId("clear");
+            squareSmall.setId("clear");
+        } else if (circle == circleMedium) {
+            circleSmall.setId("clear");
+            circleBig.setId("clear");
+            squareBig.setId("clear");
+            squareMedium.setId("clear");
+            squareSmall.setId("clear");
+        } else if (circle == circleBig) {
+            circleSmall.setId("clear");
+            circleMedium.setId("clear");
+            squareBig.setId("clear");
+            squareMedium.setId("clear");
+            squareSmall.setId("clear");
+        }
+    }
+
+    @FXML // Highlight the selected square brush, clear other highlights
+    private void handleHighlightSquare(Rectangle rectangle) {
+        rectangle.setId("highlightedBrush");
+        if (rectangle == squareSmall) {
+            squareMedium.setId("clear");
+            squareBig.setId("clear");
+            circleBig.setId("clear");
+            circleMedium.setId("clear");
+            circleSmall.setId("clear");
+        } else if (rectangle == squareMedium) {
+            squareSmall.setId("clear");
+            squareBig.setId("clear");
+            circleBig.setId("clear");
+            circleMedium.setId("clear");
+            circleSmall.setId("clear");
+        } else if (rectangle == squareBig) {
+            squareSmall.setId("clear");
+            squareMedium.setId("clear");
+            circleBig.setId("clear");
+            circleMedium.setId("clear");
+            circleSmall.setId("clear");
+        }
+
+    }
+
+    // Tool selection highlights
+    @FXML
+    private void handleEraserClick() {
+        eraserPane.setId("toolPaneHighlight");
+        pencilPane.setId("toolPane");
+    }
+
+    @FXML
+    private void handlePencilClick() {
+        pencilPane.setId("toolPaneHighlight");
+        eraserPane.setId("toolPane");
+    }
 
     @FXML
     private void setToolEraser() {
         selectedTool = new EraserTool(settings);
+
     }
 
     @FXML
@@ -249,13 +369,86 @@ public class PaintController {
     @FXML
     private void resetCanvas() {
         drawingCanvas.getGraphicsContext2D().clearRect(
-            0, 0, drawingCanvas.getWidth(), drawingCanvas.getHeight());
+                0, 0, drawingCanvas.getWidth(), drawingCanvas.getHeight());
         loadImage(gameInfoPersistence.getImagePath(gameInfo));
     }
 
     @FXML
     private void updatePaintColor() {
         settings.setColor(colorPicker.getValue());
+    }
+
+    // lagrer en snapshot av det som har blitt tegnet på canvas som en snapshot i en
+    // stack hver gang det mouse blir released
+    Image nextImageToSave;
+
+    @FXML
+    private void saveToStack(MouseEvent event) {
+        WritableImage image = new WritableImage(
+                (int) drawingCanvas.getWidth(), (int) drawingCanvas.getHeight());
+        image = drawingCanvas.snapshot(new SnapshotParameters(), image);
+        if (nextImageToSave != null) {
+            undoStack.push(nextImageToSave);
+        }
+        nextImageToSave = image;
+
+        System.out.println("Saved to stack");
+
+        redoStack.clear();
+    }
+
+    // henter ut snapshot fra stacken og tegner det på canvas
+    @FXML
+    private void undo() {
+        if (!undoStack.isEmpty()) {
+            Image image = undoStack.pop();
+            redoStack.push(nextImageToSave);
+            nextImageToSave = image;
+            drawingCanvas.getGraphicsContext2D().drawImage(image, 0, 0);
+        }
+        System.out.println("Undo");
+
+    }
+
+    // a method to redo the last undone action
+    @FXML
+    private void redo() {
+        if (!redoStack.isEmpty()) {
+            Image image = redoStack.pop();
+            undoStack.push(nextImageToSave);
+            nextImageToSave = image;
+            drawingCanvas.getGraphicsContext2D().drawImage(image, 0, 0);
+        }
+        System.out.println("Redo");
+
+    }
+
+    @FXML
+    public void keyPressed(KeyEvent e) {
+        KeyCode keyCode = e.getCode();
+
+        if (e.isControlDown()) {
+            //Delay for highlighting undo/redo
+            PauseTransition delay = new PauseTransition(Duration.seconds(0.2));
+            System.out.println("CTRL is down");
+            switch (keyCode) {
+                case Z:
+                    undo();
+                    undoPane.setId("undoredopane2");
+                    delay.setOnFinished(event -> undoPane.setId("undoredopane"));
+                    delay.play();
+                    break;
+                case Y:
+                    redo();
+                    redoPane.setId("undoredopane2");                    
+                    delay.setOnFinished(event -> redoPane.setId("undoredopane"));
+                    delay.play();
+                    break;
+                default:
+                    break;
+            }
+        }
+
     }
 
 }

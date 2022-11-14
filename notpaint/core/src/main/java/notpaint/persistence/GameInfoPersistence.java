@@ -1,17 +1,24 @@
-package notpaint.core.persistence;
+package notpaint.persistence;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.List;
-import notpaint.core.GameInfo;
 
 public abstract class GameInfoPersistence {
 
-    private GameInfo activeGameInfo = null;
+    private GameInfo activeGameInfo;
 
-     /**
+    private String username;
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    /**
      * Get a list of all GameInfo classes stored as json in the dataPath.
      *
      * @return List of all gameInfos

@@ -1,4 +1,4 @@
-package notpaint.core.persistence;
+package notpaint.persistence;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import notpaint.core.GameInfo;
+import notpaint.persistence.GameInfo;
 
 /**
  * Class for saving and loading game info on local disk.

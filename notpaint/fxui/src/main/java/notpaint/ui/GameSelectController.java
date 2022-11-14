@@ -1,16 +1,22 @@
 package notpaint.ui;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.charset.Charset;
 import java.util.Comparator;
 import java.util.List;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
-import notpaint.core.GameInfo;
-import notpaint.core.persistence.GameInfoPersistence;
+import javafx.stage.Stage;
+import notpaint.persistence.GameInfo;
+import notpaint.persistence.GameInfoPersistence;
 import notpaint.ui.util.AlertUtil;
 import notpaint.ui.util.StageUtil;
 
@@ -20,16 +26,10 @@ import notpaint.ui.util.StageUtil;
 public class GameSelectController {
 
     @FXML
-    private ScrollPane activeProjectsScrollPane;
-
-    @FXML
     private ScrollPane completedProjectsScrollPane;
 
     @FXML
-    private TilePane activeTilePane;
-
-    @FXML
-    private TilePane completedTilePane;
+    private ScrollPane activeProjectsScrollPane;
 
     @FXML
     private Text secondsPerRound;
@@ -42,6 +42,15 @@ public class GameSelectController {
 
     @FXML
     private Text lastEditor;
+
+    @FXML
+    private Text usernameText;
+
+    @FXML
+    private TilePane completedTilePane;
+
+    @FXML
+    private TilePane activeTilePane;
 
     private GameInfoPersistence gameInfoPersistence;
     private GameInfo selectedGameInfo;
@@ -59,14 +68,36 @@ public class GameSelectController {
     }
 
     private void addImageToTab(GameInfo info, TilePane pane) {
+
         ImageView imageView = new ImageView(
-            new Image(gameInfoPersistence.getImagePath(info), 200, 140, true, true));
+                new Image(gameInfoPersistence.getImagePath(info), 200, 140, true, true));
         imageView.maxHeight(150);
         imageView.maxWidth(200);
+
+        // Dark border for each project
+        HBox imageHBox = new HBox();
+        imageHBox.setId("projectBorder");
+        imageHBox.getChildren().add(imageView);
+
+        // Blank border to add margins to projects, and highlight selected project.
+        HBox imageSpace = new HBox();
+        imageSpace.setId("unselected");
+        imageSpace.getChildren().add(imageHBox);
+
         imageView.setOnMouseClicked(event -> {
+            try {
+                pane.lookupAll("#selected").forEach(node -> {
+                    node.setId("unselected");
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             setSelectedGameInfo(info);
+            imageSpace.setId("selected");
+
         });
-        pane.getChildren().add(imageView);
+
+        pane.getChildren().add(imageSpace);
     }
 
     @FXML
@@ -78,6 +109,7 @@ public class GameSelectController {
 
     private void onGameInfoPersistenceLoaded(GameInfoPersistence persistence) {
         this.gameInfoPersistence = persistence;
+        usernameText.setText(gameInfoPersistence.getUsername());
         try {
             var allInfos = gameInfoPersistence.getAllGameInfos();
             displayGameInfos(allInfos);
@@ -103,9 +135,22 @@ public class GameSelectController {
         selectedGameInfo = info;
         secondsPerRound.setText(Integer.toString(info.getSecondsPerRound()));
         iterations.setText(String.format(
-            "%s / %s", info.getCurrentIterations(), info.getMaxIterations()));
+                "%s / %s", info.getCurrentIterations(), info.getMaxIterations()));
         lastEdit.setText(info.getLastEditTime().toString());
         lastEditor.setText(info.getLastEditor());
+    }
+
+    @FXML
+    private void handleChangeUsername() throws IOException {
+        deleteUsername();
+        App.setRoot("UsernameSelectView");
+    }
+
+    @FXML
+    public void deleteUsername() throws IOException {
+        PrintWriter writer = new PrintWriter("usernameFile.txt", Charset.forName("UTF-16"));
+        writer.print("");
+        writer.close();
     }
 
     @FXML
@@ -132,6 +177,9 @@ public class GameSelectController {
             AlertUtil.warningAlert("Warning", "You must select a project to join first.");
         } else if (selectedGameInfo.isFinished()) {
             AlertUtil.warningAlert("Warning", "You cannot join a completed project.");
+        } else if (gameInfoPersistence.getUsername().equals(selectedGameInfo.getLastEditor())) {
+            AlertUtil.warningAlert("Warning",
+                    "You cannot draw on the same prosject two times in a row.");
         } else {
             // Check if the game is locked (currently being edited by someone else)
             if (gameInfoPersistence.tryLockGameInfo(selectedGameInfo)) {

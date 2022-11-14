@@ -1,4 +1,4 @@
-package notpaint.core.persistence;
+package notpaint.persistence;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -12,7 +12,7 @@ import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.util.Arrays;
 import java.util.List;
-import notpaint.core.GameInfo;
+
 
 public class RemoteGameInfoPersistence extends GameInfoPersistence {
 
