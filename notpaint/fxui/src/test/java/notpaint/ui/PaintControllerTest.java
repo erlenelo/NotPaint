@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import notpaint.core.brushes.Brush;
@@ -102,6 +103,43 @@ public class PaintControllerTest extends ApplicationTest {
     }
 
     @Test
+    public void testHighlightCircle() {
+
+        assertButtonIsHighlighted(".smallCircle");
+        assertButtonIsHighlighted(".mediumCircle");
+        assertButtonIsHighlighted(".bigCircle");
+
+    }
+
+    @Test
+    public void testHighlightSquare() {
+
+        assertButtonIsHighlighted(".smallSquare");
+        assertButtonIsHighlighted(".mediumSquare");
+        assertButtonIsHighlighted(".bigSquare");
+
+    }
+    private void assertButtonIsHighlighted(String button) {
+        clickOn(button);
+        assertTrue(lookup(button).query().getId().contains("highlightedBrush"));
+    }
+
+    
+
+    @Test
+    public void testEraserClick() {
+        clickOn("#toolPane");
+        assertTrue(lookup("#toolPaneHighlight").query().getId().contains("toolPaneHighlight"));
+  
+    }
+
+    @Test
+    public void testPencilClick() {
+        clickOn("#pencil");
+        assertTrue(lookup("#toolPaneHighlight").query().getId().contains("toolPaneHighlight"));
+    }
+
+    @Test
     public void testDone() {
         clickOn("#doneButton");
         assertNotNull(findSceneRootWithId("gameSelectRoot"), "GameSelectView should be visible");
@@ -113,6 +151,8 @@ public class PaintControllerTest extends ApplicationTest {
         Image image = new Image(gameInfoPersistence.getImagePath(gameInfo));
         assertNotNull(image, "Image should exist after clicking done on PaintView");
     }
+
+
 
     private Parent findSceneRootWithId(String id) {
         for (Window window : Window.getWindows()) {
@@ -126,6 +166,37 @@ public class PaintControllerTest extends ApplicationTest {
         return null;
     }
 
+    @Test
+    public void testUndoRedo(){
+
+        clickOn("#drawingCanvas");
+        
+        clickOn("#undoArrow");
+        assertTrue(controller.undoStack.isEmpty());
+        
+        clickOn("#redoArrow");
+        assertTrue(controller.redoStack.isEmpty());
+
+
+
+    }
+
+    
+
+
+
+    @Test
+    public void testKeyUndoRedo() {
+        clickOn("#drawingCanvas");
+        press(KeyCode.CONTROL).press(KeyCode.Z);
+        assertTrue(lookup(".undoPane").query().getId().contains("undoredopane2"));
+        press(KeyCode.CONTROL).press(KeyCode.Y).release(KeyCode.Y).release(KeyCode.CONTROL);
+
+
+    }
+
 
 }
+
+
 
