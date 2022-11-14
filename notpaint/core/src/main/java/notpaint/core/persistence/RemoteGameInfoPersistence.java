@@ -87,13 +87,29 @@ public class RemoteGameInfoPersistence extends GameInfoPersistence {
 
     @Override
     public boolean tryLockGameInfo(GameInfo info) {
-        // TODO Auto-generated method stub
-        return false;
+        HttpRequest request = HttpRequest.newBuilder(serverURI.resolve("lock?uuid=" + info.getUuid().toString()))
+            .POST(BodyPublishers.noBody())
+            .build();
+        try {
+            var response = HttpClient.newBuilder().build()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+            return Boolean.parseBoolean(response.body());
+        } catch (IOException | InterruptedException exception) {
+            throw new RuntimeException(exception);
+        }
     }
 
     @Override
     public void releaseGameInfoLock(GameInfo info) {
-        // TODO Auto-generated method stub
+        HttpRequest request = HttpRequest.newBuilder(serverURI.resolve("lock?uuid=" + info.getUuid().toString()))
+            .DELETE()
+            .build();
+        try {
+            HttpClient.newBuilder().build()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException | InterruptedException exception) {
+            throw new RuntimeException(exception);
+        }
         
     }
 }
