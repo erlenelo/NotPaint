@@ -109,6 +109,19 @@ public class GameSelectController {
     }
 
     @FXML
+    private void handleRefresh() {
+        activeTilePane.getChildren().clear();
+        completedTilePane.getChildren().clear();
+        try {
+            var allInfos = gameInfoPersistence.getAllGameInfos();
+            displayGameInfos(allInfos);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            AlertUtil.errorAlert("ERROR", "Error occured while loading games.");
+        }
+    }
+
+    @FXML
     private void handleNewProject() throws IOException {
         App.setRoot("SettingsView");
     }
