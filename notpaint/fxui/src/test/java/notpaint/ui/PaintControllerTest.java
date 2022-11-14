@@ -44,6 +44,7 @@ public class PaintControllerTest extends ApplicationTest {
          
         FXMLLoader fxmlLoader = new FXMLLoader(PaintController.class.getResource("PaintView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
+        scene.getStylesheets().add(getClass().getResource("fxui.css").toExternalForm());
         App.scene = scene;
         stage.setScene(scene);
         stage.show();
@@ -67,12 +68,12 @@ public class PaintControllerTest extends ApplicationTest {
     
     @Test
     public void testBrushButtons() {
-        assertButtonSetsBrush("#circleSmall", CircleBrush.class);
-        assertButtonSetsBrush("#squareSmall", SquareBrush.class);
-        assertButtonSetsBrush("#circleMedium", CircleBrush.class);
-        assertButtonSetsBrush("#squareMedium", SquareBrush.class);
-        assertButtonSetsBrush("#circleBig", CircleBrush.class);
-        assertButtonSetsBrush("#squareBig", SquareBrush.class);
+        assertButtonSetsBrush(".smallCircle", CircleBrush.class);
+        assertButtonSetsBrush(".smallSquare", SquareBrush.class);
+        assertButtonSetsBrush(".mediumCircle", CircleBrush.class);
+        assertButtonSetsBrush(".mediumSquare", SquareBrush.class);
+        assertButtonSetsBrush(".bigCircle", CircleBrush.class);
+        assertButtonSetsBrush(".bigSquare", SquareBrush.class);
     }
 
     private void assertButtonSetsBrush(String button, Class<? extends Brush> brushClass) {

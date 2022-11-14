@@ -27,7 +27,7 @@
     -fx-stroke:gray;
     -fx-stroke-width:2
 }
-#brushClass:pressed{
+#clear:pressed{
     -fx-fill:Black;
     -fx-stroke:yellow;
     -fx-stroke-width:2
@@ -40,7 +40,7 @@
     -fx-background-color: lightgray;
 }
 #toolPane:hover{
-    -fx-border-color: lightBlue;
+    -fx-border-color: gray;
     -fx-border-radius:5;
     -fx-border-width:2;
 
@@ -50,6 +50,23 @@
     -fx-border-radius:5;
     -fx-border-width:3;
 }
+#undoredopane:hover{
+    -fx-border-color: gray;
+    -fx-border-radius:5;
+    -fx-border-width:2;
+}
+#undoredopane:pressed{
+    -fx-border-color: yellow;
+    -fx-border-radius:5;
+    -fx-border-width:3;
+}
+/* ID for ctrl-z/-y undo/redo */
+#undoredopane2{
+    -fx-border-color: yellow;
+    -fx-border-radius:5;
+    -fx-border-width:3;
+}
+
 
 /* Styling for highlighting projects in GameSelectView */
 #unselected{
