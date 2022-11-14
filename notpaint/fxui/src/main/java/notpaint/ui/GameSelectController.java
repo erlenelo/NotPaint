@@ -120,8 +120,15 @@ public class GameSelectController {
         } else if (selectedGameInfo.isFinished()) {
             AlertUtil.warningAlert("Warning", "You cannot join a completed project.");
         } else {
-            gameInfoPersistence.setActiveGameInfo(selectedGameInfo);
-            App.setRoot("PaintView");
+            // Check if the game is locked (currently being edited by someone else)
+            if (gameInfoPersistence.tryLockGameInfo(selectedGameInfo)) {
+                gameInfoPersistence.setActiveGameInfo(selectedGameInfo);
+                App.setRoot("PaintView");
+            } else {
+                AlertUtil.warningAlert(
+                    "Warning", "This project is currently being edited by someone else.");
+            }
+            
         }
     }
 }

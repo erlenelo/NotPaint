@@ -34,7 +34,7 @@ public class ImageController {
     }
     
     @PutMapping("/image")
-    public ResponseEntity putImage(
+    public ResponseEntity<String> putImage(
         @RequestParam(value = "uuid") String uuid, @RequestBody() byte[] imageData) {
         Path path = Paths.get("data", uuid + ".png");
         try {

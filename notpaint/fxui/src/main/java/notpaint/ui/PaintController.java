@@ -171,6 +171,8 @@ public class PaintController {
             ex.printStackTrace();
             AlertUtil.errorAlert("ERROR", "Error occured while saving drawing.");
         }
+        // Release the lock, so that the next player can start drawing.
+        gameInfoPersistence.releaseGameInfoLock(gameInfo);
     }
 
     void saveImageToPath(String path) {

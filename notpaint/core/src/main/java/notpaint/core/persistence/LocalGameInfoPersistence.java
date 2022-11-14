@@ -9,6 +9,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 import notpaint.core.GameInfo;
 
 /**
@@ -57,6 +59,24 @@ public class LocalGameInfoPersistence extends GameInfoPersistence {
         return gameInfoList;
     }
 
+    /**
+     * Get GameInfo with a specific UUID.
+     * @param uuid
+     * @return GameInfo with the given UUID, or null if it does not exist
+     * @throws IOException If unable to read from disk
+     */
+    public GameInfo getGameInfoFromUUID(UUID uuid) throws IOException {
+        String uuidString = uuid.toString();
+        Path gameInfoPath = Paths.get(dataPath.toString(), uuidString + ".json");
+        
+        if (!Files.exists(gameInfoPath)) {
+            return null;
+        }
+
+        String jsonString = Files.readString(gameInfoPath);
+        return GameInfoPersistence.parseFromJson(jsonString);        
+    }
+
     
 
     /**
@@ -88,6 +108,22 @@ public class LocalGameInfoPersistence extends GameInfoPersistence {
         return "file:" + Paths.get(dataPath.toString(), imageName).toString();
     }
 
+    @Override
+    public boolean isGameInfoLocked(GameInfo info) {
+        return false; // Local game info is never locked
+    }
+
+    @Override
+    public boolean tryLockGameInfo(GameInfo info) {
+        return true; // Because local persistence is not shared, we can always lock.
+    }
+
+    @Override
+    public void releaseGameInfoLock(GameInfo info) {
+        // Do nothing, because local persistence is not shared. 
+    }
+
+    
 
 
 }

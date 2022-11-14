@@ -66,9 +66,34 @@ public class RemoteGameInfoPersistence extends GameInfoPersistence {
 
     @Override
     public String getImagePath(GameInfo info) {
-        // TODO Auto-generated method stub
-        // Server takes following format:
+        // Server takes following URL format:
         // {baseUri}/image?uuid={uuid}
         return serverURI.resolve("image").toString() + "?uuid=" + info.getUuid().toString();
+    }
+
+    @Override
+    public boolean isGameInfoLocked(GameInfo info) {
+        HttpRequest request = HttpRequest.newBuilder(serverURI.resolve("lock?uuid=" + info.getUuid().toString()))
+            .GET()
+            .build();
+        try {
+            var response = HttpClient.newBuilder().build()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+            return Boolean.parseBoolean(response.body());
+        } catch (IOException | InterruptedException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
+    @Override
+    public boolean tryLockGameInfo(GameInfo info) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public void releaseGameInfoLock(GameInfo info) {
+        // TODO Auto-generated method stub
+        
     }
 }

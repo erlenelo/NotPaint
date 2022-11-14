@@ -42,6 +42,12 @@ public abstract class GameInfoPersistence {
         return parsedGameInfo;
     }
 
+    public abstract boolean isGameInfoLocked(GameInfo info);
+    
+    public abstract boolean tryLockGameInfo(GameInfo info);
+
+    public abstract void releaseGameInfoLock(GameInfo info);
+
     /**
      * Returns the active gameinfo, which is the one that should be used by
      * PaintController to draw.
