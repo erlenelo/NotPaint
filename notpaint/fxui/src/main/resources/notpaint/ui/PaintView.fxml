@@ -76,14 +76,14 @@
                   <Font size="32.0" />
                </font>
             </Text>
-            <StackPane id="undoredopane" fx:id="undoPane" layoutX="657.0" layoutY="361.0" >
+            <StackPane id="undoredopane" fx:id="undoPane" styleClass="undoPane" layoutX="657.0" layoutY="361.0" >
                <ImageView fx:id="undoArrow" fitHeight="42.0" fitWidth="53.0" layoutX="657.0" layoutY="361.0" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#undo" pickOnBounds="true" preserveRatio="true">
                   <image>
                      <Image url="@images/arrow.png" />
                   </image>
                </ImageView>
             </StackPane>
-            <StackPane id="undoredopane" fx:id="redoPane" layoutX="723.0" layoutY="361.0" >
+            <StackPane id="undoredopane" fx:id="redoPane" styleClass = "redoPane" layoutX="723.0" layoutY="361.0" >
                <ImageView fx:id="redoArrow" fitHeight="42.0" fitWidth="53.0" layoutX="723.0" layoutY="361.0" onMouseClicked="#redo" pickOnBounds="true" preserveRatio="true">
                   <image>
                      <Image url="@images/arrow.png" />
