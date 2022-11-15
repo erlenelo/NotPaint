@@ -3,18 +3,18 @@ package notpaint.ui;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import notpaint.persistence.GameInfo;
 import notpaint.persistence.GameInfoPersistence;
-
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxAssert;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -25,9 +25,13 @@ import org.testfx.util.WaitForAsyncUtils;
  * Test class for {@link GameSelectController}.
  */
 public class GameSelectControllerTest extends ApplicationTest {
-    private GameSelectController controller;
+    
+    GameSelectController controller;
 
-    GameInfoPersistence persistence;
+   
+    static Path dataPath = Paths.get("testData_INALKN434NJN");
+    
+
 
 
     @Override
@@ -68,30 +72,18 @@ public class GameSelectControllerTest extends ApplicationTest {
 
     // @Test
     // public void testJoinGameButton() {
-        
+    //     GameInfo info = new GameInfo(9, 5, false);
+    //     GameInfoPersistence persistence = new GameInfoPersistence(dataPath);
     //     info.addIteration("testAuthor");
     //     controller.setSelectedGameInfo(info);
-        
-    //     persistence.setActiveGameInfo(info);
-    //     controller.addImageToActiveTap(info);
+    //     ImageView imageView = new ImageView(
+    //         new Image(persistence.getImagePath(info), 200, 140, true, true));
+    //     clickOn(imageView);
     //     WaitForAsyncUtils.waitForFxEvents();
     //     clickOn("#joinProjectButton");
     //     assertNotNull(findSceneRootWithId("paintRoot"));
         
     // }
-
-    // private void testAddImagetoActiveTab() {
-    //     GameInfo info = new GameInfo(9, 99, false);
-    //     ImageView imageView = new ImageView(
-    //         new Image(persistence.getImagePath(info), 200, 140, true, true));
-    //     imageView.maxHeight(150);
-    //     imageView.maxWidth(200);
-
-    //     imageView.
-    // }
-
-
-
 
 
     @Test
