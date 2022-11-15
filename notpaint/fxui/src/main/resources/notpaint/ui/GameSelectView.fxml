@@ -22,11 +22,7 @@
                      <children>
                         <ScrollPane hbarPolicy="NEVER" prefHeight="469.0" prefWidth="633.0">
                            <content>
-                              <TilePane fx:id="activeTilePane" prefHeight="467.0" prefWidth="631.0">
-                                 <children>
-                                    <!-- <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" /> -->
-                                 </children>
-                              </TilePane>
+                              <TilePane fx:id="activeTilePane" prefHeight="467.0" prefWidth="631.0" />
                            </content>
                         </ScrollPane>
                      </children>
@@ -64,7 +60,7 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <Button fx:id="changeUsernameButton" layoutX="656.0" layoutY="51.0" mnemonicParsing="false" text="Change Username" onAction="#handleChangeUsername"/>
-      <Button layoutX="670.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleRefresh" text="Refresh" />
+      <Button fx:id="changeUsernameButton" layoutX="656.0" layoutY="51.0" mnemonicParsing="false" onAction="#handleChangeUsername" text="Change Username" />
+      <Button fx:id="refreshButton" layoutX="646.0" layoutY="331.0" mnemonicParsing="false" onAction="#handleRefresh" prefHeight="40.0" prefWidth="140.0" text="Refresh" />
       </children>
 </AnchorPane>
