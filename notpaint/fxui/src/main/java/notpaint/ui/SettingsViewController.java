@@ -67,7 +67,8 @@ public class SettingsViewController {
         boolean newWordEachRound = checkboxYes.isSelected();
 
         if (secondsPerRound < 5 || secondsPerRound > 120) {
-            AlertUtil.warningAlert("Warning", "The time per round must be between 5 and 120 seconds.");
+            AlertUtil.warningAlert("Warning", 
+                "The time per round must be between 5 and 120 seconds.");
         }
 
         GameInfo newGameInfo = new GameInfo(maxIterations, secondsPerRound, newWordEachRound);

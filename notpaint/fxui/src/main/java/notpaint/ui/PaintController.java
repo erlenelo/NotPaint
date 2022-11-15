@@ -426,6 +426,10 @@ public class PaintController {
         }
     }
 
+    /**
+     * Keyboard functionality with ctrl z(undo) and y(redo).
+     *
+     */
     @FXML
     private void keyPressed(KeyEvent e) {
         KeyCode keyCode = e.getCode();

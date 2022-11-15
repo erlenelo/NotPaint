@@ -3,9 +3,13 @@ package notpaint.ui;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -22,7 +26,14 @@ import org.testfx.util.WaitForAsyncUtils;
  * Test class for {@link GameSelectController}.
  */
 public class GameSelectControllerTest extends ApplicationTest {
-    private GameSelectController controller;
+    
+    GameSelectController controller;
+
+   
+    static Path dataPath = Paths.get("testData_INALKN434NJN");
+    
+
+
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -36,7 +47,7 @@ public class GameSelectControllerTest extends ApplicationTest {
         stage.show();
         controller = fxmlLoader.getController();
     }
-
+    
     // Test that the controller is created
     @Test
     public void testController() {
@@ -61,6 +72,21 @@ public class GameSelectControllerTest extends ApplicationTest {
         assertEquals("testAuthor", lastEditorText.getText());
     }
 
+    // @Test
+    // public void testJoinGameButton() {
+    //     GameInfo info = new GameInfo(9, 5, false);
+    //     GameInfoPersistence persistence = new GameInfoPersistence(dataPath);
+    //     info.addIteration("testAuthor");
+    //     controller.setSelectedGameInfo(info);
+    //     ImageView imageView = new ImageView(
+    //         new Image(persistence.getImagePath(info), 200, 140, true, true));
+    //     clickOn(imageView);
+    //     WaitForAsyncUtils.waitForFxEvents();
+    //     clickOn("#joinProjectButton");
+    //     assertNotNull(findSceneRootWithId("paintRoot"));
+        
+    // }
+
 
     @Test
     public void testOpenNewProject() throws InterruptedException {
@@ -77,6 +103,7 @@ public class GameSelectControllerTest extends ApplicationTest {
         clickOn("#joinProjectButton");
         FxAssert.verifyThat("Warning", NodeMatchers.isVisible());
     }
+
 
     private Parent findSceneRootWithId(String id) {
         for (Window window : Window.getWindows()) {
@@ -95,5 +122,15 @@ public class GameSelectControllerTest extends ApplicationTest {
         clickOn("#completedTab");
         WaitForAsyncUtils.waitForFxEvents();
     }
+
+    @Test
+    public void testHandleChangeUsernameButton() {
+        clickOn("#changeUsernameButton");
+        assertNotNull(findSceneRootWithId("usernameSelectRoot"));
+
+    }
+
+
+   
 
 }
