@@ -6,10 +6,15 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import notpaint.persistence.GameInfo;
+import notpaint.persistence.GameInfoPersistence;
+
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxAssert;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -21,6 +26,8 @@ import org.testfx.util.WaitForAsyncUtils;
  */
 public class GameSelectControllerTest extends ApplicationTest {
     private GameSelectController controller;
+
+    GameInfoPersistence persistence;
 
 
     @Override
@@ -58,6 +65,33 @@ public class GameSelectControllerTest extends ApplicationTest {
         Text lastEditorText = lookup("#lastEditor").query();
         assertEquals("testAuthor", lastEditorText.getText());
     }
+
+    // @Test
+    // public void testJoinGameButton() {
+        
+    //     info.addIteration("testAuthor");
+    //     controller.setSelectedGameInfo(info);
+        
+    //     persistence.setActiveGameInfo(info);
+    //     controller.addImageToActiveTap(info);
+    //     WaitForAsyncUtils.waitForFxEvents();
+    //     clickOn("#joinProjectButton");
+    //     assertNotNull(findSceneRootWithId("paintRoot"));
+        
+    // }
+
+    // private void testAddImagetoActiveTab() {
+    //     GameInfo info = new GameInfo(9, 99, false);
+    //     ImageView imageView = new ImageView(
+    //         new Image(persistence.getImagePath(info), 200, 140, true, true));
+    //     imageView.maxHeight(150);
+    //     imageView.maxWidth(200);
+
+    //     imageView.
+    // }
+
+
+
 
 
     @Test
@@ -102,6 +136,7 @@ public class GameSelectControllerTest extends ApplicationTest {
         assertNotNull(findSceneRootWithId("usernameSelectRoot"));
 
     }
+
 
    
 
