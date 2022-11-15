@@ -4,21 +4,15 @@ import java.io.IOException;
 import java.util.Stack;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
-import javafx.beans.binding.NumberExpression;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -26,17 +20,18 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 import notpaint.core.brushes.CircleBrush;
 import notpaint.core.brushes.SquareBrush;
 import notpaint.persistence.GameInfo;
 import notpaint.persistence.GameInfoPersistence;
+import notpaint.persistence.RemoteGameInfoPersistence;
 import notpaint.ui.painttools.EraserTool;
 import notpaint.ui.painttools.PenTool;
 import notpaint.ui.painttools.Tool;
 import notpaint.ui.persistence.ImagePersistence;
 import notpaint.ui.persistence.LocalImagePersistence;
+import notpaint.ui.persistence.RemoteImagePersistence;
 import notpaint.ui.util.AlertUtil;
 import notpaint.ui.util.LineUtil;
 import notpaint.ui.util.StageUtil;
@@ -107,10 +102,9 @@ public class PaintController {
     /**
      * Set the default settings and tools.
      */
-    @FXML
-    public void initialize() {
-
-        StageUtil.onStageLoaded(drawingCanvas, this::onStageLoaded);
+    @FXML public void initialize() {
+        
+        StageUtil.onGameInfoPersistenceLoaded(drawingCanvas, this::onGameInfoPersistenceLoaded);
 
         settings = new PaintSettings();
 
@@ -154,19 +148,23 @@ public class PaintController {
             handlePencilClick();
         });
 
-        imagePersistence = new LocalImagePersistence();
+        
 
         colorPicker.setValue(Color.BLACK);
 
     }
 
-    private void onStageLoaded(Stage stage) {
-        gameInfoPersistence = (GameInfoPersistence) stage.getUserData();
-        if (gameInfoPersistence == null) {
-            throw new IllegalStateException("Stage has no gameInfoPersistence set");
-        }
+    private void onGameInfoPersistenceLoaded(GameInfoPersistence gameInfoPersistence) {
+        this.gameInfoPersistence = gameInfoPersistence;
         gameInfo = gameInfoPersistence.getActiveGameInfo();
-        //
+
+        // Make sure the persistence for images is same as the persistence for game info
+        if (gameInfoPersistence instanceof RemoteGameInfoPersistence) {
+            imagePersistence = new RemoteImagePersistence();
+        } else {
+            imagePersistence = new LocalImagePersistence();
+        }
+
         if (gameInfo == null) {
             throw new IllegalArgumentException(
                     "Loaded PaintController but activeGameInfo was not set in stage");
@@ -225,6 +223,8 @@ public class PaintController {
             ex.printStackTrace();
             AlertUtil.errorAlert("ERROR", "Error occured while saving drawing.");
         }
+        // Release the lock, so that the next player can start drawing.
+        gameInfoPersistence.releaseGameInfoLock(gameInfo);
     }
 
     void saveImageToPath(String path) {
@@ -394,8 +394,6 @@ public class PaintController {
         }
         nextImageToSave = image;
 
-        System.out.println("Saved to stack");
-
         redoStack.clear();
     }
 
@@ -408,8 +406,6 @@ public class PaintController {
             nextImageToSave = image;
             drawingCanvas.getGraphicsContext2D().drawImage(image, 0, 0);
         }
-        System.out.println("Undo");
-
     }
 
     // a method to redo the last undone action
@@ -421,18 +417,15 @@ public class PaintController {
             nextImageToSave = image;
             drawingCanvas.getGraphicsContext2D().drawImage(image, 0, 0);
         }
-        System.out.println("Redo");
-
     }
 
     @FXML
-    public void keyPressed(KeyEvent e) {
+    private void keyPressed(KeyEvent e) {
         KeyCode keyCode = e.getCode();
 
         if (e.isControlDown()) {
             //Delay for highlighting undo/redo
             PauseTransition delay = new PauseTransition(Duration.seconds(0.2));
-            System.out.println("CTRL is down");
             switch (keyCode) {
                 case Z:
                     undo();

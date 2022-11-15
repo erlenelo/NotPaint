@@ -1,5 +1,6 @@
 module notpaint.core {
     requires transitive com.fasterxml.jackson.databind;
+    requires java.net.http;
 
 
     exports notpaint.core.brushes;

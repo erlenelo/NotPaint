@@ -1,7 +1,9 @@
 package notpaint.ui.persistence;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javafx.scene.image.Image;
+import javafx.scene.image.PixelReader;
 
 /**
  * Interface for saving and loading images.
@@ -21,5 +23,18 @@ public abstract class ImagePersistence {
     public Image load(String imagePath) {
         Image image = new Image(imagePath);
         return image;
+    }
+
+    static BufferedImage javaFxImageToBufferedImage(Image image) {
+        BufferedImage img = new BufferedImage((int) image.getWidth(), (int) image.getHeight(),
+                BufferedImage.TYPE_3BYTE_BGR);
+        PixelReader fxImageReader = image.getPixelReader();
+        for (int y = 0; y < img.getHeight(); y++) {
+            for (int x = 0; x < img.getWidth(); x++) {
+                int color = fxImageReader.getArgb(x, y);
+                img.setRGB(x, y, color);
+            }
+        }
+        return img;
     }
 }

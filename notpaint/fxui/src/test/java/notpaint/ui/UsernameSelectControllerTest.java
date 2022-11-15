@@ -8,24 +8,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
-import org.junit.Before;
-import org.junit.Rule;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-
+import notpaint.ui.testutil.PersistenceTestConfig;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.rules.ExpectedException;
 import org.testfx.api.FxAssert;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
-import org.testfx.util.WaitForAsyncUtils;
 
 /**
  * Test class for {@link UsernameSelectController}.
@@ -37,6 +31,7 @@ public class UsernameSelectControllerTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws Exception {
+        PersistenceTestConfig.setLocalPersistence(stage);
 
         FXMLLoader fxmlLoader = new FXMLLoader(
                 UsernameSelectController.class.getResource("UsernameSelectView.fxml"));
@@ -52,9 +47,11 @@ public class UsernameSelectControllerTest extends ApplicationTest {
     @Test
     public void testController() {
         assertNotNull(controller);
-        System.out.println("testController passed");
     }
 
+    /**
+     * Delete username before testing.
+     */
     @BeforeAll
     public static void deleteFile() {
         GameSelectController ctrl = new GameSelectController();
