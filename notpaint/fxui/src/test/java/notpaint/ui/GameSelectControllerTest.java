@@ -22,6 +22,7 @@ import org.testfx.util.WaitForAsyncUtils;
 public class GameSelectControllerTest extends ApplicationTest {
     private GameSelectController controller;
 
+
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(
@@ -33,7 +34,7 @@ public class GameSelectControllerTest extends ApplicationTest {
         stage.show();
         controller = fxmlLoader.getController();
     }
-
+    
     // Test that the controller is created
     @Test
     public void testController() {
@@ -76,6 +77,8 @@ public class GameSelectControllerTest extends ApplicationTest {
         FxAssert.verifyThat("Warning", NodeMatchers.isVisible());
     }
 
+
+
     private Parent findSceneRootWithId(String id) {
         for (Window window : Window.getWindows()) {
             if (window instanceof Stage && window.isShowing()) {
@@ -93,5 +96,14 @@ public class GameSelectControllerTest extends ApplicationTest {
         clickOn("#completedTab");
         WaitForAsyncUtils.waitForFxEvents();
     }
+
+    @Test
+    public void testHandleChangeUsernameButton() {
+        clickOn("#changeUsernameButton");
+        assertNotNull(findSceneRootWithId("usernameSelectRoot"));
+
+    }
+
+   
 
 }
