@@ -1,42 +1,55 @@
 # NotPaint
-Dette prosjektet er en tegneapp hvor flere brukere sammen jobber på felles tegneprosjekter, der hver endring gjort av bruker resulterer i en ny iterasjon av samme tegning. Prosjektene tegnes med bruk av pensler i forskjellig størrelse, samt muligheter for å viske vekk endringer, og fjerne alle endringer for nåværende session. Prosjektene kan settes opp med forskjellige instillinger som begrenser brukernes muligheter til å interagere med prosjektet. Et nytt prosjekt kan settes opp med:
-- Tid man har på å utføre sine tegne-endringer
-- Antall iterasjoner for hvert prosjekt
-- At et randomisert ord knyttes til prosjektet, og skal tegnes (eller om nytt ord genereres for hver nye iterasjon)
+Dette prosjektet er en tegneapp hvor flere brukere sammen jobber på felles tegneprosjekter, der hver endring gjort av bruker resulterer i en ny iterasjon av samme tegning. Prosjektene tegnes med bruk av pensler i forskjellig størrelse, former og farger. Det er også muligheter for å viske vekk endringer, angre (undo) og gjøre om (redo) endringer, samt fjerne alle endringer for nåværende session. Prosjektene kan settes opp med forskjellige instillinger som begrenser brukernes muligheter til å interagere med prosjektet. Et nytt prosjekt kan settes opp med:
+- Tid man har på å utføre sine tegne-endringer.
+- Antall iterasjoner for hvert prosjekt.
+- At et randomisert ord knyttes til prosjektet, og skal tegnes (eller om nytt ord genereres for hver nye iterasjon).
+- Samme brukernavn har ikke mulighet til å tegne på prosjektet når en session er fullført. 
 
-Prosjekter som er ferdige (enten markert ferdig manuelt, eller at max antall iterasjoner er nådd), legges i en egen fane for ferdige prosjekter. Det er også en fane for nåværende, aktive prosjekter som man kan lage nye iterasjoner av, som vil overskrive det forrige (dog tidligere iterasjoners endringer kan ikke resettes).
+Prosjekter som er ferdige (enten markert ferdig manuelt, eller at maks antall iterasjoner er nådd), legges i en egen fane for ferdige prosjekter. Det er også en fane for nåværende, aktive prosjekter som man kan lage nye iterasjoner av, som vil overskrive det forrige (dog tidligere iterasjoners endringer kan ikke resettes).
 
 ## Bilder av grensesnittet
+### UsernameSelectView
+![](/notpaint/viewScreenshots/release3%20viewScreenshoot/UsernameSelectView.png)
+Dette er grensesnittet for å opprette brukernavn.
+- Dette grensesnittet er det som vises når man først kjører applikasjonen.
+- Det er et *input-felt* der man skriver inn brukernavn. Her må man skrive et navn for å kunne trykke på "Done"-knappen.
+- Det er *radiobuttons* som gir brukeren valget om man vil at spillet skal huske brukernavnet eller ikke. Hvis brukeren har trykket på at spillet skal huske brukernavnet vil man komme til `GameSelectView` neste gang man åpner spillet. 
+
 ### PaintView
-![](/notpaint/viewScreenshots/release2%20viewScreenshots/PaintView.png)
+![](/notpaint/viewScreenshots/release3%20viewScreenshoot/PaintView.png)
 Dette er grensesnittet til tegne-funksjonene.
-- Sirklene setter pensel til indikert radius
-- Firkantene setter pensel til indikert størrelse
-- Viskelæret setter pensel til hvit farge, slik at tegnede områder kan viskes ut
-- Blyanten setter pensel til farge
-- Color-pickeren lar bruker velge farge på pensel
-- Reset-canvas-knappen fjerner alle endringer gjort i nåværende iterasjon. I praksis laster den opp forrige iterasjon, som overwriter nåværende iterasjon med foreløpige endringer
+- Øverst til høyre står ordet som brukeren skal tegne, her ordet *Ice*. Det vises også en timer som teller ned fra hvor mange sekunder brukeren har igjen på prosjektet, her teller den ned fra 60 sekunder.
+- Sirklene setter pensel til indikert radius.
+- Firkantene setter pensel til indikert størrelse.
+- Viskelæret setter pensel til hvit farge, slik at tegnede områder kan viskes ut.
+- Blyanten setter pensel til farge.
+- *Color-pickeren* lar bruker velge farge på pensel.
+- Pilene gjør at brukeren kan angre (undo) og gjøre om (redo) det som hen selv har tegnet på prosjektet. Respektivt pilen som peker mot venstre er *undo* og motsatt, pilen som peker mot høyre er *redo*.
+- "Reset Canvas"-knappen fjerner alle endringer gjort i nåværende iterasjon. I praksis laster den opp forrige iterasjon, som overskriver nåværende iterasjon med foreløpige endringer.
+- "Done"-knappen brukes når brukeren er ferdig med prosjektet før tiden har telt ned til null. 
 
 ### GameSelectView
-![](/notpaint/viewScreenshots/release2%20viewScreenshots/GameSelectView.png)
+![](/notpaint/viewScreenshots/release3%20viewScreenshoot/GameSelectView.png)
 Dette er grensesnittet for nye/gamle prosjekter.
-- Det er to faner; Active projects viser uferdige prosjekter og Completed Prosjects viser alle ferdige prosjekter
-- Seconds to Draw viser hvor mange sekunder prosjektet tillater at en bruker gjør endringer
-- Iterations viser hvor mange ganger en endring på prosjektet er blitt lagret
-- Last Editor viser brukeren som endret prosjektet sist
-- Last Edit viser tiden siste iterasjon ble lagret
-- Join Project engasjerer et selektert, aktivt prosjekt, slik at man kan lage en ny iterasjon av prosjektet. Sender bruker til PaintView for prosjektet
-- New Project lager et nytt prosjekt. Sender bruker til SettingsView
+- Det er to faner; *Active projects* viser uferdige prosjekter og *Completed Prosjects* viser alle ferdige prosjekter.
+- *Seconds to Draw* viser hvor mange sekunder prosjektet tillater at en bruker gjør endringer.
+- Øverst til høyre står brukernavnet, her *TestAuthor*. 
+- "Change Username"-knappen lar brukeren opprette nytt brukernavn og tar brukeren til `UsernameSelectView`.
+- *Iterations* viser hvor mange ganger en endring på prosjektet er blitt lagret.
+- *Last Editor* viser brukeren som endret prosjektet sist.
+- *Last Edit* viser datoen siste iterasjon ble lagret.
+- "Join Project"-knappen engasjerer et selektert, aktivt prosjekt, slik at man kan lage en ny iterasjon av prosjektet. Sender bruker til `PaintView` for prosjektet.
+- "New Project"-knappen lager et nytt prosjekt. Sender bruker til `SettingsView`.
 
 
 ### SettingsView
-![](/notpaint/viewScreenshots/release2%20viewScreenshots/SettingsView.png)
+![](/notpaint/viewScreenshots/release3%20viewScreenshoot/SettingsView.png)
 Dette er grensesnittet til instillinger ved laging av nytt prosjekt.
-- Back to Menu tar bruker tilbake til GameSelectView
-- Time-inputten lager restriksjon på hvor mange sekunder man kan tegne per iterasjon på det nye prosjektet
-- Rounds-inputten designerer maks antall iterasjoner som prosjektet kan inneha. Når dette antallet er nådd, markeres prosjektet som ferdig, og kan hentes under "Completed projects" i GameSelectView.
-- Radio-buttonsene indikerer om prosjektet skal ha et nytt randomisert ord som skal tegnes for hver iterasjon, eller om samme ord skal beholdes gjennom hele prosjektet.
-- Create-knappen skaper selve prosjektet. Da blir det et active project, som kan interageres med i GameSelectView.
+- "Back to Menu"-knappen tar bruker tilbake til `GameSelectView`.
+- *Time-inputten* lager restriksjon på hvor mange sekunder man kan tegne per iterasjon på det nye prosjektet.
+- *Rounds-inputten* designerer maks antall iterasjoner som prosjektet kan inneha. Når dette antallet er nådd, markeres prosjektet som ferdig, og kan hentes under *Completed projects* i `GameSelectView`.
+- *Radio-buttonsene* indikerer om prosjektet skal ha et nytt randomisert ord som skal tegnes for hver iterasjon, eller om samme ord skal beholdes gjennom hele prosjektet.
+- "Create"-knappen skaper selve prosjektet. Da blir det et *Active Project*, som kan interageres med i `GameSelectView`.
 
 
 ## Brukerhistorier
@@ -67,7 +80,7 @@ Som bruker ønsker jeg å kunne opprette et nytt lerret som andre også kan tegn
 Brukeren skal kunne opprette et nytt lerret og velge hvor lang tid (opptil 2 min) man har for å tegne en tegning. Brukeren skal også kunne velge om hver person som tegner på lerretet skal tegne samme randomisert ord eller om alle skal få forskjellige randomiserte ord. Samt skal brukeren velge hvor mange personer som skal tegne på lerretet før tegningen er ferdig.
 
 Viktig å kunne se:
-- EN tilbakeknapp øverst i venstre hjørne
+- En tilbakeknapp øverst i venstre hjørne
 - En knapp som indikerer oprettelsen av et nytt lerret
 - Tydelig hvor lang tid man angir at en bruker skal kunne tegne på lerretet
 - Et tekstfelt hvor man angir hvorvidt brukerne skal tegne basert på samme- eller forskjellig ord

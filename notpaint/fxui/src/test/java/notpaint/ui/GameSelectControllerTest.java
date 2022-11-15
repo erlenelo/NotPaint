@@ -14,7 +14,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import notpaint.persistence.GameInfo;
-import notpaint.persistence.GameInfoPersistence;
+import notpaint.ui.testutil.PersistenceTestConfig;
+
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxAssert;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -36,6 +37,7 @@ public class GameSelectControllerTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws Exception {
+        PersistenceTestConfig.setLocalPersistence(stage);
         FXMLLoader fxmlLoader = new FXMLLoader(
             GameSelectController.class.getResource("GameSelectView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
@@ -88,7 +90,6 @@ public class GameSelectControllerTest extends ApplicationTest {
 
     @Test
     public void testOpenNewProject() throws InterruptedException {
-        System.out.println("testOpenNewProject");
         clickOn("#newProjectButton");
         WaitForAsyncUtils.waitForFxEvents();
         // Thread.sleep(1000);

@@ -12,7 +12,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import notpaint.persistence.GameInfo;
 import notpaint.persistence.GameInfoPersistence;
 import notpaint.ui.util.AlertUtil;
@@ -25,7 +24,7 @@ public class GameSelectController {
 
     @FXML
     private ScrollPane completedProjectsScrollPane;
-    
+
     @FXML
     private ScrollPane activeProjectsScrollPane;
 
@@ -34,18 +33,18 @@ public class GameSelectController {
 
     @FXML
     private Text iterations;
-    
+
     @FXML
     private Text lastEdit;
-    
+
     @FXML
     private Text lastEditor;
-    
+
     @FXML
     private Text usernameText;
-   
+
     @FXML
-    private TilePane completedTilePane; 
+    private TilePane completedTilePane;
 
     @FXML
     private TilePane activeTilePane;
@@ -62,13 +61,13 @@ public class GameSelectController {
             addImageToTab(info, completedTilePane);
         } else {
             addImageToTab(info, activeTilePane);
-        } 
+        }
     }
 
     private void addImageToTab(GameInfo info, TilePane pane) {
 
         ImageView imageView = new ImageView(
-            new Image(gameInfoPersistence.getImagePath(info), 200, 140, true, true));
+                new Image(gameInfoPersistence.getImagePath(info), 200, 140, true, true));
         imageView.maxHeight(150);
         imageView.maxWidth(200);
 
@@ -94,27 +93,19 @@ public class GameSelectController {
             imageSpace.setId("selected");
 
         });
-        
+
         pane.getChildren().add(imageSpace);
     }
 
-    
-       
-
     @FXML
     private void initialize() {
-        StageUtil.onStageLoaded(secondsPerRound, this::onStageLoaded);        
+        StageUtil.onGameInfoPersistenceLoaded(
+            secondsPerRound, this::onGameInfoPersistenceLoaded);        
     }
 
-    private void onStageLoaded(Stage stage) {
-        if (stage.getUserData() == null) {
-            stage.setUserData(new GameInfoPersistence());
-        }
-        gameInfoPersistence = (GameInfoPersistence) stage.getUserData();
-        onGameInfoPersistenceLoaded();
-    }
 
-    private void onGameInfoPersistenceLoaded() {
+    private void onGameInfoPersistenceLoaded(GameInfoPersistence persistence) {
+        this.gameInfoPersistence = persistence;
         usernameText.setText(gameInfoPersistence.getUsername());
         try {
             var allInfos = gameInfoPersistence.getAllGameInfos();
@@ -141,22 +132,40 @@ public class GameSelectController {
         selectedGameInfo = info;
         secondsPerRound.setText(Integer.toString(info.getSecondsPerRound()));
         iterations.setText(String.format(
-            "%s / %s", info.getCurrentIterations(), info.getMaxIterations()));
+                "%s / %s", info.getCurrentIterations(), info.getMaxIterations()));
         lastEdit.setText(info.getLastEditTime().toString());
-        lastEditor.setText(info.getLastEditor()); 
+        lastEditor.setText(info.getLastEditor());
     }
 
     @FXML
     private void handleChangeUsername() throws IOException {
-        deleteUsername();  
+        deleteUsername();
         App.setRoot("UsernameSelectView");
     }
 
-    
-    private void deleteUsername() throws IOException {
+    /**
+     * Empties the username file, so the user is no longer remembered.
+     *
+     * @throws IOException if the file cannot be emptied.
+     */
+    @FXML
+    public void deleteUsername() throws IOException {
         PrintWriter writer = new PrintWriter("usernameFile.txt", Charset.forName("UTF-16"));
         writer.print("");
         writer.close();
+    }
+
+    @FXML
+    private void handleRefresh() {
+        activeTilePane.getChildren().clear();
+        completedTilePane.getChildren().clear();
+        try {
+            var allInfos = gameInfoPersistence.getAllGameInfos();
+            displayGameInfos(allInfos);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            AlertUtil.errorAlert("ERROR", "Error occured while loading games.");
+        }
     }
 
     @FXML
@@ -171,11 +180,18 @@ public class GameSelectController {
         } else if (selectedGameInfo.isFinished()) {
             AlertUtil.warningAlert("Warning", "You cannot join a completed project.");
         } else if (gameInfoPersistence.getUsername().equals(selectedGameInfo.getLastEditor())) {
-            AlertUtil.warningAlert("Warning", 
-                "You cannot draw on the same prosject two times in a row.");
+            AlertUtil.warningAlert("Warning",
+                    "You cannot draw on the same prosject two times in a row.");
         } else {
-            gameInfoPersistence.setActiveGameInfo(selectedGameInfo);
-            App.setRoot("PaintView");
+            // Check if the game is locked (currently being edited by someone else)
+            if (gameInfoPersistence.tryLockGameInfo(selectedGameInfo)) {
+                gameInfoPersistence.setActiveGameInfo(selectedGameInfo);
+                App.setRoot("PaintView");
+            } else {
+                AlertUtil.warningAlert(
+                    "Warning", "This project is currently being edited by someone else.");
+            }
+            
         }
     }
 }
