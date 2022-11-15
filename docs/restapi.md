@@ -1,22 +1,25 @@
 # NotPaint REST API
-
-
+## Table of contents
+* [GET /allGameInfos](#GET-allGameInfos)
+* [PUT /image](#PUT-image)
 ## allGameInfos
 Methods:
 
-* GET - retrieves a list of all GameInfos from the server
+* <a name="GET-allGameInfos"></a>GET - retrieves a list of all GameInfos from the server
   * URI: host:port/allGameInfos <localhost:8080/allGameInfos>
   * parameters: 
-    * `Accept: application/json`
-  * returns: a list of all GameInfos in JSON format
+    * Header: `Accept: application/json`
+  * returns: a list of all `GameInfo`s in JSON format
+
+Example return with type comments (list with one GameInfo):
 ```json
 [
 	{
-		"maxIterations": 6,
-		"secondsPerRound": 6,
-		"newWordEachRound": true,
-		"currentIterations": 6,
-		"words": [
+		"maxIterations": 6, // int
+		"secondsPerRound": 6, // int
+		"newWordEachRound": true, // bool
+		"currentIterations": 6, // int
+		"words": [ // List<String>
 			"Committee",
 			"Bath",
 			"Article",
@@ -24,142 +27,68 @@ Methods:
 			"Length",
 			"Employee"
 		],
-		"lastEditor": "UnknownEditor",
-		"lastEditTime": "2022-10-27T12:16:31.873+00:00",
-		"uuid": "21323b4b-c9e0-4c83-b4ce-d612e07eab8a",
-		"word": "Employee",
-		"finished": true
+		"lastEditor": "UnknownEditor", // String
+		"lastEditTime": "2022-10-27T12:16:31.873+00:00", // java.util.Date
+		"uuid": "21323b4b-c9e0-4c83-b4ce-d612e07eab8a", // java.util.UUID
 	}
 ]
 ```
-
+# <a name="section-1"></a> Section 1
 ## saveGameInfo
 Methods:
 
-* PUT - saves a new or updates an existing GameInfo on the server
+* PUT - saves a new or updates an existing `GameInfo` on the server
   * URI: host:port/saveGameInfo <localhost:8080/saveGameInfo>
   * parameters:
-    * `Content-Type: application/json`
-    * body: a GameInfo object in JSON format
-  * returns: 200 OK if successful
+    * Header: `Content-Type: application/json`
+    * body: a `GameInfo` object in JSON format (like the  one returned by `GET /allGameInfos`)
+  * returns: `200 OK` if successful
 
-
-
-
-# Example API documentation:
-## Base endpoint
-
-
-* PUT - replaces the settings
-  * URI: host:port/todo/settings
- <http://localhost:8080/todo/settings>
-  * parameters:
-    * body -  application/json; charset=UTF-8
-    * list content
-
-```json
-    {"todoItemsSortOrder":"CHECKED_UNCHECKED"}
-```
-
-* todoItemsSortOrder can take the following values:
-  * NONE
-  * CHECKED_UNCHECKED
-  * UNCHECKED_CHECKED
-* If any other values are sent the todoItemsSortOrder will be set to *NONE*
-* available: jetty
-  * returns JSON with the settings content
-
-```json
-    {"todoItemsSortOrder":"NONE"}
-```
-
+## lock
 
 Methods:
+* GET - check if a `GameInfo` is locked
+  * URI: host:port/lock <localhost:8080/lock?uuid={uuid}>
+  * parameters:
+    * Query: `uuid` - the UUID of the `GameInfo` to check
+  * returns: 
+  ```json
+  true // if locked
+  ```
+  ```json
+  false // if not locked
+  ```
 
-* GET - retrieves a list of todo lists from the server
-  * URI: host:port/todo
-  <http://localhost:8080/todo>
-  * parameters: none
-  * available: jetty, springboot
-  * returns JSON with the todo lists
+* POST - request a lock on a `GameInfo`
+  * URI: host:port/lock <localhost:8080/lock?uuid={uuid}>
+  * parameters:
+    * Query: `uuid` - the UUID of the `GameInfo` to lock
+  * returns: 
+  ```json
+  true // if locking was successful
+  ```
+  ```json
+  false // if GameInfo is already locked
+  ```
+* DELETE - release a lock on a `GameInfo`
+  * URI: host:port/lock <localhost:8080/lock?uuid={uuid}>
+  * parameters:
+    * Query: `uuid` - the UUID of the `GameInfo` to unlock
+  * returns: `200 OK` if successful
 
-```json
-{
-  "lists":[
-    {"name":"todo1"},
-    {"name":"todo2"}
-  ]
-}
-```
-
-## list
-
-<http://localhost:8080/todo/list/{name}>
-
+## image
 Methods:
 
-* GET - retrieves the specified list content from the server
-  * URI: host:port/todo/list/{name}
- <http://localhost:8080/todo/list/todo1>
-  * parameters: none
-  * available: jetty, springboot
-  * returns JSON with the todo list content
-
-```json
-{
-  "name":"todo1",
-  "items":[
-   {"text":null,"checked":false}
-  ]
-}
-```
-
-* PUT creates a list with the desired name if it does not exist or updates the existing list otherwise
-  * URI: host:port/todo/list/{name}
+* GET - retrieve an image from the server
+  * URI: host:port/image <localhost:8080/image?uuid={uuid}>
   * parameters:
-    * body -  application/json; charset=UTF-8
-    * list content
+    * Query: `uuid` - the UUID of the `GameInfo` to retrieve the image from
+  * returns: the image as a byte array in PNG format
+* <a name="PUT-image"></a>PUT - save or update an existing image on the server
+  * URI: host:port/image <localhost:8080/image?uuid={uuid}>
+  * parameters:
+    * Query: `uuid` - the UUID of the `GameInfo` to save the image to
+    * body: the image as a byte array in PNG format
+  * returns: `200 OK` if successful
 
-```json
-{
-  "name":"todo3",
-  "items":[
-        { "text":"item3" , "checked":true }
-   ]
-}
-```
 
-* available: jetty, springboot
-* returns
-  * Content-Type: application/json
-  * json with boolean true on success
-
-```json
-   true
-```
-  
-* DELETE - delete the list with the name {name}
-  * URI: host:port/todo/list/{name}
-  * parameters: none
-  * available: jetty, springboot
-  * returns
-    * Content-Type: application/json
-    * json with boolean true on success
-
-```json
-   true
-```
-
-* POST - rename a list
-  * URI: host:port/todo/list/{name}/rename
-  * parameters - form / body
-    * application/x-www-form-urlencoded; charset=UTF-8
-    * newName={newName}
-  * available: jetty, springboot
-  * returns
-    * Content-Type: application/json
-    * json with boolean true on success
-
-```json
-   true
-```
