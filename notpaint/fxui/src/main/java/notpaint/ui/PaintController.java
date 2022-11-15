@@ -102,8 +102,9 @@ public class PaintController {
     /**
      * Set the default settings and tools.
      */
-    @FXML public void initialize() {
-        
+    @FXML
+    public void initialize() {
+
         StageUtil.onGameInfoPersistenceLoaded(drawingCanvas, this::onGameInfoPersistenceLoaded);
 
         settings = new PaintSettings();
@@ -147,8 +148,6 @@ public class PaintController {
         pencilPane.setOnMouseClicked(e -> {
             handlePencilClick();
         });
-
-        
 
         colorPicker.setValue(Color.BLACK);
 
@@ -207,11 +206,19 @@ public class PaintController {
 
     }
 
-    @FXML
-    private void finishDrawing() {
+    /**
+     * Stop countDownTimer if not null
+     */
+    public void stopTimer() {
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
+
+    }
+
+    @FXML
+    private void finishDrawing() {
+        stopTimer();
 
         gameInfo.addIteration(gameInfoPersistence.getUsername());
         saveImageToPath(gameInfoPersistence.getImagePath(gameInfo));
@@ -424,7 +431,7 @@ public class PaintController {
         KeyCode keyCode = e.getCode();
 
         if (e.isControlDown()) {
-            //Delay for highlighting undo/redo
+            // Delay for highlighting undo/redo
             PauseTransition delay = new PauseTransition(Duration.seconds(0.2));
             switch (keyCode) {
                 case Z:
@@ -435,7 +442,7 @@ public class PaintController {
                     break;
                 case Y:
                     redo();
-                    redoPane.setId("undoredopane2");                    
+                    redoPane.setId("undoredopane2");
                     delay.setOnFinished(event -> redoPane.setId("undoredopane"));
                     delay.play();
                     break;

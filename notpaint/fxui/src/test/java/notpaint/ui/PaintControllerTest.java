@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import notpaint.core.brushes.Brush;
@@ -21,6 +22,7 @@ import notpaint.persistence.GameInfo;
 import notpaint.persistence.GameInfoPersistence;
 import notpaint.ui.testutil.PersistenceTestConfig;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
@@ -30,16 +32,15 @@ import org.testfx.framework.junit5.ApplicationTest;
 public class PaintControllerTest extends ApplicationTest {
     private PaintController controller;
 
-    
     GameInfoPersistence gameInfoPersistence;
     GameInfo gameInfo;
 
     @Override
     public void start(Stage stage) throws Exception {
         gameInfoPersistence = PersistenceTestConfig.setLocalPersistence(stage);
-        gameInfo = new GameInfo(5, 100, true);
-        gameInfoPersistence.setActiveGameInfo(gameInfo);       
-         
+        gameInfo = new GameInfo(5, 10, true);
+        gameInfoPersistence.setActiveGameInfo(gameInfo);
+
         FXMLLoader fxmlLoader = new FXMLLoader(PaintController.class.getResource("PaintView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         scene.getStylesheets().add(getClass().getResource("fxui.css").toExternalForm());
@@ -59,7 +60,6 @@ public class PaintControllerTest extends ApplicationTest {
         assertNotNull(controller);
     }
 
-    
     @Test
     public void testBrushButtons() {
         assertButtonSetsBrush(".smallCircle", CircleBrush.class);
@@ -76,21 +76,19 @@ public class PaintControllerTest extends ApplicationTest {
 
     }
 
-
     @Test
     public void testResetCanvas() {
         clickOn("#drawingCanvas");
         clickOn("#resetCanvasButton");
         clickOn("#doneButton");
-    
+
         Image image = new Image(gameInfoPersistence.getImagePath(gameInfo));
-        
 
         // assert that the image is completely white
         for (int x = 0; x < image.getWidth(); x++) {
             for (int y = 0; y < image.getHeight(); y++) {
                 assertTrue(image.getPixelReader()
-                    .getColor(x, y).equals(javafx.scene.paint.Color.WHITE));
+                        .getColor(x, y).equals(javafx.scene.paint.Color.WHITE));
             }
         }
     }
@@ -118,13 +116,11 @@ public class PaintControllerTest extends ApplicationTest {
         assertTrue(lookup(button).query().getId().contains("highlightedBrush"));
     }
 
-    
-
     @Test
     public void testEraserClick() {
         clickOn("#toolPane");
         assertTrue(lookup("#toolPaneHighlight").query().getId().contains("toolPaneHighlight"));
-  
+
     }
 
     @Test
@@ -138,13 +134,11 @@ public class PaintControllerTest extends ApplicationTest {
         clickOn("#doneButton");
         assertNotNull(findSceneRootWithId("gameSelectRoot"), "GameSelectView should be visible");
         boolean jsonExists = Files.exists(Paths.get(
-            PersistenceTestConfig.dataPath.toString(), gameInfo.getUuid().toString() + ".json"));
+                PersistenceTestConfig.dataPath.toString(), gameInfo.getUuid().toString() + ".json"));
         assertTrue(jsonExists, "GameInfo json should exist after clicking done on PaintView");
         Image image = new Image(gameInfoPersistence.getImagePath(gameInfo));
         assertNotNull(image, "Image should exist after clicking done on PaintView");
     }
-
-
 
     private Parent findSceneRootWithId(String id) {
         for (Window window : Window.getWindows()) {
@@ -162,20 +156,14 @@ public class PaintControllerTest extends ApplicationTest {
     public void testUndoRedo() {
 
         clickOn("#drawingCanvas");
-        
+
         clickOn("#undoArrow");
         assertTrue(controller.undoStack.isEmpty());
-        
+
         clickOn("#redoArrow");
         assertTrue(controller.redoStack.isEmpty());
 
-
-
     }
-
-    
-
-
 
     @Test
     public void testKeyUndoRedo() {
@@ -184,11 +172,11 @@ public class PaintControllerTest extends ApplicationTest {
         assertTrue(lookup(".undoPane").query().getId().contains("undoredopane2"));
         press(KeyCode.CONTROL).press(KeyCode.Y).release(KeyCode.Y).release(KeyCode.CONTROL);
 
-
     }
 
+    @AfterEach
+    public void stopCountDown() throws IOException {
+        controller.stopTimer();
+    }
 
 }
-
-
-
