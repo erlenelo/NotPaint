@@ -1,7 +1,7 @@
 package notpaint.restserver;
 
-import notpaint.core.GameInfo;
-import notpaint.core.persistence.LocalGameInfoPersistence;
+import notpaint.persistence.GameInfo;
+import notpaint.persistence.LocalGameInfoPersistence;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

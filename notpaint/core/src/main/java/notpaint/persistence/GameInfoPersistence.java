@@ -73,6 +73,5 @@ public abstract class GameInfoPersistence {
      */
     public void setActiveGameInfo(GameInfo activeGameInfo) {
         this.activeGameInfo = activeGameInfo;
-        System.out.println("Setactive: " + activeGameInfo.getUuid().toString());
     }
 }

@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import notpaint.ui.testutil.PersistenceTestConfig;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -37,6 +38,7 @@ public class UsernameSelectControllerTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws Exception {
+        PersistenceTestConfig.setLocalPersistence(stage);
 
         FXMLLoader fxmlLoader = new FXMLLoader(
                 UsernameSelectController.class.getResource("UsernameSelectView.fxml"));
@@ -52,7 +54,6 @@ public class UsernameSelectControllerTest extends ApplicationTest {
     @Test
     public void testController() {
         assertNotNull(controller);
-        System.out.println("testController passed");
     }
 
     @BeforeAll

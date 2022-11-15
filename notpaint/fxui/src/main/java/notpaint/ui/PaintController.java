@@ -31,6 +31,7 @@ import notpaint.core.brushes.CircleBrush;
 import notpaint.core.brushes.SquareBrush;
 import notpaint.persistence.GameInfo;
 import notpaint.persistence.GameInfoPersistence;
+import notpaint.persistence.RemoteGameInfoPersistence;
 import notpaint.ui.painttools.EraserTool;
 import notpaint.ui.painttools.PenTool;
 import notpaint.ui.painttools.Tool;
@@ -153,7 +154,7 @@ public class PaintController {
             handlePencilClick();
         });
 
-        imagePersistence = new RemoteImagePersistence();
+        
 
         colorPicker.setValue(Color.BLACK);
 
@@ -162,6 +163,12 @@ public class PaintController {
     private void onGameInfoPersistenceLoaded(GameInfoPersistence gameInfoPersistence) {
         this.gameInfoPersistence = gameInfoPersistence;
         gameInfo = gameInfoPersistence.getActiveGameInfo();
+
+        if(gameInfoPersistence instanceof RemoteGameInfoPersistence) {
+            imagePersistence = new RemoteImagePersistence();
+        } else {
+            imagePersistence = new LocalImagePersistence();
+        }
 
         if (gameInfo == null) {
             throw new IllegalArgumentException(
@@ -392,8 +399,6 @@ public class PaintController {
         }
         nextImageToSave = image;
 
-        System.out.println("Saved to stack");
-
         redoStack.clear();
     }
 
@@ -406,8 +411,6 @@ public class PaintController {
             nextImageToSave = image;
             drawingCanvas.getGraphicsContext2D().drawImage(image, 0, 0);
         }
-        System.out.println("Undo");
-
     }
 
     // a method to redo the last undone action
@@ -419,8 +422,6 @@ public class PaintController {
             nextImageToSave = image;
             drawingCanvas.getGraphicsContext2D().drawImage(image, 0, 0);
         }
-        System.out.println("Redo");
-
     }
 
     @FXML
@@ -430,7 +431,6 @@ public class PaintController {
         if (e.isControlDown()) {
             //Delay for highlighting undo/redo
             PauseTransition delay = new PauseTransition(Duration.seconds(0.2));
-            System.out.println("CTRL is down");
             switch (keyCode) {
                 case Z:
                     undo();

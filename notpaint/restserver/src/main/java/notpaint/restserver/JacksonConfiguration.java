@@ -1,7 +1,7 @@
 package notpaint.restserver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import notpaint.core.persistence.JacksonObjectMapperBuilder;
+import notpaint.persistence.JacksonObjectMapperBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

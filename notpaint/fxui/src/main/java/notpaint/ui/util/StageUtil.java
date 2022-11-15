@@ -4,8 +4,8 @@ import java.net.URI;
 import java.util.function.Consumer;
 import javafx.scene.Node;
 import javafx.stage.Stage;
-import notpaint.core.persistence.GameInfoPersistence;
-import notpaint.core.persistence.RemoteGameInfoPersistence;
+import notpaint.persistence.GameInfoPersistence;
+import notpaint.persistence.RemoteGameInfoPersistence;
 
 /**
  * Utility class for stage loading.
@@ -13,7 +13,7 @@ import notpaint.core.persistence.RemoteGameInfoPersistence;
 public class StageUtil {
 
     /**
-     * Will call the callback with stage as soon as it is set for Node.
+     * Will call the callback with GameInfoPersistence as soon as stage is set for Node.
      *
      * @param node Node to get stage reference from
      * @param callback Method to call when stage is set
@@ -46,8 +46,7 @@ public class StageUtil {
 
     private static void setGameInfoPersistanceOnStage(
         Stage stage, Consumer<GameInfoPersistence> callback) {
-        if (stage.getUserData() == null) {
-            
+        if (stage.getUserData() == null) {            
             stage.setUserData(new RemoteGameInfoPersistence(URI.create("http://localhost:8080/")));
         }
         var gameInfoPersistence = (GameInfoPersistence) stage.getUserData();

@@ -15,6 +15,8 @@ import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import notpaint.persistence.LocalGameInfoPersistence;
+import notpaint.ui.testutil.PersistenceTestConfig;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -25,12 +27,11 @@ import org.testfx.framework.junit5.ApplicationTest;
 public class SettingsViewControllerTest extends ApplicationTest {
     private SettingsViewController controller;
 
-    static Path dataPath = Paths.get("testData_INALKN434NJN");
+   
 
     @Override
     public void start(Stage stage) throws Exception {
-        var gameInfoPersistence = new LocalGameInfoPersistence(dataPath);
-        stage.setUserData(gameInfoPersistence);
+        PersistenceTestConfig.setLocalPersistence(stage);
 
         FXMLLoader fxmlLoader = new FXMLLoader(
                 GameSelectController.class.getResource("SettingsView.fxml"));
@@ -44,15 +45,7 @@ public class SettingsViewControllerTest extends ApplicationTest {
 
     @AfterAll
     public static void cleanUp() throws IOException {
-        if (!Files.exists(dataPath)) {
-            return;
-        }
-
-        var files = Files.list(dataPath).toList();
-        for (var file : files) { // Delete every file in datapath dir
-            Files.delete(file);
-        }
-        Files.deleteIfExists(dataPath); // Delete datapath dir
+        PersistenceTestConfig.cleanUpLocalPersistence();
     }
 
     // Test that the controller is created

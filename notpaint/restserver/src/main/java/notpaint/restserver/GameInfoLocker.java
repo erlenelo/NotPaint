@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.UUID;
 
-import notpaint.core.GameInfo;
+import notpaint.persistence.GameInfo;
 
 public class GameInfoLocker {
 
