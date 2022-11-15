@@ -5,16 +5,13 @@ import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.util.Comparator;
 import java.util.List;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.TilePane;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import notpaint.persistence.GameInfo;
 import notpaint.persistence.GameInfoPersistence;
 import notpaint.ui.util.AlertUtil;
@@ -75,14 +72,14 @@ public class GameSelectController {
         imageView.maxWidth(200);
 
         // Dark border for each project
-        HBox imageHBox = new HBox();
-        imageHBox.setId("projectBorder");
-        imageHBox.getChildren().add(imageView);
+        HBox imageHbox = new HBox();
+        imageHbox.setId("projectBorder");
+        imageHbox.getChildren().add(imageView);
 
         // Blank border to add margins to projects, and highlight selected project.
         HBox imageSpace = new HBox();
         imageSpace.setId("unselected");
-        imageSpace.getChildren().add(imageHBox);
+        imageSpace.getChildren().add(imageHbox);
 
         imageView.setOnMouseClicked(event -> {
             try {
@@ -146,6 +143,11 @@ public class GameSelectController {
         App.setRoot("UsernameSelectView");
     }
 
+    /**
+     * Empties the username file, so the user is no longer remembered.
+     *
+     * @throws IOException if the file cannot be emptied.
+     */
     @FXML
     public void deleteUsername() throws IOException {
         PrintWriter writer = new PrintWriter("usernameFile.txt", Charset.forName("UTF-16"));

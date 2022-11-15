@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import notpaint.persistence.GameInfo;
-
 /**
  * Class for saving and loading game info on local disk.
  */
@@ -58,11 +56,12 @@ public class LocalGameInfoPersistence extends GameInfoPersistence {
 
     /**
      * Get GameInfo with a specific UUID.
-     * @param uuid
+     *
+     * @param uuid The UUID of the GameInfo to get
      * @return GameInfo with the given UUID, or null if it does not exist
      * @throws IOException If unable to read from disk
      */
-    public GameInfo getGameInfoFromUUID(UUID uuid) throws IOException {
+    public GameInfo getGameInfoFromUuid(UUID uuid) throws IOException {
         String uuidString = uuid.toString();
         Path gameInfoPath = Paths.get(dataPath.toString(), uuidString + ".json");
         

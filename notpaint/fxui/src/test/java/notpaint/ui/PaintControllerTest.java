@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,9 +19,7 @@ import notpaint.core.brushes.CircleBrush;
 import notpaint.core.brushes.SquareBrush;
 import notpaint.persistence.GameInfo;
 import notpaint.persistence.GameInfoPersistence;
-import notpaint.persistence.LocalGameInfoPersistence;
 import notpaint.ui.testutil.PersistenceTestConfig;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -115,6 +112,7 @@ public class PaintControllerTest extends ApplicationTest {
         assertButtonIsHighlighted(".bigSquare");
 
     }
+
     private void assertButtonIsHighlighted(String button) {
         clickOn(button);
         assertTrue(lookup(button).query().getId().contains("highlightedBrush"));
@@ -161,7 +159,7 @@ public class PaintControllerTest extends ApplicationTest {
     }
 
     @Test
-    public void testUndoRedo(){
+    public void testUndoRedo() {
 
         clickOn("#drawingCanvas");
         

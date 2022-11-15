@@ -4,21 +4,15 @@ import java.io.IOException;
 import java.util.Stack;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
-import javafx.beans.binding.NumberExpression;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -164,7 +158,8 @@ public class PaintController {
         this.gameInfoPersistence = gameInfoPersistence;
         gameInfo = gameInfoPersistence.getActiveGameInfo();
 
-        if(gameInfoPersistence instanceof RemoteGameInfoPersistence) {
+        // Make sure the persistence for images is same as the persistence for game info
+        if (gameInfoPersistence instanceof RemoteGameInfoPersistence) {
             imagePersistence = new RemoteImagePersistence();
         } else {
             imagePersistence = new LocalImagePersistence();
@@ -425,7 +420,7 @@ public class PaintController {
     }
 
     @FXML
-    public void keyPressed(KeyEvent e) {
+    private void keyPressed(KeyEvent e) {
         KeyCode keyCode = e.getCode();
 
         if (e.isControlDown()) {

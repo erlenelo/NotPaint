@@ -3,17 +3,17 @@ package notpaint.ui.persistence;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse.BodyHandlers;
-
+import javafx.scene.image.Image;
 import javax.imageio.ImageIO;
 
-import javafx.scene.image.Image;
-
+/**
+ * Implementation of ImagePersistence that saves images to a remote server.
+ */
 public class RemoteImagePersistence extends ImagePersistence {
 
     @Override

@@ -8,10 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
-import org.junit.Before;
-import org.junit.Rule;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,14 +15,11 @@ import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import notpaint.ui.testutil.PersistenceTestConfig;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.rules.ExpectedException;
 import org.testfx.api.FxAssert;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
-import org.testfx.util.WaitForAsyncUtils;
 
 /**
  * Test class for {@link UsernameSelectController}.
@@ -56,6 +49,9 @@ public class UsernameSelectControllerTest extends ApplicationTest {
         assertNotNull(controller);
     }
 
+    /**
+     * Delete username before testing.
+     */
     @BeforeAll
     public static void deleteFile() {
         GameSelectController ctrl = new GameSelectController();

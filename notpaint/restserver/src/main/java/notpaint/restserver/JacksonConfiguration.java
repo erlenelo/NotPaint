@@ -5,6 +5,9 @@ import notpaint.persistence.JacksonObjectMapperBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Configures Jackson for the REST server.
+ */
 @Configuration
 public class JacksonConfiguration {
 
