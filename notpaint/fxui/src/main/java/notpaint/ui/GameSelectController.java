@@ -161,6 +161,13 @@ public class GameSelectController {
         completedTilePane.getChildren().clear();
         try {
             var allInfos = gameInfoPersistence.getAllGameInfos();
+            for (GameInfo gameInfo : allInfos) {
+                if(gameInfoPersistence.tryLockGameInfo(gameInfo)){
+                    System.out.println(gameInfo.getLastEditor() + "Project currently being edited");
+                    AlertUtil.errorAlert("ERROR", "the project of "+ gameInfo.getLastEditor() + "is currently being edited");
+                }
+                
+            }
             displayGameInfos(allInfos);
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -188,8 +195,10 @@ public class GameSelectController {
                 gameInfoPersistence.setActiveGameInfo(selectedGameInfo);
                 App.setRoot("PaintView");
             } else {
+                
                 AlertUtil.warningAlert(
                     "Warning", "This project is currently being edited by someone else.");
+                    
             }
             
         }
