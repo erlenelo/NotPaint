@@ -1,8 +1,13 @@
 # NotPaint REST API
 ## Table of contents
 * [GET /allGameInfos](#GET-allGameInfos)
+* [PUT /saveGameInfo](#PUT-saveGameInfo)
+* [GET /lock](#GET-lock)
+* [POST /lock](#POST-lock)
+* [DELETE /lock](#DELETE-lock)
+* [GET /image](#GET-image)
 * [PUT /image](#PUT-image)
-## allGameInfos
+### /allGameInfos
 Methods:
 
 * <a name="GET-allGameInfos"></a>GET - retrieves a list of all GameInfos from the server
@@ -33,21 +38,20 @@ Example return with type comments (list with one GameInfo):
 	}
 ]
 ```
-# <a name="section-1"></a> Section 1
-## saveGameInfo
+### /saveGameInfo
 Methods:
 
-* PUT - saves a new or updates an existing `GameInfo` on the server
+* <a name="PUT-saveGameInfo"></a>PUT - saves a new or updates an existing `GameInfo` on the server
   * URI: host:port/saveGameInfo <localhost:8080/saveGameInfo>
   * parameters:
     * Header: `Content-Type: application/json`
     * body: a `GameInfo` object in JSON format (like the  one returned by `GET /allGameInfos`)
   * returns: `200 OK` if successful
 
-## lock
+### /lock
 
 Methods:
-* GET - check if a `GameInfo` is locked
+* <a name="GET-lock"></a>GET - check if a `GameInfo` is locked
   * URI: host:port/lock <localhost:8080/lock?uuid={uuid}>
   * parameters:
     * Query: `uuid` - the UUID of the `GameInfo` to check
@@ -59,7 +63,7 @@ Methods:
   false // if not locked
   ```
 
-* POST - request a lock on a `GameInfo`
+* <a name="POST-lock"></a>POST - request a lock on a `GameInfo`
   * URI: host:port/lock <localhost:8080/lock?uuid={uuid}>
   * parameters:
     * Query: `uuid` - the UUID of the `GameInfo` to lock
@@ -70,16 +74,16 @@ Methods:
   ```json
   false // if GameInfo is already locked
   ```
-* DELETE - release a lock on a `GameInfo`
+* <a name="DELETE-lock"></a>DELETE - release a lock on a `GameInfo`
   * URI: host:port/lock <localhost:8080/lock?uuid={uuid}>
   * parameters:
     * Query: `uuid` - the UUID of the `GameInfo` to unlock
   * returns: `200 OK` if successful
 
-## image
+### /image
 Methods:
 
-* GET - retrieve an image from the server
+* <a name="GET-image"></a>GET - retrieve an image from the server
   * URI: host:port/image <localhost:8080/image?uuid={uuid}>
   * parameters:
     * Query: `uuid` - the UUID of the `GameInfo` to retrieve the image from
