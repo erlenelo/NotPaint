@@ -75,4 +75,16 @@ public class GameInfoPersistenceTest {
         assertNotNull(gameInfoPersistence.getActiveGameInfo());
 
     }
+    @Test
+    public void testGetGameInfoFromUuid() throws IOException{
+        Path dataPath = Paths.get("testData_" + UUID.randomUUID().toString()); // Random path
+        LocalGameInfoPersistence gameInfoPersistence = new LocalGameInfoPersistence(dataPath);
+        GameInfo gameInfo = new GameInfo(2, 5, true);
+        gameInfoPersistence.saveGameInfo(gameInfo);
+        UUID uuid = gameInfo.getUuid();
+        GameInfo testGameInfo = gameInfoPersistence.getGameInfoFromUuid(uuid);
+        assertEquals(gameInfo.getMaxIterations(), testGameInfo.getMaxIterations());
+
+        cleanUp(dataPath);
+    }
 }
