@@ -106,7 +106,7 @@ public class GameSelectController {
         StageUtil.onGameInfoPersistenceLoaded(
             secondsPerRound, this::onGameInfoPersistenceLoaded);        
     }
-    int i = 0;
+
     private void onGameInfoPersistenceLoaded(GameInfoPersistence persistence) {
         this.gameInfoPersistence = persistence;
         usernameText.setText(gameInfoPersistence.getUsername());
@@ -129,7 +129,6 @@ public class GameSelectController {
                 return new Task<Void>() {
                     protected Void call() {
                         try {
-                            System.out.println("Refreshing... No. " + (i++));
                             Platform.runLater(() -> handleRefresh());                            
                         } catch(Exception e) {
                             e.printStackTrace();
