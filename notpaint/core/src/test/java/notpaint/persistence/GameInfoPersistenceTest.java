@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
@@ -41,10 +42,13 @@ public class GameInfoPersistenceTest {
 
     @Test
     public void testGetAllGameInfos() throws IOException {
-        LocalGameInfoPersistence gameInfoPersistence = new LocalGameInfoPersistence();
-        gameInfoPersistence.getAllGameInfos();
-        assertNotNull(gameInfoPersistence);
-
+        Path dataPath = Paths.get("testData_" + UUID.randomUUID().toString()); // Random path
+        LocalGameInfoPersistence localGameInfoPersistence = new LocalGameInfoPersistence(dataPath);
+        GameInfo gameInfo = new GameInfo(5,5,false);
+        localGameInfoPersistence.saveGameInfo(gameInfo);
+        List<GameInfo> allGameInfos = localGameInfoPersistence.getAllGameInfos();
+        assertEquals(1, allGameInfos.size());
+        cleanUp(dataPath);
     }
 
     @Test
