@@ -83,8 +83,8 @@
     -fx-border-width: 1px;
 
 }
-#locked-project{
-    -fx-border-color:red;
-    -fx-border-width: 4px;
-    -fx-border-radius: 2px;
+.locked-project {
+    -fx-border-color:red !important;
+    -fx-border-width: 2px !important;
+    -fx-border-radius: 1px !important;
 }
