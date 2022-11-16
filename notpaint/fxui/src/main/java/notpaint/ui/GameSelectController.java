@@ -5,6 +5,10 @@ import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.util.Comparator;
 import java.util.List;
+
+import javafx.application.Platform;
+import javafx.concurrent.ScheduledService;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -12,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import notpaint.persistence.GameInfo;
 import notpaint.persistence.GameInfoPersistence;
 import notpaint.ui.util.AlertUtil;
@@ -52,19 +57,17 @@ public class GameSelectController {
     private GameInfoPersistence gameInfoPersistence;
     private GameInfo selectedGameInfo;
 
-    public void addImageToActiveTap(GameInfo info) {
+    private static ScheduledService<Void> refreshService;
 
-    }
-
-    void addImage(GameInfo info) {
+    HBox addImage(GameInfo info) {
         if (info.isFinished()) {
-            addImageToTab(info, completedTilePane);
+            return addImageToTab(info, completedTilePane);
         } else {
-            addImageToTab(info, activeTilePane);
+            return addImageToTab(info, activeTilePane);
         }
     }
 
-    private void addImageToTab(GameInfo info, TilePane pane) {
+    private HBox addImageToTab(GameInfo info, TilePane pane) {
 
         ImageView imageView = new ImageView(
                 new Image(gameInfoPersistence.getImagePath(info), 200, 140, true, true));
@@ -95,6 +98,7 @@ public class GameSelectController {
         });
 
         pane.getChildren().add(imageSpace);
+        return imageSpace;
     }
 
     @FXML
@@ -102,7 +106,6 @@ public class GameSelectController {
         StageUtil.onGameInfoPersistenceLoaded(
             secondsPerRound, this::onGameInfoPersistenceLoaded);        
     }
-
 
     private void onGameInfoPersistenceLoaded(GameInfoPersistence persistence) {
         this.gameInfoPersistence = persistence;
@@ -114,6 +117,29 @@ public class GameSelectController {
             ex.printStackTrace();
             AlertUtil.errorAlert("ERROR", "Error occured while loading games.");
         }
+
+        // Stop existing service if it exists
+        if(refreshService != null) {
+            refreshService.cancel();
+        }
+
+        // Start service to refresh automatically periodically        
+        refreshService = new ScheduledService<Void> () {
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    protected Void call() {
+                        try {
+                            Platform.runLater(() -> handleRefresh());                            
+                        } catch(Exception e) {
+                            e.printStackTrace();
+                        }
+                        return null;
+                    }
+                };
+            }
+        };
+        refreshService.setPeriod(Duration.seconds(2));
+        refreshService.start();
     }
 
     private void displayGameInfos(List<GameInfo> infos) {
@@ -124,7 +150,17 @@ public class GameSelectController {
             }
         });
         for (var info : infos) {
-            addImage(info);
+            HBox image = addImage(info);
+            // If a game is already selected, select it again after refreshing.
+            if(selectedGameInfo != null && info.getUuid().equals(selectedGameInfo.getUuid())) {
+                setSelectedGameInfo(info);
+                image.setId("selected");
+            }
+            boolean isLocked = gameInfoPersistence.isGameInfoLocked(info);
+            if(isLocked) {
+                image.getStyleClass().add("locked-project");
+            }
+            
         }
     }
 
