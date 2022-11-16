@@ -1,0 +1,17 @@
+@startuml sequence
+
+actor Kari #Pink
+
+Kari -> GameSelectController: *Wants to draw on canvas*
+GameSelectController -> Persistence: **Click Join Project** \n handleJoinProject()
+GameSelectController -> Persistence: gameinfo 
+
+Persistence -> Restserver: **Request** \n tryLockGameInfo
+
+Restserver -> Persistence: **Respond** \n 
+Persistence -> GameSelectController:
+ 
+ 
+
+ 
+@enduml
