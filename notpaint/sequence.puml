@@ -1,17 +1,53 @@
-@startuml sequence
+@startuml sequence Kari
 
 actor Kari #Pink
 
-Kari -> GameSelectController: *Wants to draw on canvas*
-GameSelectController -> Persistence: **Click Join Project** \n handleJoinProject()
-GameSelectController -> Persistence: gameinfo 
+Kari -> fxui: Clicks on image
+Kari -> fxui: Clicks Join Project
 
-Persistence -> Restserver: **Request** \n tryLockGameInfo
+fxui -> controller: handleJoinProject()
 
-Restserver -> Persistence: **Respond** \n 
-Persistence -> GameSelectController:
- 
- 
+controller -> persistence: tryLockGameInfo(GameInfo info)
 
+persistence -> rest: **Request** \n HTTP POST/lock 
+persistence --> rest: UUID
+
+rest -> persistence: **Respons** \n HTTP ok \n BODY true
+
+persistence -> controller: Java true
+
+controller -> fxui: onGameInfoPersistenceLoaded(GameInfoPersistence gameInfoPersistence)
+
+rest -> fxui: GET/ image
+
+fxui -> Kari: Starts drawing
  
+@enduml
+
+@startuml sequence Ola
+actor Ola #Blue
+Ola -> fxui: Clicks New Project
+fxui -> controller: handleNewProject()
+controller -> fxui: initialize()
+Ola -> fxui: Writes values
+Ola -> fxui: Clicks Create Game
+
+fxui -> controller: createGame(ActionEvent event)
+controller -> presistence: setActiveGameInfo(GameInfo activeGameInfo)
+
+presistence -> controller: getActiveGameInfo()
+controller -> fxui: onGameInfoPersistenceLoaded(GameInfoPersistence gameInfoPersistence)
+
+Ola -> fxui: Drawing
+Ola -> fxui: Clicks Done
+
+fxui -> controller: finishDrawing()
+
+controller -> presistence: BufferedImage javaFxImageToBufferedImage(Image image)
+presistence -> rest: PUT/ image
+
+
+
+
+
 @enduml
