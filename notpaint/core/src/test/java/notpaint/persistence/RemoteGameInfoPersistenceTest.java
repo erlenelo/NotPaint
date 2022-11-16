@@ -1,10 +1,13 @@
 package notpaint.persistence;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -23,8 +26,6 @@ public class RemoteGameInfoPersistenceTest {
 
     private RemoteGameInfoPersistence remoteGameInfoPersistence;
 
-    @Rule
-    public WireMockRule wireMockRule = new WireMockRule(8089); // No-args constructor defaults to port 8080
 
     @BeforeEach
     public void startWireMockServerAndSetup() throws URISyntaxException {
@@ -32,23 +33,22 @@ public class RemoteGameInfoPersistenceTest {
       wireMockServer = new WireMockServer(config.portNumber());
       wireMockServer.start();
       WireMock.configureFor("localhost", config.portNumber());
-      remoteGameInfoPersistence = new RemoteGameInfoPersistence(new URI("http://localhost:" + wireMockServer.port() + "/notpaint"));
+      remoteGameInfoPersistence = new RemoteGameInfoPersistence(new URI("http://localhost:" + wireMockServer.port() + "/allGameInfos"));
     }
 
 
     @Test
-    public void testGetAllGameInfos() {
-        stubFor(get(urlEqualTo("/notpaint"))
+    public void testGetAllGameInfos() throws IOException {
+        stubFor(get(urlEqualTo("/allGameInfos"))
         .withHeader("Accept", equalTo("application/json"))
         .willReturn(aResponse()
             .withStatus(200)
             .withHeader("Content-Type", "application/json")
-            
-            
-        )
-    );
-
-
+            .withBody("{\"words\": [ \"test1\"\"test2\" \"test3\" \"test4\"]}")
+        ));
+        List<GameInfo> allGameInfos = remoteGameInfoPersistence.getAllGameInfos();
+        assertEquals(4, allGameInfos.size());
+        assertEquals("test1", allGameInfos.get(0).getWord());
     }
     
     @AfterEach
