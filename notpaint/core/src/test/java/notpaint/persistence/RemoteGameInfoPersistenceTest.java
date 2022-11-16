@@ -1,7 +1,8 @@
 package notpaint.persistence;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
 import java.io.IOException;
@@ -9,15 +10,15 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
+
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
-import com.github.tomakehurst.wiremock.junit.WireMockRule;
+
 
 
 public class RemoteGameInfoPersistenceTest {
@@ -44,13 +45,44 @@ public class RemoteGameInfoPersistenceTest {
         .willReturn(aResponse()
             .withStatus(200)
             .withHeader("Content-Type", "application/json")
-            .withBody("{\"words\": [ \"test1\"\"test2\" \"test3\" \"test4\"]}")
+            .withBody("[{\"words\": [ \"test1\", \"test2\", \"test3\"]}]")
         ));
+              
         List<GameInfo> allGameInfos = remoteGameInfoPersistence.getAllGameInfos();
-        assertEquals(4, allGameInfos.size());
-        assertEquals("test1", allGameInfos.get(0).getWord());
+        assertEquals(1, allGameInfos.size());
+        assertEquals("test3", allGameInfos.get(0).getWord());
+        
+
     }
-    
+
+    @Test
+    public void testSaveGameInfo() throws IOException{
+        stubFor(put(urlEqualTo("/saveGameInfo"))
+        .withHeader("Accept", equalTo("application/json"))
+        .willReturn(aResponse()
+            .withStatus(200)
+            .withHeader("Content-Type", "application/json")
+            .withBody("{\"words\": [ \"test1\", \"test2\", \"test3\"]}")
+        ));
+        GameInfo gameInfo = new GameInfo();
+        remoteGameInfoPersistence.saveGameInfo(gameInfo);
+        verify(putRequestedFor(urlEqualTo("/saveGameInfo")));
+        }
+
+        @Test
+        public void isGameInfoLocked() throws IOException{
+          GameInfo newGameInfo = new GameInfo(5,5,false);
+          String testuuid = newGameInfo.getUuid().toString();
+          
+          stubFor(get(urlEqualTo("/lock?uuid="+ testuuid))
+          .willReturn( aResponse()
+              .withBody("true")
+          ));
+          assertTrue(remoteGameInfoPersistence.isGameInfoLocked(newGameInfo));
+        
+      }
+
+
     @AfterEach
     public void stopWireMockServer() {
       wireMockServer.stop();
