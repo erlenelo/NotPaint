@@ -31,5 +31,10 @@ class LockInfo implements Comparable<LockInfo> {
         LockInfo other = (LockInfo) obj;
         return uuid.equals(other.uuid) && lockUntil.equals(other.lockUntil);
     }
+
+    @Override
+    public int hashCode() {
+        return uuid.hashCode() + lockUntil.hashCode();
+    }
     
 }
