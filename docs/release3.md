@@ -1,5 +1,5 @@
 # Release 3
-Målet med siste sprint var å utvide funksjonaliteten til applikasjonen, samt forbedre brukervennligheten til applikasjonen. Vi har også bygget en *REST-API* slik at flere brukere kan tegne på samme prosjekt. I tillegg har vi skrevet flere tester for å bedre dekningsgraden. Punktene under dokumenterer endringene i mer detalj:
+Målet med siste sprint var å utvide funksjonaliteten til applikasjonen, samt forbedre brukervennlighet. Vi har også bygget en *REST-API* slik at flere brukere kan tegne på samme prosjekt. I tillegg har vi skrevet flere tester for å bedre dekningsgraden. Punktene under dokumenterer endringene i mer detalj:
 
 
 ## Funksjonalitet
