@@ -62,7 +62,7 @@ Klassediagram for hver modul ligger i hver modul sin readme.md fil.
 ### Pakkediagram
 Pakkediagrammet viser forholdet mellom pakkene, altså arkitekturen til systemet. 
 
-![](https://www.plantuml.com/plantuml/png/TP5TRiCW3CVVVGgB0t24gVUe-a0pfwDh065JHPfwzmL86xQIl67__X-G0uk9agOREY_1M2U0EFWfU4TEK0q-ai8VmEKBPlWs5qBrH7NPrcK3L9K-nyHVnAgi7piEWI9R5d83ANW0RD7Zd6orxYkJLOXPqcXK91QcUAUOI_Ta3P75B-1gxcQSdrSzZlDqE_qjf3X4woulf1xrsNifPEzEgFK77gzB27jt0jZIowPQ_9-kE41-WdMIostdtAu9NAUz0czG-si0Ei-oRmK7SfzfIVu5)
+![](https://www.plantuml.com/plantuml/png/VL5RZi8m3FptAQmS84TOSG_4H-YwRDZceTX1bLRSVPkq4421_Dap7eydEnQJ9Bi9VP1eh1T078ABmPCNL4D8fF0FS7dH3B_cHAXkL5tH5NmYbBu-fim_nAh2rpSAaH9R5l83ARW2jDNZdEqgtP_CLY5-mArRwbTvU3Wj4GjJkb0g1_Oa6gCEtmbdSp7ZV8jbFyvkEZoRLnoJzQSxPItrCGIfpDxzgFKNxi_B4Wx-0D2sLsILUErkT80IrzOfvbfTt07qOcbRUtRQo2Rq-Aa0dP3UIy6E_7Ts4_m3)
 
 ### Sekvensdiagram
  Sekvensdiagrammene tar for seg to viktige brukstilfeller, som viser koblingen mellom brukerinteraksjon og hva som skjer inni systemet med REST-kall.
