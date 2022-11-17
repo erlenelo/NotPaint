@@ -1,8 +1,12 @@
-## Persistens
-Persistenlaget vårt har to deler. Den første er `GameInfoPersistance`-klassen som handterer lagring og lasting av `GameInfo`-klassen. `GameInfo`-klassen serialiseres til JSON ved bruk av biblioteket [Jackson](https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind). Dette gjøres ved å bruke Jacksons `ObjectMapper`-klasse, og å spesifisere attribuer på felt som skal serialiseres og deserialiseres.
+## Persistence
+Persistenslaget er delt opp i to deler persistence og [ImagePersistence](/notpaint/fxui/src/main/java/notpaint/imagepersistence/readme.md), denne delen tar for seg persistence.
 
-Den andre delen av persistenslaget er lagring og lasting av bilder. Dette gjøres av den abstrakte klassen `ImagePersistence`, som ved release2 har en implementasjon: `LocalImagePersistence`. Denne bruker `ImageIO`-klassen fra java.desktop for å lagre bilder til fil. Lasting av bilder handeres av JavaFXs `Image`-klasse, som har en konstruktør som tillater å laste bilder både fra disk og fra nett.
+*GameInfo*-klassen inneholder funksjonalitet for spill-informasjonen, enten et pågående spill eller et ferdig spill. Dette er også denne spill-informasjonen som blir serialisert til `JSON` ved bruk av biblioteket [Jackson](https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind). Dette gjøres ved å bruke *JacksonObjectMapperBuilder*-klassen, og å spesifisere attributter på felt som skal **serialiseres** og **deserialiseres**.  
 
-Sammenheng mellom JSON-filer for `GameInfo` og bilder opprettholdes ved at de har samme filnavn (en UUID), med unntak av filendelsen (.json vs .png).
+*GameInfoPersistence* er en abstrakt klasse og håndterer lagring og lasting av *GameInfo*-klassen. 
+*LocalGameInfoPersistence*-klassen er en implementasjon av *GameInfoPersistence* og håndterer lagring og lasting til lokal disk.
+*RemoteGameInfoPersistence*-klassen er en implementasjon av *GameInfoPersistence* og håndterer lagring og lasting fra en ekstern server. 
 
-Programmet vårt bruker implisitt lagring, hvor data lagres i en forhandsbestemt mappe ikke styrt av brukeren, og appen lagrer når det er fornuftig utifra brukerens handlinger.
+Sammenheng mellom `JSON`-filer for *GameInfo* og bilder opprettholdes ved at de har samme filnavn (en UUID), med unntak av filendelsen (.json vs .png).
+
+Programmet vårt bruker implisitt lagring, hvor data lagres i en forhåndsbestemt mappe som ikke er styrt av brukeren, og appen lagrer når det er fornuftig ut fra brukerens handlinger.
