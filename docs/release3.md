@@ -72,3 +72,16 @@ I starten syntes vi at feilmeldingene ikke ga mening og mente at de ikke indiker
 
 ## Om prosjektet
 I tillegg til at vi har brukt mye tid, har prosessen med å lage dette prosjektet til tider vært svært krevende. Dette har ført til at vi valgte å ikke lage integrasjonstester slik vi ble anbefalt. Som nevnt over er begrunnelsen for dette at vi prioriterte å gjøre ferdig prosjektet til fristen, heller enn å lage integrasjonstester, da dette ikke var et krav. Dog ville dette vært et naturlig neste steg for oss dersom vi hadde hatt mer tid. Å jobbe med prosjektet har vært svært lærerikt. Vi har tilegnet oss nye måter å strukturere arbeid på, noe som har ført til at vi har vært mer effektive i arbeidsprosessen. Det har vært gøy å jobbe med ting vi tidligere ikke har hatt erfaring med, spesielt når vi har fått god hjelp gjennom hele semesteret.
+
+## Gitpod-problemer
+Rett før innlevering fikk vi følgende feil i Gitpod når vi åpner prosjektet, i "Pulling Image"-steget:
+
+```
+Request createWorkspace failed with message: 13 INTERNAL: cannot resolve workspace image: pulling from host registry.gitpod.stud.ntnu.no failed with status code [manifests 6fb63762c1bbfe4bbcdf6abb8e36b618ae00f9b3f2f730009bbe9bf0fbb5bfa2]: 502 Bad Gateway
+
+Unknown Error: { "code": -32603 }
+```
+
+Vi snakket med andre grupper, og de hadde samme problem. Derfor er det antageligvis et problem med Gitpod/NTNU-serverer.
+
+Dette førte dessverre til at vi ikke fikk mulighet til å teste siste versjon av prosjektet i Gitpod.
