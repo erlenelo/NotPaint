@@ -109,4 +109,8 @@ public class GameInfoController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    void setGameInfoPersistence(LocalGameInfoPersistence gameInfoPersistence) {
+        this.gameInfoPersistence = gameInfoPersistence;
+    }
 }
