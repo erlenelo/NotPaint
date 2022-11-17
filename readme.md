@@ -45,6 +45,8 @@ Prosjektet består av 3 moduler:
 * `restserver`: Inneholder SpringBoot webserver som implementerer et REST-api for lagring og lasting av bilder og spillinformasjon. 
 
 ## Diagrammer 
+Vi har tre ulike typer UML diagrammer; klassediagram, pakkediagram og sekvensdiagram. Disse diagrammene er tegnet ved hjelp av et programmeringsspråk som blir definert av utvidelsen (extension) PlantUML.
+
 
 ### Klassediagram
 
@@ -57,12 +59,13 @@ Dette vil generere PlantUML-diagram i hver modul sin `target/generated-docs` map
 
 Klassediagram for hver modul ligger i hver modul sin readme.md fil.
 
-Pakkediagram for prosjektet:
- 
+### Pakkediagram
+Pakkediagrammet viser forholdet mellom pakkene, altså arkitekturen til systemet. 
+
 ![](https://www.plantuml.com/plantuml/png/TP5TRiCW3CVVVGgB0t24gVUe-a0pfwDh065JHPfwzmL86xQIl67__X-G0uk9agOREY_1M2U0EFWfU4TEK0q-ai8VmEKBPlWs5qBrH7NPrcK3L9K-nyHVnAgi7piEWI9R5d83ANW0RD7Zd6orxYkJLOXPqcXK91QcUAUOI_Ta3P75B-1gxcQSdrSzZlDqE_qjf3X4woulf1xrsNifPEzEgFK77gzB27jt0jZIowPQ_9-kE41-WdMIostdtAu9NAUz0czG-si0Ei-oRmK7SfzfIVu5)
 
 ### Sekvensdiagram
- Vi har lagd sekvensdiagrammene med PlantUML og har tatt for oss to viktige brukstilfeller, som viser koblingen mellom brukerinteraksjon og hva som skjer inni systemet med REST-kall.
+ Sekvensdiagrammene tar for seg to viktige brukstilfeller, som viser koblingen mellom brukerinteraksjon og hva som skjer inni systemet med REST-kall.
 
 ![](https://www.plantuml.com/plantuml/png/hLF9Rk904BttLvGq5sDfPku-ZD249ImH3ai4IdBes1NJeUactKKG-VguJ10MjaWEkRJAhlTgUK_Lz2GTRTTQo8IiWu5q2dx5ogo4AEBV_w0plnb6SALLil9W3QYrpB0-sxVAGEpi2oOaECE8n1foLcjq4IobIJKox1CLDCGfp-WDEgyyeKam0dBxeKrMNRd6ddcsmJ40bJyDKS8orQ6d2C9mZA_RF0n3U30GZoPJ-AlpAlnrEskF5p2RzLg2qPM6JFORQ_o1V3sTnZ0QSFX_r5e0kIsUToslrvTlyW0gBtLIALy_G_096WIo44jbw4xXhbOhPHGfgTKxLaGgmwmvgXAV1XjQcM8Qr6GWg_wxw466r6F7OqdBe21NjJyRYQ6NIYgkL-h_H-VZ1ipwdgVTTcvfKUG7F7tQ4zu_5ZDzwMrd3eKMPyiTt4sTt76MxJhwoLSI5IzuH5zxEnC-GL_GbSb44qsQ7-G7)
 
