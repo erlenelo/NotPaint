@@ -1,4 +1,4 @@
-package notpaint.ui.persistence;
+package notpaint.imagepersistence;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;

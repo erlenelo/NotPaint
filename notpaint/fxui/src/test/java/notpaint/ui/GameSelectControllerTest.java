@@ -28,6 +28,7 @@ public class GameSelectControllerTest extends ApplicationTest {
 
     static Path dataPath = Paths.get("testData_INALKN434NJN");
 
+
     @Override
     public void start(Stage stage) throws Exception {
         PersistenceTestConfig.setLocalPersistence(stage);
@@ -40,7 +41,8 @@ public class GameSelectControllerTest extends ApplicationTest {
         stage.show();
         controller = fxmlLoader.getController();
     }
-
+    
+    // Test that the controller is created
     @Test
     public void testController() {
         assertNotNull(controller);
@@ -76,6 +78,8 @@ public class GameSelectControllerTest extends ApplicationTest {
         clickOn("#joinProjectButton");
         FxAssert.verifyThat("Warning", NodeMatchers.isVisible());
     }
+
+
 
     private Parent findSceneRootWithId(String id) {
         for (Window window : Window.getWindows()) {
