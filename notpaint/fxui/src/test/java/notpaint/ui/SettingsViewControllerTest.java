@@ -22,8 +22,6 @@ import org.testfx.framework.junit5.ApplicationTest;
 public class SettingsViewControllerTest extends ApplicationTest {
     private SettingsViewController controller;
 
-   
-
     @Override
     public void start(Stage stage) throws Exception {
         PersistenceTestConfig.setLocalPersistence(stage);
@@ -43,13 +41,11 @@ public class SettingsViewControllerTest extends ApplicationTest {
         PersistenceTestConfig.cleanUpLocalPersistence();
     }
 
-    // Test that the controller is created
     @Test
     public void testController() {
         assertNotNull(controller);
     }
 
-    // Test that the "back to menu" button works
     @Test
     public void testBackToMenu() {
         clickOn("#backToMenuButton");
@@ -68,15 +64,6 @@ public class SettingsViewControllerTest extends ApplicationTest {
         return null;
     }
 
-    // @Test
-    // public void testTimeTextFieldIsEmpty() {
-    // clickOn("#setTimeTextField");
-    // write("");
-    // clickOn("#createButton");
-    // // assert if the error message is displayed
-    // FxAssert.verifyThat("#timeErrorPopup", NodeMatchers.isVisible());
-    // }
-
     @Test
     public void testRadioButtonsAreRightValue() {
         RadioButton checkboxYes = (RadioButton) lookup("#checkboxYes").query();
@@ -89,7 +76,6 @@ public class SettingsViewControllerTest extends ApplicationTest {
 
     }
 
-    // test if clicking on the create button opens paintview
     @Test
     public void testCreateButton() {
         clickOn("#setTimeTextField");
@@ -99,7 +85,6 @@ public class SettingsViewControllerTest extends ApplicationTest {
 
         clickOn("#createButton");
 
-        // WaitForAsyncUtils.waitForFxEvents();
         assertNotNull(findSceneRootWithId("paintRoot"));
     }
 

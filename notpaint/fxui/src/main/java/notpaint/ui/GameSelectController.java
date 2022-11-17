@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.util.Comparator;
 import java.util.List;
-
 import javafx.application.Platform;
 import javafx.concurrent.ScheduledService;
 import javafx.concurrent.Task;
@@ -104,7 +103,7 @@ public class GameSelectController {
     @FXML
     private void initialize() {
         StageUtil.onGameInfoPersistenceLoaded(
-            secondsPerRound, this::onGameInfoPersistenceLoaded);        
+                secondsPerRound, this::onGameInfoPersistenceLoaded);
     }
 
     private void onGameInfoPersistenceLoaded(GameInfoPersistence persistence) {
@@ -119,18 +118,18 @@ public class GameSelectController {
         }
 
         // Stop existing service if it exists
-        if(refreshService != null) {
+        if (refreshService != null) {
             refreshService.cancel();
         }
 
-        // Start service to refresh automatically periodically        
-        refreshService = new ScheduledService<Void> () {
+        // Start service to refresh automatically periodically
+        refreshService = new ScheduledService<Void>() {
             protected Task<Void> createTask() {
                 return new Task<Void>() {
                     protected Void call() {
                         try {
-                            Platform.runLater(() -> handleRefresh());                            
-                        } catch(Exception e) {
+                            Platform.runLater(() -> handleRefresh());
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                         return null;
@@ -152,15 +151,15 @@ public class GameSelectController {
         for (var info : infos) {
             HBox image = addImage(info);
             // If a game is already selected, select it again after refreshing.
-            if(selectedGameInfo != null && info.getUuid().equals(selectedGameInfo.getUuid())) {
+            if (selectedGameInfo != null && info.getUuid().equals(selectedGameInfo.getUuid())) {
                 setSelectedGameInfo(info);
                 image.setId("selected");
             }
             boolean isLocked = gameInfoPersistence.isGameInfoLocked(info);
-            if(isLocked) {
+            if (isLocked) {
                 image.getStyleClass().add("locked-project");
             }
-            
+
         }
     }
 
@@ -225,9 +224,9 @@ public class GameSelectController {
                 App.setRoot("PaintView");
             } else {
                 AlertUtil.warningAlert(
-                    "Warning", "This project is currently being edited by someone else.");
+                        "Warning", "This project is currently being edited by someone else.");
             }
-            
+
         }
     }
 }

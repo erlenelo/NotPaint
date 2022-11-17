@@ -94,14 +94,6 @@ public class UsernameSelectControllerTest extends ApplicationTest {
         assertFalse(noRadioButton.isSelected());
     }
 
-    // @Test
-    // public void read() throws IOException {
-    // Path file = this.workingDir.resolve("usernameFile.txt");
-    // String content = Files.readString(file);
-    // assertEquals(content, "");
-    // }
-
-    // test that usernameText is set to the username in the file
     @Test
     public void testUsernameText() throws IOException {
         clickOn("#setUsernameTextField");

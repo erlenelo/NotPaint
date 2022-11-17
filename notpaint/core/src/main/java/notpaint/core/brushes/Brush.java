@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 
 /**
  * Abstract class for brushes.
- * Implementations should override getPixels to return a 
+ * Implementations should override getPixels to return a
  * stream of pixels that the brush should draw on.
  */
 public abstract class Brush {
