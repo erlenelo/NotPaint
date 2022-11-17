@@ -31,16 +31,16 @@ public class GameInfoControllerTest {
     public static void setup() {
         controller = new GameInfoController();
         dataPath = Paths.get("testData_" + UUID.randomUUID().toString());
-        LocalGameInfoPersistence gameInfoPersistence = new LocalGameInfoPersistence();
+        LocalGameInfoPersistence gameInfoPersistence = new LocalGameInfoPersistence(dataPath);
         
         controller.setGameInfoPersistence(gameInfoPersistence);
     }
 
     @AfterAll
-    public static void cleanUp(Path dataPath) throws IOException {
+    public static void cleanUp() throws IOException {
         var files = Files.list(dataPath).toList();
         for (var file : files) { // Delete every file in datapath dir
-            Files.delete(file);
+            Files.deleteIfExists(file);
         }
         Files.deleteIfExists(dataPath); // Delete datapath dir
     }
@@ -59,9 +59,11 @@ public class GameInfoControllerTest {
         if (allGameInfos == null) {
             throw new AssertionError("Response body is null");
         }
-
-        assertTrue(allGameInfos.contains(gameInfo1));
-        assertTrue(allGameInfos.contains(gameInfo2));
+        // Assert that the list contains the game infos we saved, by checking the UUIDs
+        assertTrue(allGameInfos.stream().map(x -> x.getUuid())
+            .anyMatch(x -> x.equals(gameInfo1.getUuid())));
+        assertTrue(allGameInfos.stream().map(x -> x.getUuid())
+            .anyMatch(x -> x.equals(gameInfo2.getUuid())));
     }
 
     @Test
@@ -69,23 +71,42 @@ public class GameInfoControllerTest {
         var gameInfo = new GameInfo(5, 100, false);
         controller.putSaveGameInfo(gameInfo);
 
+        // Check if the new GameInfo is locked, it should not be.
         Boolean isLocked = controller.getLockStatus(gameInfo.getUuid()).getBody();
-
         if (isLocked == null) {
             throw new AssertionError("Response body is null");
         }
         assertFalse(isLocked);
 
-        Boolean lockSucessfull = controller.postRequestLock(gameInfo.getUuid()).getBody();
-
-        if (lockSucessfull == null) {
+        // Lock the GameInfo. Assert that locking was successfull
+        Boolean lockSuccessful = controller.postRequestLock(gameInfo.getUuid()).getBody();
+        if (lockSuccessful == null) {
             throw new AssertionError("Response body is null");
         }
-        
+        assertTrue(lockSuccessful);
 
+        // Now it should be locked
+        isLocked = controller.getLockStatus(gameInfo.getUuid()).getBody();
 
+        if (isLocked == null) {
+            throw new AssertionError("Response body is null");
+        }
+        assertTrue(isLocked);
 
+        // Try to lock again, it should fail because it is already locked
+        lockSuccessful = controller.postRequestLock(gameInfo.getUuid()).getBody();
+        if (lockSuccessful == null) {
+            throw new AssertionError("Response body is null");
+        }
+        assertFalse(lockSuccessful);
 
+        // Unlock the GameInfo, and make sure it is unlocked after
+        controller.deleteReleaseLock(gameInfo.getUuid());
+        isLocked = controller.getLockStatus(gameInfo.getUuid()).getBody();
+        if (isLocked == null) {
+            throw new AssertionError("Response body is null");
+        }
+        assertFalse(isLocked);
     }
 
 }
