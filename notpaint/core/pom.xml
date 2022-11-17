@@ -52,6 +52,7 @@
           <outputFilename>coreClassDiagram.puml</outputFilename>
           <scanPackages>
             <scanPackage>notpaint.core</scanPackage>
+            <scanPackage>notpaint.persistence</scanPackage>
           </scanPackages>
         </configuration>
       </plugin>
