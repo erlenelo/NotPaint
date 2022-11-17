@@ -74,6 +74,7 @@
         <groupId>de.elnarion.maven</groupId>
         <executions>
           <execution>
+            <?m2e ignore?>
             <goals>
               <goal>generate</goal>
             </goals>
