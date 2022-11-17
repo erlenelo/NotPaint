@@ -9,10 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
-
 import org.junit.jupiter.api.Test;
-
-
 
 /**
  * Test class for {@link LocalGameInfoPersistence}.
@@ -44,7 +41,7 @@ public class GameInfoPersistenceTest {
     public void testGetAllGameInfos() throws IOException {
         Path dataPath = Paths.get("testData_" + UUID.randomUUID().toString()); // Random path
         LocalGameInfoPersistence localGameInfoPersistence = new LocalGameInfoPersistence(dataPath);
-        GameInfo gameInfo = new GameInfo(5,5,false);
+        GameInfo gameInfo = new GameInfo(5, 5, false);
         localGameInfoPersistence.saveGameInfo(gameInfo);
         List<GameInfo> allGameInfos = localGameInfoPersistence.getAllGameInfos();
         assertEquals(1, allGameInfos.size());
@@ -75,8 +72,9 @@ public class GameInfoPersistenceTest {
         assertNotNull(gameInfoPersistence.getActiveGameInfo());
 
     }
+
     @Test
-    public void testGetGameInfoFromUuid() throws IOException{
+    public void testGetGameInfoFromUuid() throws IOException {
         Path dataPath = Paths.get("testData_" + UUID.randomUUID().toString()); // Random path
         LocalGameInfoPersistence gameInfoPersistence = new LocalGameInfoPersistence(dataPath);
         GameInfo gameInfo = new GameInfo(2, 5, true);
