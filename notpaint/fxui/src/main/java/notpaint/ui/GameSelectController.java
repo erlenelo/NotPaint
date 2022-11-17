@@ -112,8 +112,7 @@ public class GameSelectController {
         try {
             var allInfos = gameInfoPersistence.getAllGameInfos();
             displayGameInfos(allInfos);
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (IOException | RuntimeException ex) {
             AlertUtil.errorAlert("ERROR", "Error occured while loading games.");
         }
 
@@ -197,9 +196,9 @@ public class GameSelectController {
         try {
             var allInfos = gameInfoPersistence.getAllGameInfos();
             displayGameInfos(allInfos);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            AlertUtil.errorAlert("ERROR", "Error occured while loading games.");
+        } catch (IOException | RuntimeException ex) {
+            refreshService.cancel();
+            AlertUtil.errorAlert("ERROR", "Could not connect to server!");
         }
     }
 
