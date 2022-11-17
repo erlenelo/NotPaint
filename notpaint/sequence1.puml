@@ -1,0 +1,16 @@
+@startuml sequence Kari
+
+actor Kari #Pink
+
+Kari -> fxui: Clicks on image
+Kari -> fxui: Clicks Join Project
+fxui -> controller: handleJoinProject()
+controller -> persistence: tryLockGameInfo(GameInfo info)
+persistence -> rest: **Request** \n HTTP POST/lock 
+persistence --> rest: UUID
+rest -> persistence: **Respons** \n HTTP ok \n BODY true
+persistence -> controller: Java true
+controller -> fxui: onGameInfoPersistenceLoaded(GameInfoPersistence gameInfoPersistence)
+rest -> fxui: GET/ image
+fxui -> Kari: Starts drawing
+@enduml
