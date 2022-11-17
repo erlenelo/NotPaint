@@ -1,12 +1,12 @@
 package notpaint.restserver;
 
-import java.io.File;
-import java.io.FileInputStream;
+
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.UUID;
+
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ImageController {
 
+
+    private Path basePath = Paths.get("data");
+
     /**
      * HTTP GET method for getting an image.
      *
@@ -31,12 +34,15 @@ public class ImageController {
      */
     @GetMapping(value = "/image", produces = MediaType.IMAGE_PNG_VALUE)
     public @ResponseBody ResponseEntity<byte[]> getImage(
-            @RequestParam(value = "uuid") String uuid) throws IOException {
-        File imageFile = new File("data/" + uuid + ".png");
-        if (!imageFile.exists()) {
+            @RequestParam(value = "uuid") UUID uuid) throws IOException {
+        
+        Path imageFile = basePath.resolve(uuid + ".png");
+    
+        if (!Files.exists(imageFile)) {
             return ResponseEntity.notFound().build();
         }
-        try (InputStream in = new FileInputStream(imageFile)) {
+        
+        try (var in = Files.newInputStream(imageFile)) {
             return ResponseEntity.ok(in.readAllBytes());
         }
 
@@ -53,13 +59,18 @@ public class ImageController {
      */
     @PutMapping("/image")
     public ResponseEntity<String> putImage(
-            @RequestParam(value = "uuid") String uuid, @RequestBody() byte[] imageData) {
-        Path path = Paths.get("data", uuid + ".png");
+            @RequestParam(value = "uuid") UUID uuid, @RequestBody() byte[] imageData) {
+        Path path = basePath.resolve(uuid + ".png");
         try {
+            Files.createDirectory(path.getParent());
             Files.write(path, imageData);
         } catch (IOException ioe) {
             return ResponseEntity.internalServerError().body("Failed to save image");
         }
         return ResponseEntity.ok().build();
+    }
+
+    void setBasePath(Path basePath) {
+        this.basePath = basePath;
     }
 }
