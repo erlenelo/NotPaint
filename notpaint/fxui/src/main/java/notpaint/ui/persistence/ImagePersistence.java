@@ -7,17 +7,18 @@ import javafx.scene.image.PixelReader;
 
 /**
  * Interface for saving and loading images.
- * Should be implemented by classes that save and load images from different sources.
+ * Should be implemented by classes that save and load images from different
+ * sources.
  */
 public abstract class ImagePersistence {
 
     public abstract void save(Image image, String imageName) throws IOException;
 
-    
     /**
      * Loads an image from the given path.
      *
-     * @param imagePath Starts with "file:" to load from disk, start with "http:" to load from web
+     * @param imagePath Starts with "file:" to load from disk, start with "http:" to
+     *                  load from web
      * @return Image found at imagePath
      */
     public Image load(String imagePath) {

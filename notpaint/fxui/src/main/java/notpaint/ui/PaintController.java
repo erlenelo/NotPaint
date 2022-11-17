@@ -207,7 +207,7 @@ public class PaintController {
     }
 
     /**
-     * Stop countDownTimer if not null
+     * Stop countDownTimer if not null.
      */
     public void stopTimer() {
         if (countDownTimer != null) {

@@ -11,7 +11,6 @@ import javax.imageio.ImageIO;
  */
 public class LocalImagePersistence extends ImagePersistence {
 
-    
     @Override
     public void save(Image image, String imagePath) throws IOException {
         if (imagePath.startsWith("file:")) {
