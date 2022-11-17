@@ -29,7 +29,7 @@
     <Bug code="UrF" />
 </Match>
 <Match>
-    <Class name="notpaint.ui.persistence.LocalImagePersistence" />
+    <Class name="notpaint.imagepersistence.LocalImagePersistence" />
     <Bug code="RV" />
 </Match>
 </FindBugsFilter>
