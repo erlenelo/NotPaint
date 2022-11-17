@@ -25,13 +25,7 @@ public class GameInfoLocker {
      */
     public GameInfoLocker() {
         // Sort by lockUntil, so we can easily find the first lock that has expired
-        lockInfosQueue = new PriorityQueue<LockInfo>(new Comparator<LockInfo>() {
-            @Override
-            public int compare(LockInfo o1, LockInfo o2) {
-                return o1.lockUntil.compareTo(o2.lockUntil);
-            }
-        });
-
+        lockInfosQueue = new PriorityQueue<LockInfo>();
         lockedGameInfos = new HashSet<UUID>();
     }
 
