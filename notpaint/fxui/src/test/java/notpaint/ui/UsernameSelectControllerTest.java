@@ -6,6 +6,8 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +17,8 @@ import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import notpaint.ui.testutil.PersistenceTestConfig;
+
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxAssert;
@@ -111,6 +115,13 @@ public class UsernameSelectControllerTest extends ApplicationTest {
     public void testSetUserNameAlert() {
         clickOn("#doneButton");
         FxAssert.verifyThat("Warning", NodeMatchers.isVisible());
+    }
+
+    @AfterAll
+    public static void deleteUsername() throws IOException {
+        PrintWriter writer = new PrintWriter("usernameFile.txt", Charset.forName("UTF-16"));
+        writer.print("");
+        writer.close();
     }
 
 }
