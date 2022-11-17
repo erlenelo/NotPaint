@@ -9,7 +9,7 @@ Dette er prosjektet til gruppe 13 i emnet IT1901 høsten 2022. Målet er å lage
 Formålet med applikajsonen er å kunne samarbeide om å lage tegninger, hvor hver person som deltar iterativt legger til noe nytt i tegningen.
 
 
-## Bygging og kjøring
+## Bygging, kjøring og shipping
 **Bygging:** Kjør `mvn install` fra kodings-prosjektet (**notpaint**-mappen) for å 
 bygge alle moduler i prosjektet. Dette vil også kjøre tester og analysere kodekvalitet (se kodekvalitet).
 ### Kjøring
