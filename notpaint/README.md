@@ -38,6 +38,7 @@ Dette er grensesnittet for nye/gamle prosjekter.
 - *Iterations* viser hvor mange ganger en endring på prosjektet er blitt lagret.
 - *Last Editor* viser brukeren som endret prosjektet sist.
 - *Last Edit* viser datoen siste iterasjon ble lagret.
+- "Refresh"-knappen oppdaterer `GameselectView` og viser nye endringer som andre brukere har laget.
 - "Join Project"-knappen engasjerer et selektert, aktivt prosjekt, slik at man kan lage en ny iterasjon av prosjektet. Sender bruker til `PaintView` for prosjektet.
 - "New Project"-knappen lager et nytt prosjekt. Sender bruker til `SettingsView`.
 
