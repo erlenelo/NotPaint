@@ -6,4 +6,4 @@ Core modulen inneholder viktig funksjonalitet i forhold til malepenslene man kan
 # Klassediagramm:
 
 Klassediagrammet under spesifiserer strukturen:
-![](klassediagram.png)
+![](https://www.plantuml.com/plantuml/png/pP8nJyCm48LdxbVSq044jGXi3AY061YGaF8BBidH6jbEi2y82Ftlk6cAnL3CmC1qrjFpTyzFNWGXBxqr05G5yLGBreP2GDTAHzg9gblFgl9zM75Grvk90nmCZvfDiyRZeDyPBp0wesXPLcrKSTZHecF9yg1VsGGyn8uysUWjjbVmv4ivcvIZE9_eXLGlsgW8ORAg70Ui0U2dT3VQruQdZ2dENqP8qBaXMpKqEyqpat8rrN9FtQpKjZDywyI_dN_RkCSqvghQrZ2vR1NbSq_-7rLnvuINx3VSwVXBDWv1I7ITjXIxBHEeICpi2_PKEzO9aFzLy_d79UOhXumZGzeo01RicjwQJm00)

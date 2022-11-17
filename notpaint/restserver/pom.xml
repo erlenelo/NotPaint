@@ -62,6 +62,26 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+        <artifactId>plantuml-generator-maven-plugin</artifactId>
+        <groupId>de.elnarion.maven</groupId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <phase>generate-test-sources</phase>
+          </execution>
+        </executions>
+        <configuration>
+          <outputFilename>restserverClassdiagram.puml</outputFilename>
+          <scanPackages>
+            <scanPackage>notpaint.restserver</scanPackage>
+          </scanPackages>
+          <maxVisibilityFields>PACKAGE_PRIVATE</maxVisibilityFields>
+          <maxVisibilityMethods>PACKAGE_PRIVATE</maxVisibilityMethods>
+        </configuration>
+      </plugin>
         </plugins>
     </build>
 </project>
