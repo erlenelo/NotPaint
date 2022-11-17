@@ -13,8 +13,9 @@ import notpaint.persistence.GameInfo;
  */
 public class GameInfoLocker {
 
-    // Priority queue of lock infos, sorted by unlock time, to easily unlock the expired locks.
-    PriorityQueue<LockInfo> lockInfosQueue; 
+    // Priority queue of lock infos, sorted by unlock time, to easily unlock the
+    // expired locks.
+    PriorityQueue<LockInfo> lockInfosQueue;
 
     // Set of all currently locked game infos for fast lookup.
     Set<UUID> lockedGameInfos;
@@ -40,7 +41,7 @@ public class GameInfoLocker {
      * @param info the GameInfo to lock
      * @return true if the GameInfo was locked, false if it was already locked
      */
-    public boolean tryLockGameInfo(GameInfo info) { 
+    public boolean tryLockGameInfo(GameInfo info) {
         if (isLocked(info)) {
             return false;
         } else {
@@ -81,9 +82,10 @@ public class GameInfoLocker {
     }
 
     private void lockGameInfo(GameInfo info) {
-        // Lock until the duration of a round, plus 2 seconds to account for delays on client side
+        // Lock until the duration of a round, plus 2 seconds to account for delays on
+        // client side
         Date lockUntil = new Date(
-            System.currentTimeMillis() + info.getSecondsPerRound() * 1000 + 2000);
+                System.currentTimeMillis() + info.getSecondsPerRound() * 1000 + 2000);
         var lockInfo = new LockInfo(info.getUuid(), lockUntil);
         lockInfosQueue.add(lockInfo);
         lockedGameInfos.add(info.getUuid());
@@ -91,8 +93,8 @@ public class GameInfoLocker {
 
     private void removeExpiredLocks() {
         // Remove all expired locks
-        while (lockInfosQueue.peek() != null 
-            && lockInfosQueue.peek().lockUntil.before(new Date())) {
+        while (lockInfosQueue.peek() != null
+                && lockInfosQueue.peek().lockUntil.before(new Date())) {
             var lockInfo = lockInfosQueue.poll();
             lockedGameInfos.remove(lockInfo.uuid);
         }

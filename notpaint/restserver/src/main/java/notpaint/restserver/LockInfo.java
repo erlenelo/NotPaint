@@ -10,5 +10,5 @@ class LockInfo {
     LockInfo(UUID uuid, Date lockUntil) {
         this.uuid = uuid;
         this.lockUntil = lockUntil;
-    }    
+    }
 }
