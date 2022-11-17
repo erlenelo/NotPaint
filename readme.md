@@ -57,6 +57,9 @@ Dette vil generere PlantUML-diagram i hver modul sin `target/generated-docs` map
 
 Klassediagram for hver modul ligger i hver modul sin readme.md fil.
 
+Pakkediagram for prosjektet:
+ 
+![](https://www.plantuml.com/plantuml/png/TP5TRiCW3CVVVGgB0t24gVUe-a0pfwDh065JHPfwzmL86xQIl67__X-G0uk9agOREY_1M2U0EFWfU4TEK0q-ai8VmEKBPlWs5qBrH7NPrcK3L9K-nyHVnAgi7piEWI9R5d83ANW0RD7Zd6orxYkJLOXPqcXK91QcUAUOI_Ta3P75B-1gxcQSdrSzZlDqE_qjf3X4woulf1xrsNifPEzEgFK77gzB27jt0jZIowPQ_9-kE41-WdMIostdtAu9NAUz0czG-si0Ei-oRmK7SfzfIVu5)
 
 ### Sekvensdiagram
  Vi har lagd sekvensdiagrammene med PlantUML og har tatt for oss to viktige brukstilfeller, som viser koblingen mellom brukerinteraksjon og hva som skjer inni systemet med REST-kall.
@@ -69,3 +72,5 @@ Dette sekvensdiagrammet beskriver prosessen som skjer når en bruker vil  tegne 
 ![](https://www.plantuml.com/plantuml/png/dP91SzCm48Nl_XKxvU9aQ7ltWIcj3TEPG4ERK3h0GSYlZgWY5MaT0x-Uo1CdKMCyq8j7qdvwUhj-Pvw5utgf4o7PEhhIWbwSwnf94fR7h-ZDftUJZ2wqaW-UtgEXgRFV8Ja9XG18QzXPhU4oMWXJQgof3PIEabsPZdToQx02UGa3OaitO5QcyXyLcbvXKaQn4bhzHZhgYE0sevk5RVnEglPmiVTRfnYULaBNyBrjNJW81hqLI_I-BjjwAAUl9IjhYXKC4y8txZ2-Pz2qefVctgPFmKSuhpp3I6JamK5vXItUBKX4v_yuqAbGXlyspMYO0_QjwLwTxhnEh2XHfZqLgWxF1fkk3feU9Nl0KpiTDIYvOKugyArrvR3YKMwheqYkcwS7p_2JqvRe3Tow46SfTw9HfkeDM6vDVxBkbL5-iRaw716r51NsHdlYnGffU_gI7WKl3bfry9pHU7oD7pKyZyVqnT1qFgFJzbROVPWNrtSqdr_cONT-bT_Hjr-Cpr-fHGOZA_P-N1pI_t2ohxAr4AiDcN3G47wBJgnyU9QNl9WKiu9EzLeWdajo1bFMI_q7)
 
 Dette sekvensdiagrammet beskriver prosessen når en bruker vil opprette et nytt prosjekt. 
+
+
