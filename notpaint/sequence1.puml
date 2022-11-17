@@ -1,0 +1,24 @@
+@startuml sequence Kari
+
+actor Kari #Pink
+
+Kari -> FXML: Clicks on image
+Kari -> FXML: Clicks Join Project
+FXML -> controller: handleJoinProject()
+controller -> persistence: tryLockGameInfo(GameInfo info)
+persistence -> rest: **Request** \n POST /lock \n QUERY UUID
+rest -> persistence: **Respons** \n HTTP OK \n BODY true
+persistence -> controller: Java true
+controller --> FXML: Change scene to PaintView
+FXML -> controller: initialize()
+controller -> controller: onGameInfoPersistenceLoaded(GameInfoPersistence gameInfoPersistence)
+controller -> persistence: getImagePath(gameInfo)
+persistence --> controller: Path
+controller -> persistence: imagePersistence.load(Path)
+persistence -> rest: **Request** \n GET /image \n QUERY UUID
+rest -> persistence: **Respons** \n HTTP OK \n BODY byte[] image
+persistence -> controller: JavaFX Image
+controller -> FXML: drawImage()
+FXML -> Kari: Kari sees image
+Kari -> FXML: Starts drawing
+@enduml

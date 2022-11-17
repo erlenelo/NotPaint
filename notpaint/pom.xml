@@ -72,9 +72,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>de.elnarion.util</groupId>
-            <artifactId>plantuml-generator-util</artifactId>
-            <version>1.1.2</version>
+            <groupId>de.elnarion.maven</groupId>
+            <artifactId>plantuml-generator-maven-plugin</artifactId>
+            <version>1.5.4</version>
         </dependency>
 
 
@@ -175,10 +175,11 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- https://mvnrepository.com/artifact/de.elnarion.maven/plantuml-generator-maven-plugin -->
             <plugin>
-                <artifactId>plantuml-generator-maven-plugin</artifactId>
                 <groupId>de.elnarion.maven</groupId>
-                <version>1.1.2</version>
+                <artifactId>plantuml-generator-maven-plugin</artifactId>
+                <version>1.5.4</version>
             </plugin>
         </plugins>
     </build>
