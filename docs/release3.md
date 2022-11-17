@@ -44,9 +44,14 @@ Pakkediagrammet viser forholdet mellom pakkene, altså arkitekturen til systemet
 
 Klassediagrammene viser klassene i hver modul i detalj, og illustrerer hvordan klassene innad i en modul avhenger av hverandre. Det er et klassediagram i hver modul, respektivt *core*, *fxui* og *restserver*. Klassediagrammet til restserver ble først ikke autogenerert riktig, fordi den ble oppfattet som en anonym *Comparator*-klasse for *LockInfo-objektet* som en egen klasse. Dette løste vi ved å implementere *Comparable*-interface på *LockInfo*-klassen istedenfor.
 
-Sekvensdiagrammene viser viktige brukstilfeller, som illustrerer koblingen mellom brukerinteraksjon og hva som skjer inne i systemet inkludert *REST*-kall.
+Sekvensdiagrammene viser viktige brukstilfeller, som illustrerer koblingen mellom brukerinteraksjon og hva som skjer inne i systemet inkludert *REST*-kall. 
 
 ## REST-api
+Selve API-dokumentasjonen finnes i [/docs/restapi](/docs/restapi)
+
+Vi har implementert et *REST-api* med en webserver for å kunne lagre og laste spill og bilder på tvers av enheter. Dette gjør vi ved å bruke *SpringBoot*. Vi har valgt å bruke *SpringBoot* fordi det er en enkel måte å lage en webserver på. 
+
+SpringBoot bruker *Jackson* for å serialisere og deserialisere objekter til og fra JSON. *SpringBoot*-serveren har en `Bean` som konfigurerer *Jackson* til å bruke en `ObjectMapper` fra core-modulen. Dette sørger for at serialiseringen oppfører seg likt i klient og tjener, på tvers av modulene.
 
 
 ## Valg knyttet til arbeid og progresjon under sprint 3
