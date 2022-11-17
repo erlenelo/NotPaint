@@ -1,12 +1,13 @@
 package notpaint.persistence;
 
-import org.junit.jupiter.api.Test;
-
-
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.junit.jupiter.api.Test;
+
+/**
+ * Test class for {@link LocalGameInfoPersistence}.
+ */
 public class GameInfoTest {
 
     @Test
@@ -39,8 +40,8 @@ public class GameInfoTest {
     public void testGetLastEditTime() {
         GameInfo gameInfo = new GameInfo(2, 5, true);
         gameInfo.addIteration("Person1");
-        assertEquals(gameInfo.getLastEditTime(), gameInfo.getLastEditTime()); // Unsure as to what the comparitor should
-                                                                              // be
+        assertEquals(gameInfo.getLastEditTime(),
+                gameInfo.getLastEditTime()); // Unsure as to what the comparitor should be
     }
 
     @Test
@@ -71,17 +72,6 @@ public class GameInfoTest {
         assertEquals(gameInfo.getUuid(), gameInfo.getUuid()); // same here, unsure about comparison
 
     }
-    /*
-     * @Test
-     * public void testGetWord() {
-     * GameInfo gameInfo = new GameInfo(2,5,true);
-     * 
-     * assertEquals(gameInfo.getWord(), "test"); //Need to get index of randomly
-     * chosen word.
-     * 
-     * 
-     * }
-     */
 
     @Test
     public void testIsFinished() {
@@ -94,19 +84,3 @@ public class GameInfoTest {
 
     }
 }
-/*
- * @Test
- * public void testToString() {
- * GameInfo gameInfo = new GameInfo(2,5,true);
- * assertEquals(gameInfo.toString(), "GameInfo{uuid=" + gameInfo.getUuid() +
- * ", word=" + gameInfo.getWord() + ", maxIterations=" +
- * gameInfo.getMaxIterations() + ", currentIterations=" +
- * gameInfo.getCurrentIterations() + ", secondsPerRound=" +
- * gameInfo.getSecondsPerRound() + ", lastEditor=" + gameInfo.getLastEditor() +
- * ", lastEditTime=" + gameInfo.getLastEditTime() + ", finished=" +
- * gameInfo.isFinished() + '}');
- * 
- * 
- * }
- * }
- */

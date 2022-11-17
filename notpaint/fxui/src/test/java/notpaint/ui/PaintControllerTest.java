@@ -12,7 +12,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import notpaint.core.brushes.Brush;
@@ -134,7 +133,8 @@ public class PaintControllerTest extends ApplicationTest {
         clickOn("#doneButton");
         assertNotNull(findSceneRootWithId("gameSelectRoot"), "GameSelectView should be visible");
         boolean jsonExists = Files.exists(Paths.get(
-                PersistenceTestConfig.dataPath.toString(), gameInfo.getUuid().toString() + ".json"));
+                PersistenceTestConfig.dataPath.toString(),
+                gameInfo.getUuid().toString() + ".json"));
         assertTrue(jsonExists, "GameInfo json should exist after clicking done on PaintView");
         Image image = new Image(gameInfoPersistence.getImagePath(gameInfo));
         assertNotNull(image, "Image should exist after clicking done on PaintView");

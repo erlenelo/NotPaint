@@ -1,0 +1,39 @@
+@startuml notpaint
+  component "core" {
+    package "notpaint.core"{
+        package "core.brushes"
+    }
+    package "notpaint.persistence"
+}
+
+component fxui{
+        package "notpaint.ui"  
+}
+
+
+component "restserver" {
+  package "notpaint.restserver"
+}
+
+package "javafx" {
+    [fxml]
+}
+
+component "spring" {
+    [spring.boot]
+}
+
+notpaint.persistence ..> [jackson]
+
+restserver ..> spring
+restserver ..> jackson
+
+fxui ..> javafx
+fxui ..> fxml
+
+notpaint.ui ..> notpaint.persistence
+notpaint.ui ..> core.brushes
+
+notpaint.restserver ..> notpaint.persistence
+
+@enduml

@@ -4,10 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.junit.jupiter.api.Test;
-
 import javafx.util.Pair;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test class for {@link LineUtilTest}.
@@ -16,7 +14,7 @@ public class LineUtilTest {
 
     @Test
     public void testGetLine1() {
-        List<Pair<Integer, Integer>> list1 = LineUtil.getAllPixelsBetween(0, 0, 10, 0);
+
         List<Pair<Integer, Integer>> list = new ArrayList<Pair<Integer, Integer>>();
         list.add(new Pair<Integer, Integer>(0, 0));
         list.add(new Pair<Integer, Integer>(1, 0));
@@ -29,6 +27,8 @@ public class LineUtilTest {
         list.add(new Pair<Integer, Integer>(8, 0));
         list.add(new Pair<Integer, Integer>(9, 0));
         list.add(new Pair<Integer, Integer>(10, 0));
+
+        List<Pair<Integer, Integer>> list1 = LineUtil.getAllPixelsBetween(0, 0, 10, 0);
 
         assertTrue(list1.equals(list));
     }
