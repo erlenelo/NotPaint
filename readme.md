@@ -13,9 +13,9 @@ Formålet med applikajsonen er å kunne samarbeide om å lage tegninger, hvor hv
 **Bygging:** Kjør `mvn install` fra kodings-prosjektet (**notpaint**-mappen) for å 
 bygge alle moduler i prosjektet. Dette vil også kjøre tester og analysere kodekvalitet (se kodekvalitet).
 ### Kjøring
-**Java FXUI-klient:** Kjør `mvn javafx:run` i mappa **notpaint/fxui**. 
-
 **Spring-boot webserver:** Kjør `mvn spring-boot:run` i mappa **notpaint/restserver**.
+
+**Java FXUI-klient:** Kjør `mvn javafx:run` i mappa **notpaint/fxui**. 
 
 core-modulen må bygges før både klient og server kan kjøres.
 
