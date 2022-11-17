@@ -4,6 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Class for reading and writing game info.
+ */
 public abstract class GameInfoPersistence {
 
     private GameInfo activeGameInfo;
@@ -19,10 +22,10 @@ public abstract class GameInfoPersistence {
     }
 
     /**
-     * Get a list of all GameInfo classes stored as json in the dataPath.
+     * Get a list of all GameInfo classes stored.
      *
      * @return List of all gameInfos
-     * @throws IOException If unable to read from dataPath
+     * @throws IOException If unable to read
      */
     public abstract List<GameInfo> getAllGameInfos() throws IOException;
 
@@ -41,7 +44,6 @@ public abstract class GameInfoPersistence {
      */
     public abstract String getImagePath(GameInfo info);
 
-    
     static GameInfo parseFromJson(String jsonString) throws IOException {
         ObjectMapper mapper = JacksonObjectMapperBuilder.getConfiguredObjectMapper();
 
@@ -50,7 +52,7 @@ public abstract class GameInfoPersistence {
     }
 
     public abstract boolean isGameInfoLocked(GameInfo info);
-    
+
     public abstract boolean tryLockGameInfo(GameInfo info);
 
     public abstract void releaseGameInfoLock(GameInfo info);

@@ -15,7 +15,6 @@ class LockInfo implements Comparable<LockInfo> {
     @Override
     public int compareTo(LockInfo o) {
         return lockUntil.compareTo(o.lockUntil);
-    }    
+    }
 
-    
 }

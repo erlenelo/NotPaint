@@ -15,13 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
 /**
  * Handles requests for GameInfos.
  */
 @RestController
 public class GameInfoController {
-    
+
     LocalGameInfoPersistence gameInfoPersistence = new LocalGameInfoPersistence();
     GameInfoLocker gameInfoLocker = new GameInfoLocker();
 

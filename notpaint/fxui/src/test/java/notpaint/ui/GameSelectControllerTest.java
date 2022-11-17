@@ -8,14 +8,11 @@ import java.nio.file.Paths;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import notpaint.persistence.GameInfo;
 import notpaint.ui.testutil.PersistenceTestConfig;
-
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxAssert;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -26,20 +23,16 @@ import org.testfx.util.WaitForAsyncUtils;
  * Test class for {@link GameSelectController}.
  */
 public class GameSelectControllerTest extends ApplicationTest {
-    
+
     GameSelectController controller;
 
-   
     static Path dataPath = Paths.get("testData_INALKN434NJN");
-    
-
-
 
     @Override
     public void start(Stage stage) throws Exception {
         PersistenceTestConfig.setLocalPersistence(stage);
         FXMLLoader fxmlLoader = new FXMLLoader(
-            GameSelectController.class.getResource("GameSelectView.fxml"));
+                GameSelectController.class.getResource("GameSelectView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         App.scene = scene;
         scene.getStylesheets().add(getClass().getResource("fxui.css").toExternalForm());
@@ -47,8 +40,7 @@ public class GameSelectControllerTest extends ApplicationTest {
         stage.show();
         controller = fxmlLoader.getController();
     }
-    
-    // Test that the controller is created
+
     @Test
     public void testController() {
         assertNotNull(controller);
@@ -61,7 +53,7 @@ public class GameSelectControllerTest extends ApplicationTest {
         controller.setSelectedGameInfo(info);
         Text secondsPerRoundText = lookup("#secondsPerRound").query();
         assertEquals("12", secondsPerRoundText.getText());
-        
+
         Text iterationsText = lookup("#iterations").query();
         assertEquals("1 / 44", iterationsText.getText());
 
@@ -72,30 +64,11 @@ public class GameSelectControllerTest extends ApplicationTest {
         assertEquals("testAuthor", lastEditorText.getText());
     }
 
-    // @Test
-    // public void testJoinGameButton() {
-    //     GameInfo info = new GameInfo(9, 5, false);
-    //     GameInfoPersistence persistence = new GameInfoPersistence(dataPath);
-    //     info.addIteration("testAuthor");
-    //     controller.setSelectedGameInfo(info);
-    //     ImageView imageView = new ImageView(
-    //         new Image(persistence.getImagePath(info), 200, 140, true, true));
-    //     clickOn(imageView);
-    //     WaitForAsyncUtils.waitForFxEvents();
-    //     clickOn("#joinProjectButton");
-    //     assertNotNull(findSceneRootWithId("paintRoot"));
-        
-    // }
-
-
     @Test
     public void testOpenNewProject() throws InterruptedException {
         clickOn("#newProjectButton");
         WaitForAsyncUtils.waitForFxEvents();
-        // Thread.sleep(1000);
-        // assertTrue(true);
         assertNotNull(findSceneRootWithId("settingsRoot"));
-        // Thread.sleep(1000);
     }
 
     @Test
@@ -103,7 +76,6 @@ public class GameSelectControllerTest extends ApplicationTest {
         clickOn("#joinProjectButton");
         FxAssert.verifyThat("Warning", NodeMatchers.isVisible());
     }
-
 
     private Parent findSceneRootWithId(String id) {
         for (Window window : Window.getWindows()) {
@@ -127,10 +99,6 @@ public class GameSelectControllerTest extends ApplicationTest {
     public void testHandleChangeUsernameButton() {
         clickOn("#changeUsernameButton");
         assertNotNull(findSceneRootWithId("usernameSelectRoot"));
-
     }
-
-
-   
 
 }

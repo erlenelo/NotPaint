@@ -21,11 +21,11 @@ public class RemoteImagePersistence extends ImagePersistence {
         BufferedImage bufferedImage = javaFxImageToBufferedImage(image);
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
         ImageIO.write(bufferedImage, "png", byteStream);
-        
+
         byte[] imageBytes = byteStream.toByteArray();
         HttpRequest request = HttpRequest.newBuilder(URI.create(imagePath))
-            .PUT(BodyPublishers.ofByteArray(imageBytes))
-            .build();
+                .PUT(BodyPublishers.ofByteArray(imageBytes))
+                .build();
 
         try {
             HttpClient.newBuilder().build().send(request, BodyHandlers.discarding());
@@ -33,5 +33,5 @@ public class RemoteImagePersistence extends ImagePersistence {
             throw new RuntimeException(exception);
         }
     }
-    
+
 }
