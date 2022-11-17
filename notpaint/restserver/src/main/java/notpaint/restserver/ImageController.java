@@ -6,7 +6,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
-
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,7 +61,10 @@ public class ImageController {
             @RequestParam(value = "uuid") UUID uuid, @RequestBody() byte[] imageData) {
         Path path = basePath.resolve(uuid + ".png");
         try {
-            Files.createDirectory(path.getParent());
+            Path parentPath = path.getParent();
+            if (parentPath != null) {
+                Files.createDirectories(parentPath);
+            }
             Files.write(path, imageData);
         } catch (IOException ioe) {
             return ResponseEntity.internalServerError().body("Failed to save image");

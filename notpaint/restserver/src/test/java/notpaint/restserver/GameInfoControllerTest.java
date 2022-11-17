@@ -1,7 +1,6 @@
 package notpaint.restserver;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -10,14 +9,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
-
+import notpaint.persistence.GameInfo;
+import notpaint.persistence.LocalGameInfoPersistence;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
-
-import notpaint.persistence.GameInfo;
-import notpaint.persistence.LocalGameInfoPersistence;
 
 /**
  * Test class for {@link GameInfoController}.
@@ -27,6 +24,9 @@ public class GameInfoControllerTest {
     static GameInfoController controller;
     static Path dataPath; 
 
+    /**
+     * Setup the test class by creating a new controller and setting a test path.
+     */
     @BeforeAll
     public static void setup() {
         controller = new GameInfoController();

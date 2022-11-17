@@ -7,17 +7,22 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 
+/**
+ * Test class for {@link GameInfoController}.
+ */
 public class ImageControllerTest {
     
     static ImageController controller;
     static Path dataPath;
     
+    /**
+     * Setup the test class by creating a new controller and setting a test path.
+     */
     @BeforeAll
     public static void setup() {
         controller = new ImageController();
