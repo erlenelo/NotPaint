@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class GameInfoController {
     
     LocalGameInfoPersistence gameInfoPersistence = new LocalGameInfoPersistence();
-    GameInfoLocker gameInfoLock = new GameInfoLocker();
+    GameInfoLocker gameInfoLocker = new GameInfoLocker();
 
     /**
      * HTTP GET method for getting a list of all GameInfos.
@@ -65,7 +65,7 @@ public class GameInfoController {
     public ResponseEntity<Boolean> postRequestLock(@RequestParam(value = "uuid") UUID uuid) {
         try {
             GameInfo gameInfo = gameInfoPersistence.getGameInfoFromUuid(uuid);
-            if (gameInfoLock.tryLockGameInfo(gameInfo)) {
+            if (gameInfoLocker.tryLockGameInfo(gameInfo)) {
                 return ResponseEntity.ok(true);
             } else {
                 return ResponseEntity.ok(false);
@@ -85,7 +85,7 @@ public class GameInfoController {
     public ResponseEntity<Boolean> getLockStatus(@RequestParam(value = "uuid") UUID uuid) {
         try {
             GameInfo gameInfo = gameInfoPersistence.getGameInfoFromUuid(uuid);
-            if (gameInfoLock.isLocked(gameInfo)) {
+            if (gameInfoLocker.isLocked(gameInfo)) {
                 return ResponseEntity.ok(true);
             } else {
                 return ResponseEntity.ok(false);
@@ -104,7 +104,7 @@ public class GameInfoController {
     public ResponseEntity<Void> deleteReleaseLock(@RequestParam(value = "uuid") UUID uuid) {
         try {
             GameInfo gameInfo = gameInfoPersistence.getGameInfoFromUuid(uuid);
-            gameInfoLock.unlockGameInfo(gameInfo);
+            gameInfoLocker.unlockGameInfo(gameInfo);
             return ResponseEntity.ok().build();
         } catch (IOException ioe) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
