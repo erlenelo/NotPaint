@@ -1,5 +1,5 @@
 ## ImagePersistence
-Persistenslaget er delt opp i to deler [Persistence](notpaint/core/src/main/java/notpaint/persistence/readme.md) og ImagePersistence, denne delen tar for seg ImagePersistence.
+Persistenslaget er delt opp i to deler [Persistence](/notpaint/core/src/main/java/notpaint/persistence/readme.md) og ImagePersistence, denne delen tar for seg ImagePersistence.
 
 *ImagePersistence* hånderer lagring og lasting av bilder. 
 
