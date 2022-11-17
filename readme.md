@@ -26,7 +26,7 @@ Kjør `mvn javafx:jlink` i mappa **notpaint/fxui**. Dette vil bygge en distribue
 
 Etter å ha kjørt jlink, kan du lage en installasjonsveiviser for klienten ved å kjøre `mvn jpackage:jpackage` i mappa **notpaint/fxui**. Dette vil bygge en installasjonsveiviser for klienten i mappa **notpaint/fxui/target/dist**.
 
-**NB**: For å lage en installasjonsveiviser må du ha [WiX Toolset](https://wixtoolset.org/) installert og konfigurert i PATH.
+**NB**: For å lage en installasjonsveiviser *for Windows* må du ha [WiX Toolset](https://wixtoolset.org/) installert og konfigurert i PATH.
 
 
 ## Applikasjonen 
