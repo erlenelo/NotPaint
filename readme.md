@@ -9,7 +9,7 @@ Dette er prosjektet til gruppe 13 i emnet IT1901 høsten 2022. Målet er å lage
 Formålet med applikajsonen er å kunne samarbeide om å lage tegninger, hvor hver person som deltar iterativt legger til noe nytt i tegningen.
 
 
-## Bygging og kjøring
+## Bygging, kjøring og shipping
 **Bygging:** Kjør `mvn install` fra kodings-prosjektet (**notpaint**-mappa) for å 
 bygge alle moduler i prosjektet. Dette vil også kjøre tester og analysere kodekvalitet (se kodekvalitet).
 ### Kjøring
@@ -18,6 +18,16 @@ bygge alle moduler i prosjektet. Dette vil også kjøre tester og analysere kode
 **Spring-boot webserver:** Kjør `mvn spring-boot:run` i mappa **notpaint/restserver**.
 
 core-modulen må bygges før både klient og server kan kjøres.
+
+### Shipping
+For å lage en distibuerbar versjon av klienten, må modulene først bygges (se "Bygging").
+
+Kjør `mvn javafx:jlink` i mappa **notpaint/fxui**. Dette vil bygge en distribuerbar versjon av klienten i mappa **notpaint/fxui/target/notpaint**.
+
+Etter å ha kjørt jlink, kan du lage en installasjonsveiviser for klienten ved å kjøre `mvn jpackage:jpackage` i mappa **notpaint/fxui**. Dette vil bygge en installasjonsveiviser for klienten i mappa **notpaint/fxui/target/dist**.
+
+**NB**: For å lage en installasjonsveiviser må du ha [WiX Toolset](https://wixtoolset.org/) installert og konfigurert i PATH.
+
 
 ## Applikasjonen 
 **notpaint**-mappen inneholder koden til prosjektet. Brukergrensenittet er laget med **JavaFX** og **FXML**. Webserveren som implementerer et REST-API er laget med Spring Boot.
