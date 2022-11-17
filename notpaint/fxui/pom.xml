@@ -84,6 +84,7 @@
           <outputFilename>uiClassDiagram.puml</outputFilename>
           <scanPackages>
             <scanPackage>notpaint.ui</scanPackage>
+            <scanPackage>notpaint.imagepersistence</scanPackage>
           </scanPackages>
           <maxVisibilityFields>PACKAGE_PRIVATE</maxVisibilityFields>
           <maxVisibilityMethods>PACKAGE_PRIVATE</maxVisibilityMethods>
