@@ -2,18 +2,32 @@
 
 actor Ola #Blue
 
-Ola -> fxui: Clicks New Project
-fxui -> controller: handleNewProject()
-controller -> fxui: initialize()
-Ola -> fxui: Writes values
-Ola -> fxui: Clicks Create Game
-fxui -> controller: createGame(ActionEvent event)
-controller -> presistence: setActiveGameInfo(GameInfo activeGameInfo)
-presistence -> controller: getActiveGameInfo()
-controller -> fxui: onGameInfoPersistenceLoaded(GameInfoPersistence gameInfoPersistence)
-Ola -> fxui: Drawing
-Ola -> fxui: Clicks Done
-fxui -> controller: finishDrawing()
-controller -> presistence: BufferedImage javaFxImageToBufferedImage(Image image)
-presistence -> rest: PUT/ image
+Ola -> FXML: Clicks New Project
+FXML -> controller: handleNewProject()
+controller --> FXML: Change scene to SettingsView
+FXML -> controller:  initialize()
+FXML -> Ola: Shows scene to user
+Ola -> FXML: Writes values
+Ola -> FXML: Clicks Create Game
+FXML -> controller: createGame(ActionEvent event)
+controller -> controller: new GameInfo()
+controller -> persistence: setActiveGameInfo(GameInfo activeGameInfo)
+controller --> FXML: Change scene to PaintView
+FXML -> controller: initialize()
+controller -> controller: onGameInfoPersistenceLoaded(GameInfoPersistence gameInfoPersistence)
+controller -> persistence: getActiveGameInfo()
+persistence -> controller: GameInfo
+controller -> persistence: gameInfo.getWord()
+persistence -> controller: "Dog"
+controller -> FXML: setText("Dog")
+FXML -> Ola: Shows Dog
+Ola -> FXML: Drawing
+Ola -> FXML: Clicks Done
+FXML -> controller: finishDrawing()
+controller -> persistence: imagePersistence.save(image, path)
+persistence -> rest: **Request** \n PUT /image \n QUERY UUID \n BODY byte[] image
+controller -> persistence: saveGameInfo(activeGameInfo)
+persistence -> rest: **Request** \n PUT /saveGameInfo \n BODY activeGameInfo
+controller -> persistence: releaseGameInfoLock(activeGameInfo)
+persistence -> rest: **Request** \n DELETE /lock \n QUERY UUID
 @enduml
