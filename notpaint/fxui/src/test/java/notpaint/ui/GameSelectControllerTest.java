@@ -3,6 +3,8 @@ package notpaint.ui;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -10,6 +12,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import notpaint.persistence.GameInfo;
+import notpaint.ui.testutil.PersistenceTestConfig;
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxAssert;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -20,13 +23,17 @@ import org.testfx.util.WaitForAsyncUtils;
  * Test class for {@link GameSelectController}.
  */
 public class GameSelectControllerTest extends ApplicationTest {
-    private GameSelectController controller;
+
+    GameSelectController controller;
+
+    static Path dataPath = Paths.get("testData_INALKN434NJN");
 
 
     @Override
     public void start(Stage stage) throws Exception {
+        PersistenceTestConfig.setLocalPersistence(stage);
         FXMLLoader fxmlLoader = new FXMLLoader(
-            GameSelectController.class.getResource("GameSelectView.fxml"));
+                GameSelectController.class.getResource("GameSelectView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         App.scene = scene;
         scene.getStylesheets().add(getClass().getResource("fxui.css").toExternalForm());
@@ -48,7 +55,7 @@ public class GameSelectControllerTest extends ApplicationTest {
         controller.setSelectedGameInfo(info);
         Text secondsPerRoundText = lookup("#secondsPerRound").query();
         assertEquals("12", secondsPerRoundText.getText());
-        
+
         Text iterationsText = lookup("#iterations").query();
         assertEquals("1 / 44", iterationsText.getText());
 
@@ -59,16 +66,11 @@ public class GameSelectControllerTest extends ApplicationTest {
         assertEquals("testAuthor", lastEditorText.getText());
     }
 
-
     @Test
     public void testOpenNewProject() throws InterruptedException {
-        System.out.println("testOpenNewProject");
         clickOn("#newProjectButton");
         WaitForAsyncUtils.waitForFxEvents();
-        // Thread.sleep(1000);
-        // assertTrue(true);
         assertNotNull(findSceneRootWithId("settingsRoot"));
-        // Thread.sleep(1000);
     }
 
     @Test
@@ -101,9 +103,6 @@ public class GameSelectControllerTest extends ApplicationTest {
     public void testHandleChangeUsernameButton() {
         clickOn("#changeUsernameButton");
         assertNotNull(findSceneRootWithId("usernameSelectRoot"));
-
     }
-
-   
 
 }

@@ -18,6 +18,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import notpaint.persistence.GameInfoPersistence;
 import notpaint.ui.util.AlertUtil;
+import notpaint.ui.util.StageUtil;
 
 /**
  * Controller for making an username.
@@ -41,36 +42,11 @@ public class UsernameSelectController {
 
     @FXML
     private void initialize() {
-        // Get the scene from any Node object.
-        // Because the scene is not set in initialize, we need to listen for the
-        // property to update.
-        setUsernameTextField.sceneProperty().addListener((observableScene, oldScene, newScene) -> {
-            if (newScene != null) {
-                var stage = newScene.getWindow();
-                // The window property is also initially not set the first time the app starts.
-                // If it is null, listen for the property to update an then set it
-                if (stage == null) {
-                    newScene.windowProperty().addListener((observableWindow,
-                            oldWindow, newWindow) -> {
-
-                        // Create a persistence instance and set it as the user data for the stage.
-                        // This makes it accessible from all other scenes.
-                        if (newWindow != null) {
-                            onStageLoaded((Stage) newWindow);
-                        }
-                    });
-                } else {
-                    onStageLoaded((Stage) stage);
-                }
-            }
-        });
+        StageUtil.onGameInfoPersistenceLoaded(doneButton, this::onGameInfoPersistenceLoaded);
     }
 
-    private void onStageLoaded(Stage stage) {
-        if (stage.getUserData() == null) {
-            stage.setUserData(new GameInfoPersistence());
-        }
-        gameInfoPersistence = (GameInfoPersistence) stage.getUserData();
+    private void onGameInfoPersistenceLoaded(GameInfoPersistence gameInfoPersistence) {
+        this.gameInfoPersistence = gameInfoPersistence;
 
         try {
             if (readUsernameFile() == true) {

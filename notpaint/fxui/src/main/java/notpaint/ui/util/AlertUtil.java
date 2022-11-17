@@ -11,7 +11,7 @@ public class AlertUtil {
     /**
      * Creates and shows a warning alert with the given title and message.
      *
-     * @param title  Title of the alert
+     * @param title   Title of the alert
      * @param content Message of the alert
      */
     public static void warningAlert(String title, String content) {
@@ -24,7 +24,7 @@ public class AlertUtil {
     /**
      * Creates and shows an error alert with the given title and message.
      *
-     * @param title Title of the alert
+     * @param title   Title of the alert
      * @param content Message of the alert
      */
     public static void errorAlert(String title, String content) {

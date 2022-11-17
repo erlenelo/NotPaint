@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.util.Pair;
 
-
 /**
  * Utility class for line computations.
  */
 public class LineUtil {
-    
+
     /**
-     * Calculates the distance between two points, using Breseham's line algorithm.
+     * Calculates all points between two points, using Breseham's line algorithm.
      *
      * @param x0 The x coordinate of the first point.
      * @param y0 The y coordinate of the first point.

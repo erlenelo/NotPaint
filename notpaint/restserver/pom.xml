@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>restserver</artifactId>
+    <packaging>jar</packaging>
+    <!--Inherit settings-->
+    <parent>
+        <groupId>gr2213.notpaint</groupId>
+        <artifactId>notpaint</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <name>restserver</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>gr2213.notpaint</groupId>
+            <artifactId>core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>2.7.5</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jetty</artifactId>
+            <version>2.7.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <version>2.7.5</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+        <artifactId>plantuml-generator-maven-plugin</artifactId>
+        <groupId>de.elnarion.maven</groupId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <phase>generate-test-sources</phase>
+          </execution>
+        </executions>
+        <configuration>
+          <outputFilename>restserverClassdiagram.puml</outputFilename>
+          <scanPackages>
+            <scanPackage>notpaint.restserver</scanPackage>
+          </scanPackages>
+          <maxVisibilityFields>PACKAGE_PRIVATE</maxVisibilityFields>
+          <maxVisibilityMethods>PACKAGE_PRIVATE</maxVisibilityMethods>
+        </configuration>
+      </plugin>
+        </plugins>
+    </build>
+</project>

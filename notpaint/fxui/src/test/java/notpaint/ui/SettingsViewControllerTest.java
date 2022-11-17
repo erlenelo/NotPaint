@@ -5,20 +5,16 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import notpaint.persistence.GameInfoPersistence;
+import notpaint.ui.testutil.PersistenceTestConfig;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
-import org.testfx.util.WaitForAsyncUtils;
 
 /**
  * Test class for {@link SettingsViewController}.
@@ -26,12 +22,9 @@ import org.testfx.util.WaitForAsyncUtils;
 public class SettingsViewControllerTest extends ApplicationTest {
     private SettingsViewController controller;
 
-    static Path dataPath = Paths.get("testData_INALKN434NJN");
-
     @Override
     public void start(Stage stage) throws Exception {
-        var gameInfoPersistence = new GameInfoPersistence(dataPath);
-        stage.setUserData(gameInfoPersistence);
+        PersistenceTestConfig.setLocalPersistence(stage);
 
         FXMLLoader fxmlLoader = new FXMLLoader(
                 GameSelectController.class.getResource("SettingsView.fxml"));
@@ -45,24 +38,14 @@ public class SettingsViewControllerTest extends ApplicationTest {
 
     @AfterAll
     public static void cleanUp() throws IOException {
-        if (!Files.exists(dataPath)) {
-            return;
-        }
-
-        var files = Files.list(dataPath).toList();
-        for (var file : files) { // Delete every file in datapath dir
-            Files.delete(file);
-        }
-        Files.deleteIfExists(dataPath); // Delete datapath dir
+        PersistenceTestConfig.cleanUpLocalPersistence();
     }
 
-    // Test that the controller is created
     @Test
     public void testController() {
         assertNotNull(controller);
     }
 
-    // Test that the "back to menu" button works
     @Test
     public void testBackToMenu() {
         clickOn("#backToMenuButton");
@@ -81,15 +64,6 @@ public class SettingsViewControllerTest extends ApplicationTest {
         return null;
     }
 
-    // @Test
-    // public void testTimeTextFieldIsEmpty() {
-    // clickOn("#setTimeTextField");
-    // write("");
-    // clickOn("#createButton");
-    // // assert if the error message is displayed
-    // FxAssert.verifyThat("#timeErrorPopup", NodeMatchers.isVisible());
-    // }
-
     @Test
     public void testRadioButtonsAreRightValue() {
         RadioButton checkboxYes = (RadioButton) lookup("#checkboxYes").query();
@@ -102,7 +76,6 @@ public class SettingsViewControllerTest extends ApplicationTest {
 
     }
 
-    // test if clicking on the create button opens paintview
     @Test
     public void testCreateButton() {
         clickOn("#setTimeTextField");
@@ -112,7 +85,6 @@ public class SettingsViewControllerTest extends ApplicationTest {
 
         clickOn("#createButton");
 
-        // WaitForAsyncUtils.waitForFxEvents();
         assertNotNull(findSceneRootWithId("paintRoot"));
     }
 

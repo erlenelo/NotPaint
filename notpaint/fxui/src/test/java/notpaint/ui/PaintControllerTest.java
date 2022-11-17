@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,7 +19,9 @@ import notpaint.core.brushes.CircleBrush;
 import notpaint.core.brushes.SquareBrush;
 import notpaint.persistence.GameInfo;
 import notpaint.persistence.GameInfoPersistence;
+import notpaint.ui.testutil.PersistenceTestConfig;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
@@ -30,19 +31,15 @@ import org.testfx.framework.junit5.ApplicationTest;
 public class PaintControllerTest extends ApplicationTest {
     private PaintController controller;
 
-    // weird name because this folder will be removed after tests,
-    // make sure it's not a folder anyone will use
-    static Path dataPath = Paths.get("testData_INALKN434NJN");
     GameInfoPersistence gameInfoPersistence;
     GameInfo gameInfo;
 
     @Override
     public void start(Stage stage) throws Exception {
-        gameInfoPersistence = new GameInfoPersistence(dataPath);
+        gameInfoPersistence = PersistenceTestConfig.setLocalPersistence(stage);
         gameInfo = new GameInfo(5, 10, true);
-        gameInfoPersistence.setActiveGameInfo(gameInfo);        
-        stage.setUserData(gameInfoPersistence);
-         
+        gameInfoPersistence.setActiveGameInfo(gameInfo);
+
         FXMLLoader fxmlLoader = new FXMLLoader(PaintController.class.getResource("PaintView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         scene.getStylesheets().add(getClass().getResource("fxui.css").toExternalForm());
@@ -54,11 +51,7 @@ public class PaintControllerTest extends ApplicationTest {
 
     @AfterAll
     public static void cleanUp() throws IOException {
-        var files = Files.list(dataPath).toList();
-        for (var file : files) { // Delete every file in datapath dir
-            Files.delete(file);
-        }
-        Files.deleteIfExists(dataPath); // Delete datapath dir
+        PersistenceTestConfig.cleanUpLocalPersistence();
     }
 
     @Test
@@ -66,7 +59,6 @@ public class PaintControllerTest extends ApplicationTest {
         assertNotNull(controller);
     }
 
-    
     @Test
     public void testBrushButtons() {
         assertButtonSetsBrush(".smallCircle", CircleBrush.class);
@@ -83,21 +75,19 @@ public class PaintControllerTest extends ApplicationTest {
 
     }
 
-
     @Test
     public void testResetCanvas() {
         clickOn("#drawingCanvas");
         clickOn("#resetCanvasButton");
         clickOn("#doneButton");
-    
+
         Image image = new Image(gameInfoPersistence.getImagePath(gameInfo));
-        
 
         // assert that the image is completely white
         for (int x = 0; x < image.getWidth(); x++) {
             for (int y = 0; y < image.getHeight(); y++) {
                 assertTrue(image.getPixelReader()
-                    .getColor(x, y).equals(javafx.scene.paint.Color.WHITE));
+                        .getColor(x, y).equals(javafx.scene.paint.Color.WHITE));
             }
         }
     }
@@ -119,18 +109,17 @@ public class PaintControllerTest extends ApplicationTest {
         assertButtonIsHighlighted(".bigSquare");
 
     }
+
     private void assertButtonIsHighlighted(String button) {
         clickOn(button);
         assertTrue(lookup(button).query().getId().contains("highlightedBrush"));
     }
 
-    
-
     @Test
     public void testEraserClick() {
         clickOn("#toolPane");
         assertTrue(lookup("#toolPaneHighlight").query().getId().contains("toolPaneHighlight"));
-  
+
     }
 
     @Test
@@ -144,15 +133,12 @@ public class PaintControllerTest extends ApplicationTest {
         clickOn("#doneButton");
         assertNotNull(findSceneRootWithId("gameSelectRoot"), "GameSelectView should be visible");
         boolean jsonExists = Files.exists(Paths.get(
-            dataPath.toString(), gameInfo.getUuid().toString() + ".json"));
-        System.out.println(Paths.get(
-            dataPath.toString(), gameInfo.getUuid().toString() + ".json").toAbsolutePath());
+                PersistenceTestConfig.dataPath.toString(),
+                gameInfo.getUuid().toString() + ".json"));
         assertTrue(jsonExists, "GameInfo json should exist after clicking done on PaintView");
         Image image = new Image(gameInfoPersistence.getImagePath(gameInfo));
         assertNotNull(image, "Image should exist after clicking done on PaintView");
     }
-
-
 
     private Parent findSceneRootWithId(String id) {
         for (Window window : Window.getWindows()) {
@@ -167,23 +153,17 @@ public class PaintControllerTest extends ApplicationTest {
     }
 
     @Test
-    public void testUndoRedo(){
+    public void testUndoRedo() {
 
         clickOn("#drawingCanvas");
-        
+
         clickOn("#undoArrow");
         assertTrue(controller.undoStack.isEmpty());
-        
+
         clickOn("#redoArrow");
         assertTrue(controller.redoStack.isEmpty());
 
-
-
     }
-
-    
-
-
 
     @Test
     public void testKeyUndoRedo() {
@@ -192,11 +172,11 @@ public class PaintControllerTest extends ApplicationTest {
         assertTrue(lookup(".undoPane").query().getId().contains("undoredopane2"));
         press(KeyCode.CONTROL).press(KeyCode.Y).release(KeyCode.Y).release(KeyCode.CONTROL);
 
-
     }
 
+    @AfterEach
+    public void stopCountDown() throws IOException {
+        controller.stopTimer();
+    }
 
 }
-
-
-
