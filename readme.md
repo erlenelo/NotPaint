@@ -54,3 +54,7 @@ For å generere eller oppdatere de eksisterende klassediagrammene, kjør:
 Dette vil generere PlantUML-diagram i hver modul sin `target/generated-docs` mappe.
 
 Klassediagram for hver modul ligger i hver modul sin readme.md fil.
+
+Pakkediagram for prosjektet:
+ 
+![](https://www.plantuml.com/plantuml/png/TP5TRiCW3CVVVGgB0t24gVUe-a0pfwDh065JHPfwzmL86xQIl67__X-G0uk9agOREY_1M2U0EFWfU4TEK0q-ai8VmEKBPlWs5qBrH7NPrcK3L9K-nyHVnAgi7piEWI9R5d83ANW0RD7Zd6orxYkJLOXPqcXK91QcUAUOI_Ta3P75B-1gxcQSdrSzZlDqE_qjf3X4woulf1xrsNifPEzEgFK77gzB27jt0jZIowPQ_9-kE41-WdMIostdtAu9NAUz0czG-si0Ei-oRmK7SfzfIVu5)
